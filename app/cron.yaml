@@ -1,0 +1,13 @@
+cron:
+- description: daily training closure job
+  url: /worker/task/training_announcements/close
+  schedule: every 24 hours
+- description: daily training payment calculation job
+  url: /worker/task/training_announcements/payments/calculate
+  schedule: every 24 hours
+#  timezone: Asia/Kolkata
+#- description: monday morning mailout
+#  url: /mail/weekly
+#  schedule: every monday 09:00
+#  timezone: Australia/NSW
+

@@ -1,0 +1,47 @@
+application: mils-secure
+version: sandbox
+runtime: python
+api_version: 1
+
+default_expiration: "7d"
+
+handlers:
+- url: /s
+  static_dir: public
+  secure: never
+  expiration: 10s
+- url: /favicon.ico
+  static_files: public/image/icon/favicon.png
+  upload: public/image/icon/favicon.png
+- url: /robots.txt
+  static_files: public/robots.txt
+  upload: public/robots.txt
+  expiration: 7d
+- url: /console/static/
+  static_dir: lib/console/app/view/static
+  expiration: 7d
+
+- url: /console.*
+  script: lib/console/app/console.py
+  login: admin
+- url: /remote_api.*
+  script: $PYTHON_LIB/google/appengine/ext/remote_api/handler.py
+  login: admin
+
+- url: /admin.*
+  script: admin.py
+  login: admin
+- url: /worker.*
+  script: workers.py
+  login: admin
+- url: /api.*
+  script: api.py
+  login: admin
+- url: /rpc.*
+  script: rpc.py
+  login: admin
+- url: /account.*
+  script: accounts.py
+- url: /.*
+  script: www.py
+
