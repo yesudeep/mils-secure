@@ -1,0 +1,12 @@
+application:
+    app_dir: app
+    framework: google-app-engine-python
+build:
+    templates:
+        src_dir: templates
+        dest_dir: "app/templates"
+    media:
+        src_dir: media
+        dest_dir: "app/public"
+    watch:
+        paths: ["media", "templates"]
