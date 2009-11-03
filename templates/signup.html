@@ -1,0 +1,215 @@
+{% extends "base.html" %}
+
+{% block tag_navlinks %}
+    <li id="logout"><a href="/account/logout/">Logout</a></li>
+{% endblock %}
+
+{% block tag_header_additional_content %}
+    <h1 class="title">Welcome {{ first_name }} {{ last_name }}.</h1>
+    <p>Please complete your profile.  We need this information to verify whether you are an MILS Alumni.</p>
+    #*<p><strong>Tip:</strong> Provide the email address you used when registering for the MILS meet to automatically fill in your details.</p>*#
+{% endblock %}
+{% block tag_trunk_content %}
+    {% if photo %}
+        <p>Nice picture!</p>
+        <img width="48" height="48" src="{{ photo }}" alt="{{ first_name }} {{ last_name }}" title="You" />
+    {% endif %}
+    <form id="form_signup" class="decorated-fields vertical" method="post" action="/account">
+        <fieldset>
+            <legend>Account</legend>
+            <div class="column">
+                <label for="email_address">
+                    <span class="prefix">preferred personal email address</span>
+                    <input type="text" name="email_address" value="{% if verified_email %}{{ verified_email }}{% else %}{{ email }}{% endif %}" class="required email" />
+                    <span class="suffix">Account verification messages will be sent to this address.</span>
+                </label>
+                <label for="corporate_email_address">
+                    <span class="prefix">corporate email address</span>
+                    <input type="text" name="corporate_email_address" value="" class="email" />
+                    <span class="suffix">Your corporate email address. Leave the field blank if you don't have one.
+                    </span>
+                </label>
+            </div>
+            <div class="column">
+                <label for="graduation_year">
+                    <span class="prefix">graduation year</span>
+                    <select name="graduation_year">
+                    {% for year in mils_year_list %}
+                        <option value="{{ year }}" {% if year == graduation_year %}selected="selected"{% endif %}>{{ year }}</option>
+                    {% endfor %}
+                    </select>
+                    <span class="suffix">Your graduation year.</span>
+                </label>
+                <label for="is_student">
+                    <span class="prefix="></span>
+                    <input type="checkbox" name="is_student" value="yes" />I'm currently a student
+                    <span class="suffix"></span>
+                </label>
+            </div>
+        </fieldset>
+        <fieldset>
+            <legend>A little about you</legend>
+            <div class="column">
+                <label for="first_name">
+                    <span class="prefix">first name</span>
+                    <input type="text" name="first_name" value="{{ first_name }}" class="required capitalize" />
+                    <span class="suffix"></span>
+                </label>
+                <label for="last_name">
+                    <span class="prefix">last name</span>
+                    <input type="text" name="last_name" value="{{ last_name }}" class="required capitalize" />
+                    <span class="suffix"></span>
+                </label>
+                <label for="gender">
+                    <span class="prefix">gender</span>
+                    <select name="gender">
+                    {% for gender_choice in gender_choices %}
+                        <option value="{{ gender_choice }}" {% if gender_choice == gender %}selected="selected"{% endif %}>{{ gender_choice }}</option>
+                    {% endfor %}
+                    </select>
+                    <span class="suffix"></span>
+                </label>
+            </div>
+            <div class="column">
+                <label for="birthdate">
+                    <span class="prefix">birthdate</span>
+                    <select name="birthdate_day">
+                        {% for day in range(1, 32) %}
+                            <option value="{{ day }}" {% if day == birthdate_day %}selected="selected"{% endif %}>{{ day }}</option>
+                        {% endfor %}
+                    </select>
+                    <select name="birthdate_month">
+                        {% for month in month_list %}
+                            <option value="{{ loop.index }}" {% if loop.index == birthdate_month %}selected="selected"{% endif %}>{{ month }}</option>
+                        {% endfor %}
+                    </select>
+                    <select name="birthdate_year">
+                        {% for year in year_list %}
+                            <option value="{{ year }}" {% if year == birthdate_year %}selected="selected"{% endif %}>{{ year }}</option>
+                        {% endfor %}
+                    </select>
+                    <span class="suffix">You need to be at least 18 years old to use this Website.</span>
+                </label>
+                <label for="t_shirt_size">
+                    <span class="prefix">t-shirt size</span>
+                    <select name="t_shirt_size">
+                        {% for size in t_shirt_sizes %}
+                            <option value="{{ size.0 }}" {% if size.0 == t_shirt_size %}selected="selected"{% endif %}>{{ size.1 }}</option>
+                        {% endfor %}
+                    </select>
+                    <span class="suffix"></span>
+                </label>
+            </div>
+        </fieldset>
+        <fieldset>
+            <legend>Workplace</legend>
+                <label class="column" for="company">
+                    <span class="prefix">company</span>
+                    <input type="text" name="company" value="{{ company }}" class="required capitalize" />
+                    <span class="suffix">Your current workplace.</span>
+                </label>
+                <label class="column" for="designation">
+                    <span class="prefix">designation</span>
+                    <input type="text" name="designation" value="{{ designation }}" class="required capitalize" />
+                    <span class="suffix">Your current designation at this workplace.</span>
+                </label>
+        </fieldset>
+        <fieldset id="fieldset_mailing_address">
+            <legend>Mailing address</legend>
+            <div class="column">
+                <label for="apartment">
+                    <span class="prefix">apartment/house</span>
+                    <input type="text" name="apartment" value="" class="required capitalize" />
+                    <span class="suffix"></span>
+                </label>
+                <label for="street_name">
+                    <span class="prefix">street name</span>
+                    <input type="text" name="street_name" value="{{ address_street_name }}" class="required capitalize" />
+                    <span class="suffix"></span>
+                </label>
+                <label for="landmark">
+                    <span class="prefix">landmark</span>
+                    <input type="text" name="landmark" value="" class="required capitalize" />
+                    <span class="suffix">Nearest prominent landmark.</span>
+                </label>
+                <label for="city">
+                    <span class="prefix">city</span>
+                    <input type="text" name="city" value="{% if address_locality %}{{ address_locality }}{% else %}Mumbai{% endif %}" class="required capitalize" />
+                    <span class="suffix"></span>
+                </label>
+            </div>
+            <div class="column">
+                <label for="railway_line">
+                    <span class="prefix">nearest railway line</span>
+                    <select name="railway_line">
+                        {% for railway_line in railway_lines %}
+                            <option value="{{ railway_line.0 }}"{% if railway_line.0 == nearest_railway_line %} selected="selected"{% endif %}>{{ railway_line.1 }}</option>
+                        {% endfor %}
+                    </select>
+                    <span class="suffix">Only applies if you're in Mumbai.</span>
+                </label>
+                <label for="country">
+                    <span class="prefix">country</span>
+                    <select name="country">
+                        {% for country in countries %}
+                        <option value="{{ country.2 }}"{% if country.2 == 'IND' %} selected="selected"{% endif %}>{{ country.0 }}</option>
+                        {% endfor %}
+                    </select>
+                    <span class="suffix"></span>
+                </label>
+                <label for="state_province">
+                    <span class="prefix">state/province</span>
+                    <input type="text" name="state_province" class="required capitalize" value="{% if address_state_province %}{{ address_state_province }}{% else %}Maharashtra{% endif %}" />
+                    <span class="suffix"></span>
+                </label>
+                <label for="zip_code">
+                    <span class="prefix">zip code</span>
+                    <input type="text" name="zip_code" class="required" value="{{ address_zip_code }}" />
+                    <span class="suffix"></span>
+                </label>
+            </div>
+        </fieldset>
+        <fieldset>
+            <legend>Contact</legend>
+            <input type="hidden" name="phone_number_count" value="1" />
+            <label id="field_phone_number_1" class="column" for="phone_number_1">
+                <span class="prefix">phone number</span>
+                <input type="text" name="phone_number_1" value="{{ phone_number }}" class="required phone" />
+                <select id="phone_types" name="phone_type_1">
+                {% for type in phone_types %}
+                    <option value="{{ type }}" {% if type == phone_type %}selected="selected"{% endif %}>{{ type }}</option>
+                {% endfor %}
+                </select>
+                <span class="suffix"><a href="#add_phone_number">add another</a></span>
+            </label>
+        </fieldset>
+        <fieldset>
+            <legend>Finish</legend>
+            #*<div class="column">
+                <label for="nothing">
+                    <span class="prefix">stop spam. <a href="http://recaptcha.net/learnmore.html" alt="What is a captcha?" title="What is a captcha?">block robots</a>.</span>
+                    <span class="suffix">
+                        Please type both the words shown below.  See another set of words by clicking (<img src="http://api.recaptcha.net/img/clean/refresh.png" />) below.
+                    </span>
+                </label>
+                <script type="text/javascript" charset="utf-8">
+                    var RecaptchaOptions = {theme: 'clean'};
+                </script>
+                {{ captcha_html }}
+            </div>*#
+            <label for="submit">
+                <span class="prefix"></span>
+                <input type="submit" name="submit" value="Create my account" />
+                <span class="suffix">Please check your inbox for a verification email.</span>
+            </label>
+        </fieldset>
+    </form>
+{% endblock %}
+{% block tag_scripts %}
+<script type="text/javascript">
+window.scripts.push(
+"{{ MEDIA_URL }}script/page/signup{{ MINIFIED }}.js"
+);
+</script>
+{% endblock %}
+

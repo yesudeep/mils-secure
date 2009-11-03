@@ -1,0 +1,16 @@
+{% extends "admin/index.html" %}
+
+{% block tag_section_content %}
+<h1>{{ page_name }}</h1>
+<h2>It's easy to approve, delete, and send messages to users.</h2>
+#*<p>Find: <input type="search" name="filter" value="" /></p>*#
+<ul id="data-list" class="data-list"></ul>
+</div>
+{% endblock %}
+
+{% block tag_scripts %}
+<script type="text/javascript">
+    window.scripts.push("{{ MEDIA_URL }}script/admin/articles{{ MINIFIED }}.js");
+</script>
+{% endblock %}
+

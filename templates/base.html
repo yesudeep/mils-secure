@@ -1,0 +1,60 @@
+{% extends "base_site.html" %}
+
+{% block tag_head %}
+	{% block tag_stylesheets %}
+    <link rel="stylesheet" href="{{ MEDIA_URL }}css/generic{{ MINIFIED }}.css" type="text/css" media="screen" charset="utf-8" />
+    <link rel="stylesheet" href="{{ MEDIA_URL }}css/screen{{ MINIFIED }}.css" type="text/css" media="screen" charset="utf-8" />
+	{% endblock %}
+	{% block tag_additional_stylesheets %}{% endblock %}
+{% endblock %}
+
+{% block tag_body %}
+	{% block tag_wrapper %}
+	<div id="wrapper">
+		{% block tag_wrapper_content %}
+		{% block tag_header %}
+		<div id="header">
+			{% block tag_header_content %}
+			<ul class="logobar horizontal clearfix">
+			    <li>
+			        <a href="/">
+			            <img src="{{ MEDIA_URL }}image/logo/mils_alumni.png" alt="MILS Alumni Logo" />
+			            <img src="{{ MEDIA_URL }}image/logo/text_en_US.png" alt="MILS Alumni Text Logo" />
+			        </a>
+			    </li>
+			</ul>
+			<ul class="navlinks">
+			    {% block tag_navlinks %}
+			    <li id="about"><a href="/about/">About</a></li>
+			    <li id="blog"><a href="/blog/">Blog</a></li>
+			    <li id="students_corner"><a href="/students/">Students' Corner</a></li>
+			    <li id="photos"><a target="_blank" href="{{ PICASA_WEB_ALBUMS_PUBLIC_URL }}">Nostalgia</a></li>
+			    <li id="announcements"><a href="/training_announcements/">Announcements</a></li>
+			    <li id="logout"><a href="/account/logout/">Logout</a></li>
+    			{% endblock %}
+			</ul>
+			{% endblock %}
+			{% block tag_header_additional_content %}
+			{% endblock %}
+		</div>
+		{% endblock %}
+		{% block tag_trunk %}
+		<div id="trunk">
+			{% block tag_trunk_content %}
+			{% endblock %}
+		</div>
+		{% endblock %}
+		{% block tag_footer %}
+		<div id="footer">
+			{% block tag_footer_content %}
+			<p>Content Copyright &copy; 2009 <a href="/">MILS Alumni.</a> All rights reserved.</p>
+			<p>Portions Copyright &copy; 2009 <a href="http://www.happychickoo.com">HappyChickoo.</a> Designed and developed by <a href="http://www.happychickoo.com">HappyChickoo.</a></p>
+			<p></p>
+			{% endblock %}
+		</div>
+		{% endblock %}
+		{% endblock %}
+	</div>
+	{% endblock %}
+{% endblock %}
+

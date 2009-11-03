@@ -1,0 +1,12 @@
+Dear {{ nickname }},
+
+Thank you for registering with the MILS Alumni Association.
+As soon as the administrator approves your account, another
+notification email will be sent to you indicating activation.
+
+After verification, you may log into any of the services offered
+by the MILS Alumni Website.
+
+Thank you.
+
+{{ MAIL_SIGNATURE }}

@@ -1,0 +1,48 @@
+{% extends "admin/new.html" %}
+
+
+{% block form_action %}/api/books/new/{% endblock %}
+
+{% block form_fields %}
+
+  <label for="isbn">
+    <span class="prefix">isbn</span>
+    <input type="text" name="isbn" value="" class="required isbn" />
+    <span class="suffix">
+      Find your book: <a href="http://openlibrary.org" target="_blank">openlibrary.org</a>.
+      <img class="cover" src="" />
+    </span>
+  </label>
+
+  <label for="isbn_10">
+    <span class="prefix">isbn 10 (calculated)</span>
+    <input type="text" name="isbn_10" readonly="readonly" value="" class="required" />
+    <span class="suffix"></span>
+  </label>
+
+  <label for="isbn_13">
+    <span class="prefix">isbn 13 (calculated)</span>
+    <input type="text" name="isbn_13" readonly="readonly" value="" class="required" />
+    <span class="suffix"></span>
+  </label>
+
+  <label for="title">
+    <span class="prefix">title</span>
+    <input type="text" name="title" readonly="readonly" value="" class="required" />
+    <span class="suffix"></span>
+  </label>
+  <label for="authors">
+    <span class="prefix">authors</span>
+    <input type="text" name="authors" readonly="readonly" value="" class="required" />
+    <span class="suffix"></span>
+  </label>
+  <label for="info_url">
+    <span class="prefix">information url</span>
+    <input type="text" name="info_url" readonly="readonly" value="" class="required url" />
+    <span class="suffix"></span>
+  </label>
+
+{% endblock %}
+
+{% block form_submit_attributes %}disabled="disabled"{% endblock %}
+

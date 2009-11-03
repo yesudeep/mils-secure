@@ -1,0 +1,85 @@
+{% extends "admin/new.html" %}
+
+
+{% block form_action %}/api/announcements/new/{% endblock %}
+
+{% block form_additional_attributes %}enctype="multipart/form-data"{% endblock %}
+
+{% block form_fields %}
+  <label for="title">
+    <span class="prefix">title</span>
+    <input type="text" name="title" value="" class="required" />
+    <span class="suffix"></span>
+  </label>
+
+  <label for="faculty">
+    <span class="prefix">faculty</span>
+    <input type="text" name="faculty" value="" class="required" />
+    <span class="suffix"></span>
+  </label>
+
+  <label for="venue">
+    <span class="prefix">venue</span>
+    <input type="text" name="venue" value="" class="required" />
+    <span class="suffix"></span>
+  </label>
+
+  <fieldset><legend>brochure</legend>
+    <label for="brochure_url">
+      <span class="prefix">brochure url</span>
+      <input type="text" name="brochure_url" value="" class="required" />
+
+      <span class="suffix"><a class="preview_url" href="" target="_blank"><img class="preview" src="" /></a><a target="_blank" href="http://www.flickr.com/photos/upload/">Upload image here</a> and then paste the link in this text box.</span>
+    </label>
+  </fieldset>
+
+  <fieldset>
+    <legend>dates</legend>
+    <label for="from">
+      <span class="prefix">from date/time</span>
+      <input type="text" name="when_from" value="" id="new-when-from" class="required" />
+      <span class="suffix">The date and time of the commencement of the program.</span>
+    </label>
+
+    <label for="to">
+      <span class="prefix">to date/time</span>
+      <input type="text" name="when_to" value="" id="new-when-to" class="required" />
+      <span class="suffix">The date and time of the end of the program.</span>
+    </label>
+
+    <label for="when_payment_is_calculated">
+      <span class="prefix">payment calculation date</span>
+      <input type="text" name="when_payment_is_calculated" id="new-when-payment-is-calculated" value="" class="required" />
+      <span class="suffix">Payment calculations will occur on this date and emails will be dispatched to registered nominees.</span>
+    </label>
+
+    <label for="when_registration_ends">
+      <span class="prefix">registration closure date</span>
+      <input type="text" name="when_registration_ends" value="" id="new-when-registration-ends" class="required" />
+      <span class="suffix">Registrations received after this date will receive "Thank you for your interest." message.</span>
+    </label>
+  </fieldset>
+
+  <fieldset>
+    <legend>participation</legend>
+    <label for="max_participants">
+      <span class="prefix">maximum participants</span>
+      <input type="text" name="max_participants" value="" class="number required" />
+      <span class="suffix"></span>
+    </label>
+
+    {% for count in [1, 2, 3] %}
+    <label for="fees_{{ count }}">
+      <span class="prefix">fees</span>
+      <input type="text" name="fees_{{ count }}" value="" />
+      for participants
+      <input type="text" name="participants_{{ count }}" value="" />
+      <span class="suffix"></span>
+    </label>
+    {% endfor %}
+
+  </fieldset>
+
+
+{% endblock %}
+

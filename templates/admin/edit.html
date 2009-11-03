@@ -1,0 +1,21 @@
+
+{% block tag_form %}
+<form class="{% block form_classes %}decorated-fields table{% endblock %} {%block user_action %}edit{% endblock %}" action="{% block form_action %}{% endblock %}" method="{% block form_method %}post{% endblock %}" {% block form_additional_attributes %}{% endblock%}>
+  {% block form_body %}
+  {% block form_fields %}
+  {% endblock %}
+  {% block form_actions %}
+  <input class="save-button" {% block form_submit_attributes %}{% endblock %} type="submit" name="submit" value="{% block form_submit_value %}Save &raquo;{% endblock %}" />
+  {% endblock %}
+  {% endblock %}
+</form>
+{% endblock %}
+
+{% block tag_form_additional_content %}{% endblock %}
+
+{% block form_script %}
+<script type="text/javascript">
+jQuery('form').validate();
+</script>
+{% endblock %}
+

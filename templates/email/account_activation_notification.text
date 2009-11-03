@@ -1,0 +1,8 @@
+Dear {{ nickname }},
+
+We're pleased to tell you that your account at {{ PRIMARY_URL }}
+has been activated.  We hope you enjoy your stay.
+
+Thank you.
+
+{{ MAIL_SIGNATURE }}

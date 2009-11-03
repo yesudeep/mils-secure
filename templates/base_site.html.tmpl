@@ -1,0 +1,69 @@
+<!doctype html><html><head>
+<meta name="verify-v1" content="KI7FCk3ZgACVoQ+YKUk+2rCXWlyF51E83Ke8LFp076Y=" />
+#*<meta http-equiv="X-UA-Compatible" content="IE=edge" /> Make IE use the latest rendering mode/engine. *#
+#*<!--[if lt IE 7]>*#
+<meta http-equiv="X-UA-Compatible" content="chrome=1" />
+#*<![endif]-->*#
+<meta charset="utf-8" />
+<title>{% block tag_title %}MILS Alumni{% endblock %}</title>
+
+{% block unsupported_browser %}
+#*<!--[if IE]>
+<script type="text/javascript">
+window.location.href="/unsupported/browser/";
+</script>
+<![endif]-->*#
+{% endblock %}
+
+<!--[if gt IE 6]>
+<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+
+{% block tag_head %}{% endblock %}
+</head><body>
+{% block chrome_frame_plugin %}
+<!--[if lt IE 7]>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js"></script>
+<div id="chrome_frame_plugin_placeholder"></div>
+<script type="text/javascript">CFInstall.check({node:"chrome_frame_plugin_placeholder"});</script>
+<![endif]-->
+{% endblock %}
+{% block tag_body %}{% endblock %}
+
+{% block tag_scripts_prefix %}
+#*<script type="text/javascript" src="{{ MEDIA_URL }}script/lib/chickoojs/src/load{{ MINIFIED }}.js" charset="utf-8"></script>*#
+<script type="text/javascript">
+$LOADER_SCRIPT
+{% if LOCAL %}window.scripts=["{{ MEDIA_URL }}script/lib/chickoojs/src/jquery/jquery-1.3.2-min.js"];
+{% else %}window.scripts=["http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"];
+#*window.scripts=["http://ajax.microsoft.com/ajax/jQuery/jquery-1.3.2.min.js"];*#
+{% endif %}
+</script>
+{% endblock %}
+{% block tag_scripts_base %}{% endblock %}
+{% block tag_scripts %}{% endblock %}
+{% block tag_scripts_suffix %}
+<script type="text/javascript">
+getScripts(window.scripts);
+</script>
+{% endblock %}
+
+{% if not LOCAL %}
+{% block tag_scripts_analytics %}
+{% block tag_scripts_google_analytics %}<script type="text/javascript">
+var gaJsHost=(("https:"==document.location.protocol)?"https://ssl.":"http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+try{var pageTracker=_gat._getTracker("UA-7340598-3");pageTracker._trackPageview();}catch(err){}
+</script>{% endblock %}
+{% block tag_scripts_woopra_analytics %}<script type="text/javascript">
+var _wh = ((document.location.protocol=='https:') ? "https://sec1.woopra.com" : "http://static.woopra.com");
+document.write(unescape("%3Cscript src='" + _wh + "/js/woopra.js' type='text/javascript'%3E%3C/script%3E"));
+</script>{% endblock %}
+{% endblock %}
+{% endif %}
+
+
+</body></html>
+

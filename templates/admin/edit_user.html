@@ -1,0 +1,102 @@
+{% extends "admin/edit.html" %}
+
+
+{% block form_action %}/api/users/{{ user_key }}/edit/{% endblock %}
+
+{% block form_fields %}
+  <label for="first_name">
+    <span class="prefix">first name</span>
+    <input type="text" name="first_name" value="{{ person.first_name }}" />
+    <span class="suffix"></span>
+  </label>
+
+  <label for="last_name">
+    <span class="prefix">last name</span>
+    <input type="text" name="last_name" value="{{ person.last_name }}" />
+    <span class="suffix"></span>
+  </label>
+
+  <label for="email">
+    <span class="prefix">email</span>
+    <input type="text" name="email" value="{{ user.email }}" />
+    <span class="suffix"></span>
+  </label>
+
+  <label for="corporate_email">
+    <span class="prefix">corporate email</span>
+    <input type="text" name="corporate_email" value="{% if user.corporate_email %}{{ user.corporate_email }}{% endif %}" />
+    <span class="suffix"></span>
+  </label>
+
+  <label for="company">
+    <span class="prefix">company</span>
+    <input type="text" name="company" value="{{ person.company }}" />
+    <span class="suffix"></span>
+  </label>
+
+  <label for="designation">
+    <span class="prefix">designation</span>
+    <input type="text" name="designation" value="{{ person.designation }}" />
+    <span class="suffix"></span>
+  </label>
+
+  <label for="graduation_year">
+      <span class="prefix">graduation year</span>
+      <select name="graduation_year">
+      {% for year in mils_year_list %}
+          <option value="{{ year }}" {% if year == graduation_year %}selected="selected"{% endif %}>{{ year }}</option>
+      {% endfor %}
+      </select>
+      <span class="suffix"></span>
+  </label>
+
+  <label for="is_student">
+      <span class="prefix="></span>
+      <input type="checkbox" name="is_student" value="yes" {% if person.is_student %}checked="checked"{% endif %} />Is a student?
+      <span class="suffix"></span>
+  </label>
+
+
+  <label for="gender">
+      <span class="prefix">gender</span>
+      <select name="gender">
+      {% for gender_choice in gender_choices %}
+          <option value="{{ gender_choice }}" {% if gender_choice == person.gender %}selected="selected"{% endif %}>{{ gender_choice }}</option>
+      {% endfor %}
+      </select>
+      <span class="suffix"></span>
+  </label>
+
+  <label for="birthdate">
+      <span class="prefix">birthdate</span>
+      <select name="birthdate_day">
+          {% for day in range(1, 32) %}
+              <option value="{{ day }}" {% if day == birthdate_day %}selected="selected"{% endif %}>{{ day }}</option>
+          {% endfor %}
+      </select>
+      <select name="birthdate_month">
+          {% for month in month_list %}
+              <option value="{{ loop.index }}" {% if loop.index == birthdate_month %}selected="selected"{% endif %}>{{ month }}</option>
+          {% endfor %}
+      </select>
+      <select name="birthdate_year">
+          {% for year in year_list %}
+              <option value="{{ year }}" {% if year == birthdate_year %}selected="selected"{% endif %}>{{ year }}</option>
+          {% endfor %}
+      </select>
+      <span class="suffix"></span>
+  </label>
+
+  <label for="t_shirt_size">
+      <span class="prefix">t-shirt size</span>
+      <select name="t_shirt_size">
+          {% for size in t_shirt_sizes %}
+              <option value="{{ size.0 }}" {% if size.0 == person.t_shirt_size %}selected="selected"{% endif %}>{{ size.1 }}</option>
+          {% endfor %}
+      </select>
+      <span class="suffix"></span>
+  </label>
+
+
+{% endblock %}
+

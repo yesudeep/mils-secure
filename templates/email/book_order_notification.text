@@ -1,0 +1,19 @@
+Greetings,
+
+{{ person_name }} has placed an order for the following books:
+
+{{ books }}
+
+About the buyer:
+
+Name: {{ person_name }}
+Phone: {{ person_phone_number }}
+Email: {{ person_email_address }}
+
+About the vendor:
+
+Name: {{ vendor_name }}
+Phone: {{ vendor_phone_number }}
+Email: {{ vendor_email_address }}
+
+{{ MAIL_SIGNATURE }}

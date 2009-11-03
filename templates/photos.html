@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block tag_additional_stylesheets %}
+    <link rel="stylesheet" type="text/css" charset="utf-8" href="{{ MEDIA_URL }}script/lib/jquery-prettyPhoto/css/pretty-photo-min.css" />
+{% endblock %}
+
+
+{% block tag_header_additional_content %}
+    <h1 class="title">Pictures speak louder than words!</h1>
+    <h2 class="subtitle">Let us take you on a tour of the most recent alumni meet we had.</h2>
+{% endblock %}
+
+{% block tag_trunk_content %}
+<ul class="photos">
+    <li>
+        <a href="{{ MEDIA_URL }}image/photo/1.jpg" rel="prettyPhoto[alumni-meet]" title="Some thing"><img src="{{ MEDIA_URL }}image/photo/thumb/1.jpg" alt="Sample Picture" /></a>
+    </li>
+    <li>
+        <a href="{{ MEDIA_URL }}image/photo/2.jpg" rel="prettyPhoto[alumni-meet]" title="Some thing"><img src="{{ MEDIA_URL }}image/photo/thumb/2.jpg" alt="Sample Picture" /></a>
+    </li>
+    <li>
+        <a href="{{ MEDIA_URL }}image/photo/3.jpg" rel="prettyPhoto[alumni-meet]" title="Some thing"><img src="{{ MEDIA_URL }}image/photo/thumb/3.jpg" alt="Sample Picture" /></a>
+    </li>
+    <li>
+        <a href="{{ MEDIA_URL }}image/photo/4.jpg" rel="prettyPhoto[alumni-meet]" title="Some thing"><img src="{{ MEDIA_URL }}image/photo/thumb/4.jpg" alt="Sample Picture" /></a>
+    </li>
+    <li>
+        <a href="{{ MEDIA_URL }}image/photo/5.jpg" rel="prettyPhoto[alumni-meet]" title="Some thing"><img src="{{ MEDIA_URL }}image/photo/thumb/5.jpg" alt="Sample Picture" /></a>
+    </li>
+    <li>
+        <a href="{{ MEDIA_URL }}image/photo/6.jpg" rel="prettyPhoto[alumni-meet]" title="Some thing"><img src="{{ MEDIA_URL }}image/photo/thumb/6.jpg" alt="Sample Picture" /></a>
+    </li>
+</ul>
+{% endblock %}
+
+
+{% block tag_additional_deferred_scripts %}
+    <script type="text/javascript" charset="utf-8" src="{{ MEDIA_URL }}script/lib/jquery-prettyPhoto/js/jquery.prettyPhoto-min.js"></script>
+    <script type="text/javascript">
+        (function($){
+            $(function(){
+                $("a[rel^='prettyPhoto']").prettyPhoto({
+                    theme: 'dark_rounded'
+                });
+            });
+        })(jQuery);
+    </script>
+{% endblock %}
+

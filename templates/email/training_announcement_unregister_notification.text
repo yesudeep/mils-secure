@@ -1,0 +1,11 @@
+Dear {{ nickname }},
+
+You have unregistered from the event {{ training_program_title }}.
+
+If you wish to re-enable your registration at any stage, please
+click the following URL:
+
+    {{ renew_url }}
+
+{{ MAIL_SIGNATURE }}
+

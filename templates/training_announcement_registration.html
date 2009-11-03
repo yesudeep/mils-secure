@@ -1,0 +1,102 @@
+{% extends "base.html" %}
+
+{% block tag_header_additional_content %}
+    <h1 class="title">{{ training_announcement.title }}</h1>
+    <h2 class="subtitle">Get your friends to attend and avail discounts!</h2>
+{% endblock %}
+
+{% block tag_trunk_content %}
+    <div class="info">
+      <table border="0" cellspacing="0" cellpadding="0">
+        <thead>
+          <tr>
+            <th>Faculty</th>
+            <th>Venue</th>
+            <th>From</th>
+            <th>To</th>
+            <th>Registration Closes</th>
+            <th>Fee Structure</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>{{ training_announcement.faculty }}</td>
+            <td>{{ training_announcement.venue }}</td>
+            <td>{{ training_announcement.when_from|datetimeformat('%Y, %b %d, %H:%M') }}</td>
+            <td>{{ training_announcement.when_to|datetimeformat('%Y, %b %d, %H:%M') }}</td>
+            <td>{{ training_announcement.when_registration_ends|datetimeformat('%Y, %b %d') }}</td>
+            <td>
+                <ul>
+                {% for fee in training_announcement.fees %}
+                  <li>{{ fee.fee }} for {{ fee.for_participant_count }} participants</li>
+                {% endfor %}
+                </ul>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <img src="{{ training_announcement.brochure_url }}" />
+      <form id="form_training_registration" class="decorated-fields table" method="post" action="/announcement/{{ training_announcement.key() }}/register/" key="{{ training_announcement.key() }}">
+        <input type="hidden" name="nominations_count" value="1" />
+
+        <fieldset id="nomination_1">
+          <legend>Nomination 1</legend>
+          <label for="full_name_1">
+            <span class="prefix">full name</span>
+            <input type="text" name="full_name_1" value="{{ user.nickname }}" class="required capitalize" />
+            <span class="suffix"></span>
+          </label>
+          <label for="company_1">
+            <span class="prefix">company</span>
+            <input type="text" name="company_1" value="{{ person.company }}" class="required capitalize" />
+            <span class="suffix"></span>
+          </label>
+          <label for="designation_1">
+            <span class="prefix">designation</span>
+            <input type="text" name="designation_1" value="{{ person.designation }}" class="required capitalize" />
+            <span class="suffix"></span>
+          </label>
+          <label for="email_1">
+            <span class="prefix">email</span>
+            <input type="text" name="email_1" value="{{ user.email }}" class="required email" />
+            <span class="suffix"></span>
+          </label>
+          <label for="phone_number_1">
+            <span class="prefix">phone</span>
+            <input type="text" name="phone_number_1" value="{{ phone_number }}" class="required phone" />
+            <span class="suffix"><a href="#add_nomination">Add nomination</a></span>
+          </label>
+        </fieldset>
+
+
+
+        #*<label for="current_fee">
+          <span class="prefix">current fee</span>
+          <input type="text" name="current_fee" readonly="readonly" value="" />
+          <span class="suffix"></span>
+        </label>
+
+        <label for="total_amount">
+          <span class="prefix">total amount</span>
+          <input type="text" name="total_amount" readonly="readonly" value="" />
+          <span class="suffix"></span>
+        </label>*#
+
+        <label for="submit">
+          <span class="prefix"></span>
+          <input type="submit" name="submit" value="&#10004; Complete Registration" />
+          <span class="suffix"></span>
+        </label>
+      </form>
+    </div>
+{% endblock %}
+
+
+{% block tag_scripts %}
+  <script type="text/javascript">
+    window.scripts.push(
+      "{{ MEDIA_URL }}script/page/training_announcement_registration{{ MINIFIED }}.js"
+    );
+  </script>
+{% endblock %}
+

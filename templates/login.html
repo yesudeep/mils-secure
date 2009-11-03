@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+
+{% block tag_header_additional_content %}
+    <h1 class="title">Login</h1>
+{% endblock %}
+
+{% block tag_trunk_content %}
+
+{#<iframe src="https://{{ RPX_NOW_REALM }}.rpxnow.com/openid/embed?token_url={{ RPX_NOW_TOKEN_URL }}"
+  scrolling="no" frameBorder="no" style="width:400px;height:240px;">
+</iframe>
+{#
+    <form id="form_login" class="decorated-fields table" method="post" action="/account/login">
+        <label for="email_address">
+            <span class="prefix">email</span>
+            <input type="text" name="email_address" value="" />
+            <span class="suffix"></span>
+        </label>
+        <label for="password">
+            <span class="prefix">password</span>
+            <input type="password" name="password" value="" />
+            <span class="suffix"><a href="/account/forgot_password">I forgot my password.</a></span>
+        </label>
+        <label for="submit">
+            <span class="prefix"></span>
+            <input type="submit" name="submit" value="Sign in" />
+            <span class="suffix">New user? <a href="/account/signup">Register here</a></span>
+        </label>
+    </form>#}
+{% endblock %}

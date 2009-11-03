@@ -1,0 +1,7 @@
+Dear {{ nickname }},
+
+Thank you for registering for the event {{ training_program_title }}.
+Your registration is now complete as we have received your payment.
+
+{{ MAIL_SIGNATURE }}
+

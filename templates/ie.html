@@ -1,0 +1,58 @@
+{% extends "base_site.html" %}
+
+{% block tag_head %}
+    <link rel="stylesheet" href="{{ MEDIA_URL }}css/ie{{ MINIFIED }}.css" type="text/css" charset="utf-8" />
+{% endblock %}
+
+{% block unsupported_browser %}
+
+{% endblock %}
+
+{% block tag_body %}
+
+    <div  class="ie-message">
+        <ul>
+            <li class="qa">
+                <h1>Oops! You seem to be using Internet Explorer 6 or earlier. Please upgrade.</h1>
+                <p>Your browser is almost a decade old or even older!</p>
+
+                <p>Our Website uses features not available in Internet Explorer 6 or earlier. We suggest you use any of these better browsers: <a href="http://getfirefox.com">Firefox</a>, <a href="http://www.apple.com/safari/">Safari</a>, <a href="http://www.opera.com">Opera</a>, and <a href="http://www.google.com/chrome">Chrome</a> to improve your Web browsing experience.  Alternatively, you can install <a href="http://www.microsoft.com/windows/internet-explorer/default.aspx">Internet Explorer 8</a>.</p>
+
+                <p>Click any of these icons to download a better browser now:</p>
+
+                <ul class="horizontal">
+                    <li><a href="http://getfirefox.com" target="_blank" alt="Firefox"><img src="{{ MEDIA_URL }}image/browser/get_firefox.png" /></a></li>
+                    <li><a href="http://www.google.com/chrome" target="_blank" alt="Chrome"><img src="{{ MEDIA_URL }}image/browser/get_chrome.png" /></a></li>
+                    <li><a href="http://www.apple.com/safari/download" target="_blank" alt="Safari"><img src="{{ MEDIA_URL }}image/browser/get_safari.png" /></a></li>
+                    <li><a href="http://www.opera.com" target="_blank" alt="Opera"><img src="{{ MEDIA_URL }}image/browser/get_opera.png" /></a></li>
+                    <li><a href="http://www.microsoft.com/windows/internet-explorer/default.aspx" target="_blank" alt="Internet Explorer"><img src="{{ MEDIA_URL }}image/browser/get_ie.png" /></a></li>
+                </ul>
+                <p>On a broadband connection, it should take roughly 3-5 minutes to upgrade to a fresh new browser.</p>
+            </li>
+            <li class="qa">
+                <h1>If you are a corporate user...</h1>
+                <p>Legacy systems that work only using Internet Explorer 6 still keep the Web from growing and evolving further.  Major companies like Google have stopped supporting Internet Explorer 6 or earlier.</p>
+                <p>Many companies have policies that do not allow people to install new software on their computers.  We think this is very short-sighted of their administrators.  You can use a <a target="_blank" href="http://portableapps.com/apps/internet/firefox_portable"><strong>portable</strong> version of Firefox</a> which does not require any installation and can be run directly without administrative privileges.</p>
+                <p>Many times administrators refuse to install new software into your computer simply because it's more work for them!  They'll give you all kinds of "technical" excuses why you shouldn't install another browser.  Don't let that happen to you.  Please try a different browser before forming a judgement.</p>
+            </li>
+            <li class="qa">
+                <h1>I am not allowed to download Windows executables (.exe).</h1>
+                <p>Well, then you are simply out of luck.  You can try convincing your management or system administrators to upgrade your systems because sooner or later they will need to anyway with newer Web technologies coming in.</p>
+            </li>
+            <li class="qa">
+                <h1>You don't lose Internet Explorer or legacy Websites by using another browser.</h1>
+                <p>Just have your administrator install a newer browser alongside Internet Explorer 6 and use Internet Explorer 6 only for those legacy Web applications.  It's that simple.</p>
+            </li>
+            <li class="qa">
+                <h1>My administrator is not convinced.</h1>
+                <p>Try asserting to your administrator: "Did you know Internet Explorer 6 is the most insecure browser on the planet?" and then watch his face go red.  They might tell you something along the lines of "If your computer gets infected with a virus, will you or will the Website maker be responsible for it?"  We'll tell you what.  Ask him whether Mac OS X or Linux has viruses.  Again, watch his face go red.</p>
+                <p>Fun? An antivirus on Windows is like an inflatable on a sinking boat.  All it needs is a pointy poke. We hope your administrator has a sense of humor.</p>
+                <p>Please spread the word.</p>
+            </li>
+        </ul>
+    </div>
+{% endblock %}
+
+{% block tag_scripts_prefix %}{% endblock %}
+{% block tag_scripts_suffix %}{% endblock %}
+

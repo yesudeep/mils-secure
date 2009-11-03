@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block tag_header_additional_content %}
+    <h1 class="title">Do you want to renew your registration for the event?</h1>
+    <h2 class="subtitle">{{ training_announcement.title }}</h2>
+
+    <form class="decorated-fields table" action="/training_announcements/{{ training_announcement_key }}/registrant/{{ registrant_key }}/register/" method="post">
+      <label for="submit">
+        <span class="prefix"></span>
+        <input type="submit" name="submit" value="&x10004; Renew my Registration" />
+        <span class="suffix"></span>
+      </label>
+    </form>
+
+{% endblock %}
+
+
+{% block tag_scripts %}
+<script type="text/javascript">
+window.scripts.push("{{ MEDIA_URL }}script/page/unregister_registrant{{ MINIFIED }}.js");
+</script>
+{% endblock %}
+

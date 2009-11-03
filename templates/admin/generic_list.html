@@ -1,0 +1,18 @@
+{% extends "admin/index.html" %}
+
+{% block tag_section_content %}
+<h1>{{ page_name }}</h1>
+<h2>{{ page_description }}</h2>
+#*<p>Find: <input type="search" name="filter" value="" /></p>*#
+
+<a class="awesome-button {{ page_name }}" rel="new" href="/api/{{ page_name }}/new">+ Add new</a>
+<div id="new-item"></div>
+<ul id="data-list" class="data-list"></ul>
+{% endblock %}
+
+{% block tag_scripts %}
+<script type="text/javascript">
+    window.scripts.push("{{ MEDIA_URL }}script/admin/{{ page_name }}{{ MINIFIED }}.js");
+</script>
+{% endblock %}
+

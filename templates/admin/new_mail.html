@@ -1,0 +1,39 @@
+{% extends "admin/new.html" %}
+
+
+{% block form_action %}/api/mails/new/{% endblock %}
+
+{% block form_additional_attributes %}enctype="multipart/form-data"{% endblock %}
+
+{% block form_fields %}
+
+  <label for="to_users">
+    <span class="prefix">to users</span>
+    <select name="to_users">
+      {% for to_users_choice in to_users_choices %}
+        <option value="{{ to_users_choice }}" {% if to_users_choice == 'all' %}selected="selected"{% endif %}>{{ to_users_choice }}</option>
+      {% endfor %}
+    </select>
+    <span class="suffix"></span>
+  </label>
+
+  <label for="to">
+    <span class="prefix">to</span>
+    <textarea name="to" rows="3" cols="40"></textarea>
+    <span class="suffix"></span>
+  </label>
+
+  <label for="subject">
+    <span class="prefix">subject</span>
+    <input type="text" name="subject" value="" />
+    <span class="suffix"></span>
+  </label>
+
+  <label for="body">
+    <span class="prefix">body</span>
+    <textarea name="body" rows="10" cols="60"></textarea>
+    <span class="suffix"></span>
+  </label>
+
+{% endblock %}
+

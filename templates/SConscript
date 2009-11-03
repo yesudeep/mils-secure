@@ -1,0 +1,82 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+Import('env')
+
+SRC_DIR = './'
+MEDIA_SRC_DIR = '../' + env['MEDIA_SRC_DIR'] + '/'
+DEST_DIR = '../' + env['TEMPLATES_DEST_DIR'] + '/'
+TEMPLATE_BUILD_DIR = './_build/'
+
+base_site_pickle = env.Pickle('base_site_vars.pkl', Value({
+    'LOADER_SCRIPT': open(MEDIA_SRC_DIR + 'script/lib/chickoojs/src/loader-min.js', 'r').read()
+}))
+env.Cheetah(TEMPLATE_BUILD_DIR + 'base_site.html', 'base_site.html.tmpl', PICKLE=base_site_pickle)
+env.Cheetah(TEMPLATE_BUILD_DIR + 'admin/base_site.html', 'base_site.html.tmpl', PICKLE=base_site_pickle)
+
+HTML_FILES = Split("""
+    profile.html
+    signup.html
+    blog.html
+    blog_students.html
+    about.html
+    activation_reminder.html
+    base.html
+    ie.html
+    index.html
+    admin/generic_list.html
+    admin/base.html
+    admin/index.html
+    admin/users.html
+    admin/edit.html
+    admin/edit_user.html
+    admin/edit_book.html
+    admin/edit_article.html
+    admin/edit_announcement.html
+    admin/new.html
+    admin/new_article.html
+    admin/new_book.html
+    admin/new_announcement.html
+    admin/new_mail.html
+    admin/edit_mail.html
+    training_announcements.html
+    training_announcement_registration.html
+    training_announcement_canceled.html
+    unregister_registrant.html
+    unregister_thanks.html
+    renew_registrant.html
+""")
+
+TEMPLATE_FILES = HTML_FILES + Split("""
+
+""")
+
+PLAIN_COPIES = Split("""
+    email/account_activation_notification.text
+    email/book_order_notification.text
+    email/thank_you_for_registering.text
+    email/training_announcement_notification.text
+    email/training_announcement_registration_notification.text
+    email/training_announcement_unregister_notification.text
+    email/training_announcement_payment_notification.text
+    email/training_announcement_confirm_payment_notification.text
+    email/training_announcement_registrations_closed.text
+    email/training_announcement_canceled_notification.text
+""")
+
+MINIFIABLE_FILES = HTML_FILES + Split("""
+    admin/base_site.html
+    base_site.html
+""")
+
+GENERAL_PICKLE = env.Pickle('general_vars.pkl', Value({}))
+for f in set(TEMPLATE_FILES):
+    env.Cheetah(TEMPLATE_BUILD_DIR + f, SRC_DIR + f, PICKLE=GENERAL_PICKLE)
+
+for f in set(PLAIN_COPIES):
+    env.Command(DEST_DIR + f, SRC_DIR + f, Copy("$TARGET", "$SOURCE"))
+
+for f in set(MINIFIABLE_FILES):
+    env.HTMLMinify(DEST_DIR + f, TEMPLATE_BUILD_DIR + f, HTML_MINIFY_INLINE=True)
+    #env.Command(DEST_DIR + f, TEMPLATE_BUILD_DIR + f, Copy("$TARGET", "$SOURCE"))
+

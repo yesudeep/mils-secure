@@ -1,0 +1,40 @@
+{% extends "base_site.html" %}
+
+{% block tag_head %}
+<link rel="stylesheet" href="{{ MEDIA_URL }}css/generic{{ MINIFIED }}.css" type="text/css" media="screen" charset="utf-8" />
+<link rel="stylesheet" href="{{ MEDIA_URL }}css/screen{{ MINIFIED }}.css" type="text/css" media="screen" charset="utf-8" />
+<link rel="stylesheet" href="{{ MEDIA_URL }}css/index{{ MINIFIED }}.css" type="text/css" media="screen" charset="utf-8" />
+{% endblock %}
+
+{% block tag_body %}
+<div id="wrapper">
+<div id="presentation"></div>
+<div id="create_account">
+    <h1 id="disclaimer">You'll need a <strong>Gmail</strong>, <strong>Yahoo!</strong>, <strong>Windows Live</strong>, <strong>Twitter</strong>, <strong>Facebook</strong>, or <strong>OpenID</strong> account to sign in.</h1>
+    <ul id="user_account">
+        <li>Don't have any? Pick one.</li>
+        <li><a href="https://www.google.com/accounts/NewAccount?service=mail&continue=http%3A%2F%2Fmail.google.com%2Fmail%2Fe-11-1615f4d92597fed26bc45d638ab7f-8a1a7bd9b9a0cc6c26bcf61c11c600b99ac8d03f&type=2" target="_blank" id="google" title="Google"></a></li>
+        <li><a href="https://edit.yahoo.com/registration?.intl=us&.pd=ym_ver%253D0%2526c%253D%2526ivt%253D%2526sg%253D&new=1&.done=http%3A//mail.yahoo.com&.src=ym&.v=0&.u=f7prkqh54o4j0&partner=&.partner=&pkg=&stepid=&.p=&promo=&.last=" target="_blank" id="yahoo" title="Yahoo!"></a></li>
+        <li><a href="https://signup.live.com/signup.aspx?fl=wld2&wa=wsignin1.0&rpsnv=10&ct=1246499579&rver=5.5.4177.0&wp=MBI&wreply=http:%2F%2Fcalendar.live.com%2F%2Fdefault.aspx%3Fmkt%3Den-ca&lc=1033&id=64362&mkt=en-ca&bk=1246499579&rollrs=12&lic=1" target="_blank" id="windows_live" title="Windows Live"></a></li>
+        <li><a href="https://twitter.com/signup" target="_blank" id="twitter" title="Twitter"></a></li>
+        <li><a href="https://www.myopenid.com/signup" target="_blank" id="open_id" title="Open Id"></a></li>
+        <li><a href="http://www.facebook.com/index.php?lh=5bde5b6e240ab97300451678af17384f&" target="_blank" id="facebook" title="Facebook"></a></li>
+    </ul>
+</div>
+<div id="rpxnow_button"><a id="come_on_in_button" class="rpxnow green button" href="https://{{ RPX_NOW_DOMAIN }}/openid/v2/signin?token_url={{ RPX_NOW_TOKEN_URL }}"><img width="202" height="55" src="{{ MEDIA_URL }}image/button/sign_in.png" alt="Sign-in" /></a></div>
+</div>
+{% endblock %}
+
+
+{% block tag_scripts %}
+#*<script src="https://rpxnow.com/openid/v2/widget" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+RPXNOW.token_url = "{{ RPX_NOW_TOKEN_URL }}";
+RPXNOW.domain = "{{ RPX_NOW_DOMAIN }}";
+RPXNOW.overlay = true;
+RPXNOW.language_preference = '{{ RPX_NOW_LANGUAGE }}';
+</script>*#<script type="text/javascript">
+window.scripts.push("{{ MEDIA_URL }}script/page/index{{ MINIFIED }}.js");
+</script>
+{% endblock %}
+

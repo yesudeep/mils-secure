@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block tag_navlinks %}
+    <li id="logout"><a href="/account/logout/">Logout</a></li>
+{% endblock %}
+
+{% block tag_header_additional_content %}
+    <h1 class="title">Administrator Activation Pending</h1>
+    <p>An administrator will activate your account after verifying that you are an MILS Alumni.  When your account is activated, you will receive a notification email.</p>
+    <p><a href="/">Return to the home page</a> (requires an active account; click log out to attempt to sign in again).</p>
+{% endblock %}
+

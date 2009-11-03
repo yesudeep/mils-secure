@@ -1,0 +1,97 @@
+{% extends "admin/edit.html" %}
+
+
+{% block form_action %}/api/announcements/{{ announcement.key() }}/edit/{% endblock %}
+
+{% block form_fields %}
+  <label for="title">
+    <span class="prefix">title</span>
+    <input type="text" name="title" value="{{ announcement.title }}" />
+    <span class="suffix"></span>
+  </label>
+
+  <label for="faculty">
+    <span class="prefix">faculty</span>
+    <input type="text" name="faculty" value="{{ announcement.faculty }}" />
+    <span class="suffix"></span>
+  </label>
+
+  <label for="venue">
+    <span class="prefix">venue</span>
+    <input type="text" name="venue" value="{{ announcement.venue }}" />
+    <span class="suffix"></span>
+  </label>
+
+  <fieldset><legend>brochure</legend>
+    <label for="brochure_url">
+      <span class="prefix">brochure url</span>
+      <input type="text" name="brochure_url" value="{{ announcement.brochure_url }}" />
+
+      <span class="suffix"><a class="preview_url" href="{{ announcement.brochure_url }}" target="_blank"><img class="preview" src="{{ announcement.brochure_url }}" /></a><a target="_blank" href="http://www.flickr.com/photos/upload/">Upload image here</a> and then paste the link in this text box.</span>
+    </label>
+  </fieldset>
+
+  <fieldset><legend>dates</legend>
+    <label for="from">
+      <span class="prefix">from date/time</span>
+      <input type="text" name="when_from" value="{{ announcement.when_from|datetimeformat('%Y-%m-%dT%H:%M:%S') }}" id="edit-when-from" />
+      <span class="suffix">The date and time of the commencement of the program.</span>
+    </label>
+
+    <label for="to">
+      <span class="prefix">to date/time</span>
+      <input type="text" name="when_to" value="{{ announcement.when_to|datetimeformat('%Y-%m-%dT%H:%M:%S') }}" id="edit-when-to" />
+      <span class="suffix">The date and time of the end of the program.</span>
+    </label>
+
+    <label for="when_payment_is_calculated">
+      <span class="prefix">payment calculation date</span>
+      <input type="text" name="when_payment_is_calculated" id="edit-when-payment-is-calculated" value="{{ announcement.when_payment_is_calculated|datetimeformat('%Y-%m-%dT%H:%M:%S') }}" class="required" />
+      <span class="suffix">Payment calculations will occur on this date and emails will be dispatched to registered nominees.</span>
+    </label>
+
+    <label for="when_registration_ends">
+      <span class="prefix">registration closure date</span>
+      <input type="text" name="when_registration_ends" value="{{ announcement.when_registration_ends|datetimeformat('%Y-%m-%dT%H:%M:%S') }}" id="edit-when-registration-ends" />
+      <span class="suffix">Registrations received after this date will receive "Thank you for your interest." message.</span>
+    </label>
+  </fieldset>
+
+  <fieldset>
+    <legend>participation</legend>
+    <label for="max_participants">
+      <span class="prefix">maximum participants</span>
+      <input type="text" name="max_participants" value="{{ announcement.max_participants }}" />
+      <span class="suffix"></span>
+    </label>
+
+    {% for fee in announcement.fees %}
+    <label for="fees_{{ loop.index }}">
+      <span class="prefix">fees</span>
+      <input type="text" name="fees_{{ loop.index }}" value="{{ fee.fee }}" />
+      for participants
+      <input type="text" name="participants_{{ loop.index }}" value="{{ fee.for_participant_count }}" />
+      <span class="suffix"></span>
+    </label>
+    {% endfor %}
+  </fieldset>
+
+{% endblock %}
+
+{% block tag_form_additional_content %}
+  <h2 id="registrants-{{ announcement.key() }}">Registrants (total: {{ announcement.total_participant_count }}, active: {{ announcement.participant_count }})</h2>
+  <ul class="sub-data-list">
+  {% for registrant in registrants %}
+    <li id="{{ registrant.key() }}" class="data-item {% if not registrant.is_active %}unapproved{% endif %} {% if registrant.is_payment_received %}approved-payment{% endif %}"><span class="title">{{ registrant.full_name }} {% if registrant.is_payment_received %}(paid){% endif %}</span> <span class="subtitle">{{ registrant.designation }}, {{ registrant.company }}</span> <span class="subtitle"><a href="mailto:{{ registrant.email }}">{{ registrant.email }}</a>, {{ registrant.phone_number }} - {{ registrant.when_created|datetimeformat('%A, %B %d, %Y - %H:%M:%S') }} UTC</span>
+    <ul class="sub-actions">
+      <li><a class="awesome-button cool" href="/api/registrants/{{ registrant.key() }}/approve/{{ announcement.key() }}" rel="approve">&#10004; Approve Attendance (sends email)</a></li>
+      <li><a class="awesome-button warm" href="/api/registrants/{{ registrant.key() }}/unapprove/{{ announcement.key() }}" rel="unapprove">&#10004; Unapprove Attendance</a></li>
+      <li><a class="awesome-button cool" href="/api/registrants/{{ registrant.key() }}/confirm_payment/{{ announcement.key() }}" rel="approve-payment">&#10004; Confirm Payment (sends email)</a></li>
+      #*<li><a class="awesome-button warm" href="/api/registrants/{{ registrant.key() }}/reverse_payment/{{ announcement.key() }}" rel="unapprove-payment">&times; Reverse Payment (sends email)</a></li>*#
+    </ul>
+    {% if registrant.why_unregister %}<h3>Why unregistered?</h3><p>{{ registrant.why_unregister }}</p>{% endif %}
+    </li>
+  {% endfor %}
+  </ul>
+{% endblock %}
+

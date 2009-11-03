@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+
+{% block tag_additional_stylesheets %}
+        <link rel="stylesheet" href="{{ MEDIA_URL }}css/articles-min.css" type="text/css" media="screen" charset="utf-8" />
+{% endblock %}
+
+{% block tag_header_additional_content %}
+    <h1 class="title">Meet. Belong. Collaborate.</h1>
+    <h2 class="subtitle">Time for some coffee with old friends.</h2>
+{% endblock %}
+
+{% block tag_trunk_content %}
+    <ul id="articles" class="articles">
+      {% if not articles %}
+        <li class="article">
+          <span class="date">{{ today|datetimeformat('%B %d') }}</span>
+          <h1 class="title">Hmm.</h1>
+          <h2 class="authorline"></h2>
+          <div class="article-content">
+          No articles for this month.  Please choose a different month.
+          </div>
+        </li>
+      {% endif %}
+      {% for article in articles %}
+        <li class="article">
+          <span class="date">{{ article.when_published|datetimeformat('%B %d') }}</span>
+          <h1 class="title"><a href="/article/{{ article.when_published|datetimeformat('%Y/%m/%d') }}/{{ article.slug_title }}">{{ article.title }}</a></h1>
+          <h2 class="authorline">{{ article.author.nickname() }}</h2>
+          <div class="article-content">{{ article.content_html }}</div>
+        </li>
+      {% endfor %}
+    </ul>
+    <ul id="sidebar">
+        <li id="archives">
+            <h1>archives</h1>
+            <form id="form_blog_archives" method="get">
+                <select name="year">
+                    {% for year in year_list %}
+                    <option value="{{ year }}" {% if year == requested_year %}selected="selected"{% endif %}>{{ year }}</option>
+                    {% endfor %}
+                </select>
+                <select name="month">
+                    {% for month in month_list %}
+                        <option value="{{ loop.index }}" {% if loop.index == requested_month %}selected="selected"{% endif %}>{{ month }}</option>
+                    {% endfor %}
+                </select>
+                <input type="submit" name="go" value="Go" />
+            </form>
+        </li>
+        <li id="bookers_corner">
+            <h1>booker's corner</h1>
+            <p>Here's what we think you should be reading.</p>
+            <ul class="book-list">
+            </ul>
+            #*<p><a href="#books_more_details" rel="#books_overlay" class="green button">More Details</a></p>*#
+        </li>
+    </ul>
+
+    <div id="books_overlay" class="overlay">
+    </div>
+    <div id="books_tooltip" class="tooltip">
+    </div>
+{% endblock %}
+
+{% block tag_scripts %}
+    <script>
+        window.scripts.push(
+            "{{ MEDIA_URL }}script/page/blog{{ MINIFIED }}.js"
+        );
+    </script>
+{% endblock %}
+

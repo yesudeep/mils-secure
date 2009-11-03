@@ -1,0 +1,60 @@
+{% extends "admin/base.html" %}
+
+{% block tag_header_content %}
+    <ul>
+        <li><a href="/admin/logout">Logout</a></li>
+    </ul>
+
+    <div id="notification">
+      <h1 id="notification-title">Saving information</h1>
+      <div id="notification-content">
+        <p>Please wait while we synchronize information with the servers...</p>
+      </div>
+    </div>
+{% endblock %}
+
+
+{% block tag_nav_content %}
+    <ul>
+        #*<li><a {% if page_name == 'dashboard' %}class="active"{% endif %} id="nav_dashboard" href="/admin/">Dashboard</a></li>*#
+        <li><a {% if page_name == 'users' %}class="active"{% endif %} id="nav_users" href="/admin/users/">Users</a></li>
+        <li><a {% if page_name == 'articles' %}class="active"{% endif %} id="nav_articles" href="/admin/articles/">Blog Articles</a></li>
+        <li><a {% if page_name == 'books' %}class="active"{% endif %} id="nav_books" href="/admin/books/">Books</a></li>
+        <li><a {% if page_name == 'announcements' %}class="active"{% endif %} id="nav_announcements" href="/admin/announcements/">Event Announcements</a></li>
+        <li><a {% if page_name == 'mails' %}class="active"{% endif %} id="nav_mails" href="/admin/mails/">Mails</a></li>
+    </ul>
+{% endblock %}
+
+{% block tag_section_content %}
+<ul id="dashboard" class="columns">
+    <li>
+        <h1>Recent users</h1>
+        <ul>
+            <li>Adwaya Bidwe</li>
+            <li>Whoever Whatever</li>
+        </ul>
+        <p><a href="/admin/users/" class="awesome-button">More users &raquo;</a></p>
+    </li>
+    <li>
+        <h1>Latest Comments</h1>
+        <ul class="comments">
+            <li>
+                <blockquote>A man should look for what is, and not for what he thinks should be.</blockquote>
+                <p class="author">Albert Einstein, <em>8 minutes ago</em></p>
+            </li>
+            <li>
+                <blockquote>A comfortable old age is the reward of a well-spent youth. Instead of its bringing sad and melancholy prospects of decay, it would give us hopes of eternal youth in a better world.</blockquote>
+                <p class="author">Maurice Chevalier, <em>1 day ago</em></p>
+            </li>
+        </ul>
+        <p><a href="/admin/comments/" class="awesome-button">More comments &raquo;</a></p>
+    </li>
+</ul>
+{% endblock %}
+
+{% block tag_scripts %}
+<script type="text/javascript">
+window.scripts.push("{{ MEDIA_URL }}script/admin{{ MINIFIED }}.js");
+</script>
+{% endblock %}
+

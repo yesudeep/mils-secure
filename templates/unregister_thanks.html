@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block tag_header_additional_content %}
+    <h1 class="title">Thank you for your interest.</h1>
+    #*<h2 class="subtitle">You have been successfully unregistered from the event: {{ training_announcement.title }}</h2>*#
+    <p>You have been successfully unregistered from the event: {{ training_announcement.title }}.  Please give us 24 hours to process your request.</p>
+{% endblock %}
+
+{% block tag_scripts %}
+<script type="text/javascript">
+setTimeout(function(){
+  window.top.location = '/';
+}, 12000);
+</script>
+{% endblock %}
+

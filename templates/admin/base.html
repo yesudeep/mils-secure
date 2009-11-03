@@ -1,0 +1,65 @@
+{% extends "admin/base_site.html" %}
+
+{% block tag_head %}
+#*<link rel="stylesheet" type="text/css" media="screen" charset="utf-8" href="{{ MEDIA_URL }}script/lib/chickoojs/src/blackbirdjs/blackbird{{ MINIFIED }}.css" />*#
+    {% block tag_stylesheets %}
+    #*<link rel="stylesheet" type="text/css" media="screen" charset="utf-8" href="{{ MEDIA_URL }}css/generic{{ MINIFIED }}.css" />
+    <link rel="stylesheet" type="text/css" media="screen" charset="utf-8" href="{{ MEDIA_URL }}css/articles{{ MINIFIED }}.css" />*#
+    <link rel="stylesheet" type="text/css" media="screen" charset="utf-8" href="{{ MEDIA_URL }}css/admin-all{{ MINIFIED }}.css" />
+    {% endblock %}
+	{% block tag_additional_stylesheets %}{% endblock %}
+{% endblock %}
+
+{% block tag_body %}
+    {% block tag_header %}
+    <header>
+        {% block tag_header_content %}
+        {% endblock %}
+        {% block tag_header_additional_content %}
+        {% endblock %}
+    </header>
+    {% endblock %}
+    {% block tag_nav %}
+    <nav>
+        {% block tag_nav_content %}
+
+        {% endblock %}
+    </nav>
+    {% endblock %}
+    {% block tag_section %}
+    <section id="trunk">
+        <div id="trunk_content">
+        {% block tag_section_content %}
+        {% endblock %}
+        </div>
+    </section>
+    {% endblock %}
+    {% block tag_footer %}
+    <footer>
+        {% block tag_footer_content %}
+        {% endblock %}
+        <nav>
+            <ul>
+                <li>Copyright &copy; 2009 happychickoo.</li>
+                <li><a href="/">Home</a></li>
+                <li><a href="/blog">Blog</a></li>
+                <li><a href="/admin/">Admin</a></li>
+                <li><a href="mailto:support@happychickoo.com">Report a Problem</a></li>
+            </ul>
+        </nav>
+    </footer>
+    {% endblock %}
+{% endblock %}
+
+
+{% block tag_scripts_base %}
+<script type="text/javascript">
+window.scripts.push(
+//"{{ MEDIA_URL }}script/lib/chickoojs/src/blackbirdjs/blackbird{{ MINIFIED }}.js",
+"{{ MEDIA_URL }}script/lib/admin-common{{ MINIFIED }}.js"
+);
+</script>
+{% endblock %}
+
+{% block tag_scripts_analytics %}{% endblock %}
+

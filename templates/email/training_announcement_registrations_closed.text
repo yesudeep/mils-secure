@@ -1,0 +1,9 @@
+Dear {{ nickname }},
+
+Registrations for the event {{ training_program.title }} are now closed.
+
+Venue:
+Whatever other details that are wanted.
+
+{{ MAIL_SIGNATURE }}
+

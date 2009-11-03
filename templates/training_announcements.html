@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+
+{% block tag_header_additional_content %}
+    <h1 class="title">Participate.</h1>
+    <h2 class="subtitle">Training announcements for this month.</h2>
+{% endblock %}
+
+{% block tag_trunk_content %}
+  <div id="training_announcements">
+    {% for training_announcement in training_announcements %}
+      <h1>{{ training_announcement.title }}</h1>
+      <div class="info">
+        <table border="0" cellspacing="0" cellpadding="0">
+          <thead>
+            <tr>
+              <th>Faculty</th>
+              <th>Venue</th>
+              <th>From</th>
+              <th>To</th>
+              <th>Registration Closes</th>
+              <th>Fee Structure</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>{{ training_announcement.faculty }}</td>
+              <td>{{ training_announcement.venue }}</td>
+              <td>{{ training_announcement.when_from|datetimeformat('%Y, %b %d, %H:%M') }}</td>
+              <td>{{ training_announcement.when_to|datetimeformat('%Y, %b %d, %H:%M') }}</td>
+              <td>{{ training_announcement.when_registration_ends|datetimeformat('%Y, %b %d') }}</td>
+              <td>
+                  <ul>
+                  {% for fee in training_announcement.fees %}
+                    <li>{{ fee.fee }} for {{ fee.for_participant_count }} participants</li>
+                  {% endfor %}
+                  </ul>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <p><img src="{{ training_announcement.brochure_url }}" /></p>
+        <p><a class="awesome-button large ice-cool" href="/announcement/{{ training_announcement.key() }}/register/">Register for the Event</a></p>
+
+        <h2>Who has registered already?</h2>
+        <ul>
+          {% for registrant in training_announcement.registrants %}
+          {% if registrant.is_active %}
+          <li>{{ registrant.full_name }} ({{ registrant.designation }}, {{ registrant.company }})</li>
+          {% endif %}
+          {% endfor %}
+        </ul>
+      </div>
+    {% endfor %}
+  </div>
+{% endblock %}
+
+
+{% block tag_scripts %}
+  <script type="text/javascript">
+    window.scripts.push(
+      "{{ MEDIA_URL }}script/page/training_announcements{{ MINIFIED }}.js"
+    );
+  </script>
+{% endblock %}
+

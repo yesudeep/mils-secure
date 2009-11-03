@@ -1,0 +1,15 @@
+Dear {{ nickname }},
+
+Thank you for registering for the event {{ training_program_title }}.
+Here are the payment details you will need to complete your registration
+for the event.
+
+{{ payment_details }}
+
+If you wish to cancel your registration at any stage, please
+click the following URL:
+
+    {{ unregister_url }}
+
+{{ MAIL_SIGNATURE }}
+
