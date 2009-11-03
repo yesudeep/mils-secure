@@ -1,0 +1,303 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+Import('env')
+
+from util import match_patterns, minifiables, filter_files
+from fnmatch import fnmatch
+from os.path import basename
+from filesystem import walk_dir
+
+SRC_DIR = './'
+DEST_DIR = '../' + env['MEDIA_DEST_DIR'] + '/'
+
+SCRIPT_FILES = Split("""
+    script/flash.presentation.js
+    script/presentation.js
+    script/signup.js
+    script/blog.js
+    script/main.js
+    script/admin.js
+    script/admin/mails.js
+    script/admin/users.js
+    script/admin/books.js
+    script/admin/articles.js
+    script/admin/announcements.js
+    script/admin/common.js
+    script/training_announcements.js
+    script/training_announcement_registration.js
+    script/unregister_registrant.js
+    script/lib/chickoojs/src/jquery/jquery-1.3.2.js
+    script/lib/chickoojs/src/load.js
+    script/lib/chickoojs/src/loader.js
+    script/lib/chickoojs/src/json2.js
+    script/lib/chickoojs/src/jquery/tools/1.1.1/tools.flashembed-1.0.4.js
+    script/lib/chickoojs/src/jquery/tools/1.1.1/tools.tabs-1.0.3.js
+    script/lib/chickoojs/src/jquery/tools/1.1.1/tools.overlay-1.1.1.js
+    script/lib/chickoojs/src/jquery/tools/1.1.1/tools.expose-1.0.5.js
+    script/lib/chickoojs/src/jquery/validate/jquery.validate.js
+    script/lib/chickoojs/src/jquery/validate/jquery.validate.extra.js
+    script/lib/chickoojs/src/jquery/template/jquery.template.js
+    script/lib/chickoojs/src/jquery/tools/jquery.tools.min.js
+    script/lib/chickoojs/src/jquery/form/jquery.form.js
+    script/lib/chickoojs/src/jquery/metadata/jquery.metadata.js
+    script/lib/chickoojs/src/titleCaps.js
+    script/lib/chickoojs/src/memcache.js
+    script/lib/chickoojs/src/prettyDate.js
+    script/lib/chickoojs/src/isbnjs/isbn.js
+    script/lib/chickoojs/src/datejs/build/date.js
+    script/lib/chickoojs/src/logger.js
+    script/lib/chickoojs/src/blackbirdjs/blackbird.js
+    script/lib/chickoojs/src/showdown/src/showdown.js
+    script/lib/chickoojs/src/rightjs-ext/json-rpc.js
+    script/lib/rightjs/core/right-src.js
+    script/lib/rightjs/ui/right-calendar-src.js
+    script/lib/rightjs/ui/right-tooltips-src.js
+    script/lib/rightjs/ui/right-lightbox-src.js
+    script/lib/chickoojs/src/jquery/defer/jquery.defer.js
+    script/lib/chickoojs/src/jquery/liveFilter/jquery.liveFilter.js
+""")
+
+IMAGE_FILES = Split("""
+    image/background/button.png
+    image/background/rpx_overlay.png
+    image/background/popup_bg.png
+    image/background/mils_building.jpg
+    image/logo/text_en_US.png
+    image/background/textfield_normal.png
+    image/background/textfield_readonly.png
+    image/spinner.gif
+    image/loader.gif
+    image/icon/star.png
+    image/icon/blog.png
+    image/icon/announcement.png
+    image/icon/nostalgia.png
+    image/button/logout.png
+    image/icon/logout.png
+    image/icon/user_account.png
+    image/button/buy_now.png
+    image/button/place_an_order.png
+    image/button/sign_in.png
+    image/browser/get_firefox.png
+    image/browser/get_chrome.png
+    image/browser/get_opera.png
+    image/browser/get_ie.png
+    image/browser/get_safari.png
+    image/logo/mils_alumni.png
+    image/icon/favicon.png
+    image/icon/about.png
+    image/icon/blog.png
+    image/icon/student.png
+    image/icon/nostalgia.png
+    image/icon/announcement.png
+    image/icon/logout.png
+    image/background/button_overlay.png
+    image/about/1.jpg
+    image/about/2.jpg
+    image/about/3.jpg
+    image/about/4.jpg
+    image/about/5.jpg
+
+    script/lib/chickoojs/src/blackbirdjs/blackbird_icons.png
+    script/lib/chickoojs/src/blackbirdjs/blackbird_panel.png
+    script/lib/chickoojs/src/jquery/tools/overlay/white.png
+    script/lib/chickoojs/src/jquery/tools/overlay/close.png
+""")
+
+CSS_FILES = Split("""
+    css/clearfix.css
+    css/generic.css
+    css/reset.css
+    css/index.css
+    css/screen.css
+    css/articles.css
+    css/admin.css
+    css/ie.css
+
+    script/lib/chickoojs/src/blackbirdjs/blackbird.css
+""")
+
+# Do not include IMAGE files in here.
+# Please include them in IMAGE_FILES above.
+# If you would like images to be copied "as is" without
+# any optimizations, then you may include them here.
+PLAIN_COPIES = SCRIPT_FILES + CSS_FILES + Split("""
+    robots.txt
+""")
+
+PLAIN_COPY_DIRECTORIES = Split("""
+
+""")
+
+# Recursively add all the files in the directories to files to copy.
+for directory in set(PLAIN_COPY_DIRECTORIES):
+    files = [f[len(SRC_DIR):] for f in walk_dir(SRC_DIR + directory)]
+    PLAIN_COPIES.extend(files)
+
+# Plain copies.
+for f in set(PLAIN_COPIES):
+    env.Command(DEST_DIR + f, SRC_DIR + f, Copy("$TARGET", "$SOURCE"))
+
+# Optimize graphics
+# This isn't working at the moment.
+#for f in filter_files(IMAGE_FILES, allow_patterns=['*.png']):
+#    env.OptimizePNG(DEST_DIR + f, SRC_DIR + f)
+#for f in filter_files(IMAGE_FILES, allow_patterns=['*.jpg, *.jpeg']):
+#    env.OptimizeJPEG(DEST_DIR + f, SRC_DIR + f)
+for f in IMAGE_FILES:
+    filename = str(f)
+    if match_patterns(filename, patterns=['*.png']):
+        env.OptimizePNG(DEST_DIR + f, SRC_DIR + f)
+    elif match_patterns(filename, patterns=['*.jpg', '*.jpeg']):
+        env.OptimizeJPEG(DEST_DIR + f, SRC_DIR + f)
+    else:
+        env.Command(DEST_DIR + f, SRC_DIR + f, Copy("$TARGET", "$SOURCE"))
+
+# Stitching graphics together
+#STITCH_GROUP_NAVBAR = Split("""
+
+#""")
+#stitched_navbar = DEST_DIR + 'image/icon/navbar.png'
+#STITCH_GROUP_NAVBAR = [SRC_DIR + f for f in STITCH_GROUP_NAVBAR]
+#env.HStitchImages(stitched_navbar, STITCH_GROUP_NAVBAR)
+
+# Minification of the generated CSS and JS files.
+MINIFIABLE_FILES = SCRIPT_FILES + CSS_FILES + Split("""
+
+""")
+
+# Exclude these files specifically from minification.
+NON_MINIFIABLE_FILES = Split("""
+
+""")
+
+
+# Don't minify all files in one command.  Minify them separately.
+# It keeps build times small.
+for f in minifiables(MINIFIABLE_FILES, NON_MINIFIABLE_FILES):
+    filepath = DEST_DIR + str(f)
+    env.YuiCompressorMinify(filepath)
+    #if fnmatch(basename(filepath), '*.js'):
+    #    env.JsminMinify(filepath)
+
+# Combine these JavaScript files and create a common js.
+#
+# Warning:  THE ORDER MATTERS.
+#
+PAGE_INDEX_JS_FILES =  Split("""
+    script/lib/chickoojs/src/jquery/tools/1.1.1/tools.flashembed-1.0.4.js
+    script/flash.presentation.js
+    script/jquery.innerfade.js
+    """)
+PAGE_INDEX_JS_FILES = [SRC_DIR + f for f in PAGE_INDEX_JS_FILES]
+page_index_js = env.Concatenate([DEST_DIR + 'script/page/index.js'], PAGE_INDEX_JS_FILES)
+env.YuiCompressorMinify(page_index_js)
+#env.JsminMinify(lib_signup_js)
+
+PAGE_ABOUT_JS_FILES =  Split("""
+    script/jquery.innerfade.js
+    script/about.js
+    """)
+PAGE_ABOUT_JS_FILES = [SRC_DIR + f for f in PAGE_ABOUT_JS_FILES]
+page_about_js = env.Concatenate([DEST_DIR + 'script/page/about.js'], PAGE_ABOUT_JS_FILES)
+env.YuiCompressorMinify(page_about_js)
+#env.JsminMinify(lib_signup_js)
+
+PAGE_BLOG_JS_FILES =  Split("""
+    script/lib/chickoojs/src/jquery/tools/1.1.1/tools.overlay-1.1.1.js
+    script/lib/chickoojs/src/jquery/tools/1.1.1/tools.expose-1.0.5.js
+    script/blog.js
+    """)
+PAGE_BLOG_JS_FILES = [SRC_DIR + f for f in PAGE_BLOG_JS_FILES]
+page_blog_js = env.Concatenate([DEST_DIR + 'script/page/blog.js'], PAGE_BLOG_JS_FILES)
+env.YuiCompressorMinify(page_blog_js)
+#env.JsminMinify(lib_blog_js)
+
+LIB_SIGNUP_JS_FILES =  Split("""
+    script/lib/chickoojs/src/jquery/form/jquery.form.js
+    script/lib/chickoojs/src/jquery/metadata/jquery.metadata.js
+    script/lib/chickoojs/src/jquery/validate/jquery.validate.js
+    script/lib/chickoojs/src/jquery/validate/jquery.validate.extra.js
+    script/lib/chickoojs/src/jquery/alphanumeric/jquery.alphanumeric.js
+    script/lib/chickoojs/src/titleCaps.js
+    script/forms.js
+    script/signup.js
+    """)
+LIB_SIGNUP_JS_FILES = [SRC_DIR + f for f in LIB_SIGNUP_JS_FILES]
+lib_signup_js = env.Concatenate([DEST_DIR + 'script/page/signup.js'], LIB_SIGNUP_JS_FILES)
+env.YuiCompressorMinify(lib_signup_js)
+#env.JsminMinify(lib_signup_js)
+
+PAGE_TRAINING_ANNOUNCEMENTS_JS_FILES =  Split("""
+    script/lib/chickoojs/src/jquery/form/jquery.form.js
+    script/lib/chickoojs/src/jquery/metadata/jquery.metadata.js
+    script/lib/chickoojs/src/jquery/validate/jquery.validate.js
+    script/lib/chickoojs/src/jquery/tools/1.1.1/tools.tabs-1.0.3.js
+    script/training_announcements.js
+    """)
+PAGE_TRAINING_ANNOUNCEMENTS_JS_FILES = [SRC_DIR + f for f in PAGE_TRAINING_ANNOUNCEMENTS_JS_FILES]
+page_training_announcements_js = env.Concatenate([DEST_DIR + 'script/page/training_announcements.js'], PAGE_TRAINING_ANNOUNCEMENTS_JS_FILES)
+env.YuiCompressorMinify(page_training_announcements_js)
+
+
+PAGE_UNREGISTER_REGISTRANT_JS_FILES =  Split("""
+    script/lib/chickoojs/src/jquery/form/jquery.form.js
+    script/lib/chickoojs/src/jquery/metadata/jquery.metadata.js
+    script/lib/chickoojs/src/jquery/validate/jquery.validate.js
+    script/unregister_registrant.js
+    """)
+PAGE_UNREGISTER_REGISTRANT_JS_FILES = [SRC_DIR + f for f in PAGE_UNREGISTER_REGISTRANT_JS_FILES]
+page_unregister_registrant_js = env.Concatenate([DEST_DIR + 'script/page/unregister_registrant.js'], PAGE_UNREGISTER_REGISTRANT_JS_FILES)
+env.YuiCompressorMinify(page_unregister_registrant_js)
+
+training_announcement_registration_JS_FILES =  Split("""
+    script/lib/chickoojs/src/jquery/form/jquery.form.js
+    script/lib/chickoojs/src/jquery/metadata/jquery.metadata.js
+    script/lib/chickoojs/src/jquery/validate/jquery.validate.js
+    script/lib/chickoojs/src/jquery/validate/jquery.validate.extra.js
+    script/lib/chickoojs/src/jquery/alphanumeric/jquery.alphanumeric.js
+    script/lib/chickoojs/src/titleCaps.js
+    script/forms.js
+    script/training_announcement_registration.js
+""")
+training_announcement_registration_JS_FILES = [SRC_DIR + f for f in training_announcement_registration_JS_FILES]
+page_training_announcement_registration_js = env.Concatenate([DEST_DIR + 'script/page/training_announcement_registration.js'], training_announcement_registration_JS_FILES)
+env.YuiCompressorMinify(page_training_announcement_registration_js)
+#env.JsminMinify(page_training_announcement_registration_js)
+
+
+LIB_ADMIN_COMMON_JS_FILES =  Split("""
+    script/lib/chickoojs/src/json2.js
+    script/lib/rightjs/core/right-src.js
+    script/lib/rightjs/ui/right-calendar-src.js
+    script/lib/rightjs/ui/right-tooltips-src.js
+    script/lib/rightjs/ui/right-lightbox-src.js
+    script/lib/chickoojs/src/jquery/form/jquery.form.js
+    script/lib/chickoojs/src/jquery/metadata/jquery.metadata.js
+    script/lib/chickoojs/src/jquery/defer/jquery.defer.js
+    script/lib/chickoojs/src/jquery/liveFilter/jquery.liveFilter.js
+    script/lib/chickoojs/src/isbnjs/isbn.js
+    script/lib/chickoojs/src/jquery/validate/jquery.validate.js
+    script/lib/chickoojs/src/jquery/validate/jquery.validate.extra.js
+    script/admin/common.js
+    """)
+LIB_ADMIN_COMMON_JS_FILES = [SRC_DIR + f for f in LIB_ADMIN_COMMON_JS_FILES]
+lib_admin_common_js = env.Concatenate([DEST_DIR + 'script/lib/admin-common.js'], LIB_ADMIN_COMMON_JS_FILES)
+env.YuiCompressorMinify(lib_admin_common_js)
+
+admin_all_css_files =  Split("""
+    css/generic.css
+    css/admin.css
+    """)
+admin_all_css_files = [SRC_DIR + f for f in admin_all_css_files]
+admin_all_css = env.Concatenate([DEST_DIR + 'css/admin-all.css'], admin_all_css_files)
+env.YuiCompressorMinify(admin_all_css)
+
+
+
+# Include licenses.
+#c3 = env.Concatenate([DEST_DIR + 'script/lib/all-min.js'], [
+#    DEST_DIR + 'script/LICENSES',
+#    DEST_DIR + 'script/lib/all_o-min.js',
+#])
+

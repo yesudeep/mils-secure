@@ -1,0 +1,7 @@
+/* Add .clearfix to container block element to clear both floats. */
+.clearfix:after{content:".";display:block;height:0;clear: both;visibility: hidden;}
+.clearfix{display:inline-table;}
+/* backslash hack hides from IE mac \*/
+* html .clearfix{height:1%;}
+.clearfix{display:block;}
+/* end backslash hack */

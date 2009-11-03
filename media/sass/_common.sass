@@ -1,0 +1,309 @@
+!color_awesome_green = #91bd09
+!color_awesome_green_dark = #749a02
+!color_awesome_green_1 = #719600
+!color_awesome_green_1_dark = #5d7b00
+!color_awesome_green_2 = #a7de00
+!color_awesome_green_2_dark = #93c300
+!color_awesome_leaf_green = #00a064
+!color_awesome_leaf_green_dark = #00893d
+!color_awesome_blue = #2daebf
+!color_awesome_blue_dark = #007d9a
+!color_awesome_red = #e33100
+!color_awesome_red_dark = #872300
+!color_awesome_magenta = #a9014b
+!color_awesome_magenta_dark = #630030
+!color_awesome_orange = #ff5c00
+!color_awesome_orange_dark = #d45500
+!color_awesome_yellow = #ffb515
+!color_awesome_yellow_dark = #fc9200
+!color_awesome_gray_dark = #6b6b6b
+!color_awesome_silver = #cccccc
+!color_awesome_gray = #c3c3c3
+!color_awesome_white = #ffffff
+!color_awesome_black = #222
+!color_awesome_black_dark = #111
+
+!font_stack_georgia = "Georgia", "Constantia", "Lucida Bright", "Lucidabright", "Lucida Serif", "Lucida", "DejaVu Serif," "Bitstream Vera Serif", "Liberation Serif", "serif"
+!font_stack_times = "Cambria", "Hoefler Text", "Utopia", "Liberation Serif", "Nimbus Roman No9 L Regular", "Times", "Times New Roman", "serif"
+!font_stack_garamond = "Gentium", "Palatino Linotype", "Palatino", "Palladio", "URW Palladio L", "Book Antiqua", "Baskerville", "Bookman Old Style", "Bitstream Charter", "Nimbus Roman No9 L", "Garamond", "Apple Garamond", "ITC Garamond Narrow", "New Century Schoolbook", "Century Schoolbook", "Century Schoolbook L", "Georgia", "serif"
+!font_stack_helvetica = "Helvetica Neue", "Helvetica", "Frutiger", "Frutiger Linotype", "Univers", "Gill Sans", "Gill Sans MT", "Myriad Pro", "Myriad", "DejaVu Sans Condensed", "Liberation Sans", "Nimbus Sans L", "Calibri", "Tahoma", "Geneva", "Arial", "sans-serif"
+!font_stack_verdana = "Lucida Grande", "Corbel", "Lucida Sans Unicode", "Lucida Sans", "DejaVu Sans", "Bitstream Vera Sans", "Liberation Sans", "Verdana", "Verdana Ref", "sans-serif"
+!font_stack_trebuchet = "Segoe UI", "Candara", "Bitstream Vera Sans", "DejaVu Sans", "Bitstream Vera Sans", "Trebuchet MS", "Verdana", "Verdana Ref", "sans-serif"
+!font_stack_impact = "Impact", "Haettenschweiler", "Franklin Gothic Bold", "Charcoal", "Helvetica Inserat", "Bitstream Vera Sans Bold", "Arial Black", "sans-serif"
+!font_stack_monospace = "Consolas", "Andale Mono WT", "Andale Mono", "Lucida Console", "Lucida Sans Typewriter", "DejaVu Sans Mono", "Bitstream Vera Sans Mono", "Liberation Mono", "Nimbus Mono L", "Monaco", "Courier New", "Courier", "monospace"
+
+//!font_sans_serif = "Lucida Grande","Helvetica Neue Light", "Helvetica", "Arial", "FreeSans", "sans-serif"
+!font_sans_serif = !font_stack_verdana
+!font_serif = "Georgia", "Gentium", "serif"
+!tab_border_radius = 10px
+
+!image_button_overlay = url("../image/background/button_overlay.png")
+
+// Border radius mixins to ease repeating proprietary extensions.
+=border-radius(!radius)
+    -moz-border-radius= !radius
+    -webkit-border-radius= !radius
+
+=border-top-right-radius(!radius)
+    -moz-border-radius-topright= !radius
+    -webkit-border-top-right-radius= !radius
+
+=border-top-left-radius(!radius)
+    -moz-border-radius-topleft= !radius
+    -webkit-border-top-left-radius= !radius
+
+=border-bottom-left-radius(!radius)
+    -moz-border-radius-bottomleft= !radius
+    -webkit-border-bottom-left-radius= !radius
+
+=border-bottom-right-radius(!radius)
+    -moz-border-radius-bottomright= !radius
+    -webkit-border-bottom-right-radius= !radius
+
+=box-shadow(!value)
+    -moz-box-shadow= !value
+    -webkit-box-shadow= !value
+
+// http://foohack.com/2007/11/cross-browser-support-for-inline-block-styling/
+=display-inline-block()
+    :display -moz-inline-block
+    :display inline-block
+    *display: inline
+    :zoom 1
+
+=awesome-stuff(!background_color=#222, !padding=8px 10px)
+    :background= !background_color !image_button_overlay
+    :text-shadow 0 1px 1px rgba(0, 0, 0, .4)
+    :text-decoration none
+    :padding= !padding
+    :cursor pointer
+    :font-family= !font_sans_serif
+    :font-weight bold
+    :line-height 1
+    :color white
+    +display-inline-block()
+
+=awesome-button(!background_color=#222, !padding=5px 10px, !radius=5px)
+    +awesome-stuff(!background_color, !padding)
+    //+box-shadow(0 1px 3px "rgba(0, 0, 0, 0.5)")
+    :border 0
+    :border-bottom 1px solid rgba(0, 0, 0, .4)
+    +border-radius(!radius)
+    :font-size 0.8em
+
+=awesome-top-tab(!background_color=#222, !padding=8px 10px, !radius=10px)
+    +awesome-stuff(!background_color, !padding)
+    +border-top-left-radius(!radius)
+    +border-top-right-radius(!radius)
+
+=accordion-magic()
+    >li
+        >h1:before
+            :content ''
+=accordion-styles()
+    :margin-top 10px
+    :margin-bottom 10px
+    >li:nth-child(2n)
+        :background-color #efefef
+    >li:nth-child(2n):hover, > li.active:nth-child(2n)
+        :background-color white
+    >li
+        // We're setting least margin here to avoid usability issues.
+        // Negative margin creates a "depth" overlapping effect.
+        :margin-top 0px
+        :background-color white
+        :cursor default
+        //:border-top 1px solid #efefef
+        +border-radius(10px)
+        :border 1px solid #efefef
+        //+box-shadow(0px 0px 4px rgba(0, 0, 0, 0.4))
+        > div
+            :padding 10px 10px 20px 10px
+            :min-height 150px
+        > h1
+            :border 0
+            :font-family= !font_stack_trebuchet
+            :font-size 0.9em
+            :font-weight normal
+            :padding 8px
+            :cursor pointer
+            :color black
+            //:text-shadow 0 1px 1px rgba(255, 255, 255, 0.9)
+            +border-radius(10px)
+            > span.actions
+                :font-size 0.7em
+            > span.title
+                :color black
+            > span.tags
+                :display inline
+                :margin-left 15px
+                > a
+                    :font-weight bold
+                    :font-family= !font_stack_verdana
+                    :text-shadow 0px -1px 1px rgba(0, 0, 0, 0.5)
+                    :background-color #ccc
+                    :color white
+                    :font-weight bold
+                    :font-size 0.7em
+                    :padding 2px 8px
+                    :margin-left 5px
+                    +border-radius(10px)
+                    +display-inline-block
+
+        // Behavior
+        > h1
+            > span.tags
+                > a
+                    :display none
+            > span.actions
+                :display none
+                > a
+                    +display-inline-block
+                > a[rel="delete"]
+                    +display-inline-block
+                > a[rel="undelete"]
+                    :display none
+                > a[rel="approve"]
+                    :display none
+                > a[rel="unapprove"]
+                    +display-inline-block
+        > h1.deleted
+            > span.title
+                :text-decoration line-through
+                :font-style italic
+                :color #999
+            > span.actions
+                > a[rel="delete"]
+                    :display none
+                > a[rel="undelete"]
+                    +display-inline-block
+        //> h1.canceled
+            > span.title
+                :text-decoration line-through
+                :font-style italic
+                :color #999
+            > span.actions
+                > a[rel="cancel-announcement"]
+                    :display none
+        > h1.starred
+            > span.tags
+                > a[href="#starred"]
+                    :background-color= !color_awesome_red
+                    +display-inline-block
+        > h1.unapproved
+            > span.tags
+                > a[href="#unapproved"]
+                    :background-color= !color_awesome_green
+                    +display-inline-block
+            > span.actions
+                > a[rel="approve"]
+                    +display-inline-block
+                > a[rel="unapprove"]
+                    :display none
+
+    >li:hover, > li.active
+        //:border-top 0px
+        :border 1px solid !color_awesome_magenta
+        > h1
+            :font-family= !font_stack_trebuchet
+            :font-weight bold
+            //:background= !color_awesome_magenta !image_button_overlay "repeat-x scroll 0 0"
+            :background-color= !color_awesome_magenta
+            :color white
+            //:text-shadow 0 1px 1px rgba(0, 0, 0, 0.4)
+            :font-size 1.4em
+            > span.title
+                :color white
+            > span.tags
+                :display none
+            > span.actions
+                :margin-top 15px
+                :font-size 0.7em
+                :display block
+    >li.active
+        >h1
+            +border-bottom-left-radius(0px)
+            +border-bottom-right-radius(0px)
+
+=accordion-behavior()
+    >li
+        >div
+            :display none
+    //>li:hover, >li.active
+    >li.active
+        >div
+            :display block
+
+=accordion()
+    +accordion-behavior
+    +accordion-styles
+    +accordion-magic
+
+=image-link(!width, !height, !background)
+    :display block
+    :background= !background
+    :width= !width
+    :height= !height
+
+=transition(!value)
+    -webkit-transition= !value
+
+=opacity(!value)
+    :filter= "alpha(opacity=" !value * 100 ")"
+    :-moz-opacity= !value
+    :-html-opacity= !value
+    :opacity= !value
+
+=min-height(!value)
+    :min-height= !value
+    :height "auto !important"
+    :height= !value
+
+a.awesome-button:link, a.awesome-button:visited, button, input[type="button"], input[type="submit"]
+    +awesome-button()
+    :color white
+a.awesome-button:hover, a.awesome-button:visited:hover, button:hover, input[type="button"]:hover, input[type="submit"]:hover
+    :background-color= !color_awesome_black_dark
+    :color white
+
+a.awesome-button.warm:link, a.awesome-button.warm:visited, button.warm
+    :background-color= !color_awesome_orange
+a.awesome-button.warm:hover, a.awesome-button.warm:visited:hover, button.warm:hover
+    :background-color= !color_awesome_orange_dark
+
+a.awesome-button.disabled:link, a.awesome-button.disabled:visited, button.disabled
+    :background-color= !color_awesome_gray
+    :color= !color_awesome_silver
+a.awesome-button.disabled:hover, a.awesome-button.disabled:visited:hover, button.disabled:hover
+    :background-color= !color_awesome_gray_dark
+    :color= !color_awesome_silver
+
+a.awesome-button.cool:link, a.awesome-button.cool:visited, button.cool
+    :background-color= !color_awesome_green
+a.awesome-button.cool:hover, a.awesome-button.cool:visited:hover, button.cool:hover
+    :background-color= !color_awesome_green_dark
+
+a.awesome-button.cooler:link, a.awesome-button.cooler:visited, button.cooler
+    :background-color= !color_awesome_green_1
+a.awesome-button.cooler:hover, a.awesome-button.cooler:visited:hover, button.cooler:hover
+    :background-color= !color_awesome_green_1_dark
+
+a.awesome-button.coolest:link, a.awesome-button.coolest:visited, button.coolest
+    :background-color= !color_awesome_green_2
+a.awesome-button.coolest:hover, a.awesome-button.coolest:visited:hover, button.coolest:hover
+    :background-color= !color_awesome_green_2_dark
+
+a.awesome-button.ice-cool:link, a.awesome-button.ice-cool:visited, button.ice-cool
+    :background-color= !color_awesome_blue
+a.awesome-button.ice-cool:hover, a.awesome-button.ice-cool:visited:hover, button.ice-cool:hover
+    :background-color= !color_awesome_blue_dark
+.awesome-button
+    :vertical-align middle
+    :padding 0
+.awesome-button > span.symbol
+    :font-weight bold
+    :padding-right 0.3em
+a.awesome-button.large
+    :font-size 1.1em
+    :padding 10px
+

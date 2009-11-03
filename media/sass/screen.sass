@@ -1,0 +1,374 @@
+@import base.sass
+
+body
+    background: white url('../image/background/mils_building.jpg') repeat-x 0 0
+    font-family: Georgia, Gentium, serif
+h1, h2
+    font-weight: normal
+p
+    letter-spacing: -0.03em
+    font-size: 1.1em
+    line-height: 1.4
+    margin-bottom: 1.6em
+a
+    text-decoration: none
+    &:link:
+        color: #0099ee.darken(20).hex()
+    &:visited:
+        color: #0099ee.darken(20).hex()
+    &:hover:
+        color: #0099ee
+
+
+#header
+    overflow: auto
+    width: 960px
+    margin-top: 20px
+
+    h1.title
+        font-weight: normal
+        font-size: 2.6em
+        letter-spacing: -0.03em
+        padding-top: 50px
+        color: #104E8B
+        clear: both
+        line-height: 1.5
+    h2.subtitle
+        font-size: 1.4em
+        color: #666
+        line-height: 1.5
+    .logobar
+        float: left
+    .navlinks
+        float: right
+        margin-top: 15px
+        li
+            +display-inline-block
+            margin-left: 20px
+            :background-color transparent
+            :background-repeat no-repeat
+            :background-attachement scroll
+            :background-position center bottom
+            //:min-width 50px
+
+            a
+                :display block
+                :text-align center
+                :color #104E8B
+                :font-size 0.8em
+                :height 68px
+                :font-family "Lucida Grande", "Corbel", "Lucida Sans Unicode", "Lucida Sans", "DejaVu Sans", "Bitstream Vera Sans", "Liberation Sans", "Verdana", "Verdana Ref", "sans-serif"
+#about
+    :background-image= !url_about_icon
+    :width 50px
+    //:background-position 0px bottom
+#students_corner
+    :background-image= !url_student_icon
+    //:width 50px
+    //:background-position -3px bottom
+#blog
+    :background-image= !url_blog_icon
+    :width 38px
+    //:background-position -50px bottom
+#photos
+    :background-image= !url_photo_icon
+    //:width 96px
+    //:background-position -74px bottom
+#announcements
+    :background-image= !url_announcement_icon
+    //:width 144px
+    //:background-position -230px bottom
+#logout
+    :background-image= !url_logout_icon
+    //:width 74px
+    //:background-position -165px bottom
+
+#trunk
+    clear: both
+    min-height: 320px
+form.decorated-fields
+    :font-family= !font_stack_verdana
+    legend
+        border-bottom: 1px solid #0099ee
+        margin-bottom: 10px
+        font-size: 1.6em
+    span.suffix
+        color: #444
+    label.error, span.suffix
+        font-size: 0.8em
+    .column
+        float: left
+        width: 450px
+        margin-left: 20px
+
+form.decorated-fields.table
+    label.error, span.suffix
+        display: block
+        margin-left: 210px
+
+#headlines
+    margin-top: 50px
+    li
+        width: 450px
+        float: left
+        margin-left: 20px
+#presentation
+    width: 910px
+    height: 430px
+    overflow: hidden
+#wrapper
+    margin: 0px auto
+    width: 960px
+    
+#footer
+    clear: both
+    font-size: 0.8em
+    p
+        margin-bottom: 3px
+    
+// About //
+#about_alumni
+    li
+        :overflow auto
+        :clear both
+        :display none
+        img
+            border: 8px solid #444
+            margin-right: 15px
+            float: left
+            width: 200px
+        p
+            width: 700px
+            float: left
+        h1
+            float: left
+            font-size: 1.6em
+            //font-family: "Lucida Grande", "HelveticaNeue-Light","HelveticaNeue",Helvetica,Arial,sans-serif
+            //letter-spacing: -0.06em
+            line-height: 1.5
+            
+                
+
+// Photos
+ul.photos
+    overflow: hidden
+
+    li
+        border: 4px solid black
+        float: left
+        margin: 5px
+    a
+        display: block
+        height: 100px
+
+// Articles
+#sidebar
+    margin-top: 40px
+    margin-left: 20px
+    width: 280px
+    min-height: 400px
+    float: left
+    color: #666
+    h1
+        font-size: 1.6em
+        line-height: 1.4
+        color: black
+    #archives
+        margin-top: 40px
+        clear: both
+        padding-bottom: 20px
+    #bookers_corner
+        overflow: hidden
+        padding-top: 10px
+        border-top: 2px dashed #0063a9
+        clear: both
+        p
+            clear: both
+        li.book-cover
+            clear: both
+            img
+                float: left
+                border: 1px solid white
+                margin-right: 10px
+            h1
+                font-size: 0.7em
+                color: black
+            h2
+                font-size: 1em
+                color: #666
+.articles
+    margin-top: 40px
+    width: 560px
+    float: left
+    .article
+        .article-content
+            padding-left: 15px
+            margin-top: 30px
+        h1.title
+            font-size: 2.4em
+            font-family: "Lucida Grande", "HelveticaNeue-Light","HelveticaNeue",Helvetica,Arial,sans-serif
+            letter-spacing: -0.06em
+            line-height: 1.2
+            a
+                color: #1874CD
+        h2.authorline
+            font-family: "Lucida Grande", "HelveticaNeue-Light","HelveticaNeue",Helvetica,Arial,sans-serif
+            font-family: Georgia, Gentium, serif
+            font-size: 0.9em
+            font-style: italic
+            color: #666
+            line-height: 1.4
+        span.date
+            font-family: Georgia, Gentium, serif
+            font-size: 0.8em
+            color: #666
+            display: block
+            margin-left: -150px
+            margin-right: 15px
+            padding: 5px 15px 0 0
+            width: 135px
+            float: left
+            text-align: right
+            min-height: 50px
+            border-right: 1px solid silver
+#create_account
+    width: 750px
+    float: left
+    margin-top: 40px
+    #disclaimer
+        //font-family: Arial, Helvetica, sans-serif
+        font-size: 1em
+        color: #888
+        strong
+            color: #888
+            font-weight: normal
+    ul#user_account
+        margin: 10px auto 0px
+        min-width: 255px
+        li
+            color: black
+            font-size: 2.0em
+            line-height: 1.4
+            letter-spacing: -0.05em
+            word-spacing: 0.1em
+            float: left
+            margin-right: 10px
+            a
+                margin-top: 5px
+                width: 30px
+                height: 30px
+                display: block
+.overlay
+    h1
+        font-family: Georgia, Gentium, serif
+        font-size: 2.6em
+        letter-spacing: -0.03em
+        color: #0099ee
+        margin-bottom: 10px
+    ul
+        width: 100%
+        height: 300px
+        overflow-y: auto
+        overflow-x: hidden
+        li.selected
+            background: #86d3ff
+        li
+            width: 100px
+            float: left
+            margin: 0px 20px 20px 0px
+            height: 150px
+            padding: 5px
+            cursor: pointer
+            overflow: hidden
+            text-align: center
+            a.info
+                font-size: 1.0em
+                font-weight: bold
+            img
+                background-color: #111
+                padding: 4px
+                min-height: 55px
+                min-width: 25px
+            h1
+                font-size: 0.7em
+                color: black
+                font-family: Arial, serif
+                margin-top: 2px
+    #buy_now
+        background: transparent url('../image/button/place_an_order.png') no-repeat scroll 0 0
+        position: absolute
+        bottom: 70px
+        width: 147px
+        height: 40px
+    #order_notification
+        display: none
+        background-color: #ffffcc
+        padding: 5px
+        margin: 5px auto
+        width: 350px
+        color: brown
+        border: 1px solid black
+        text-align: center
+
+input[type="submit"], button
+    +awesome-button()
+table
+    :font-family= !font_stack_verdana
+    :width 100%
+    +border-top-right-radius(5px)
+    +border-top-left-radius(5px)
+    > thead
+        :background= !color_awesome_black !image_button_overlay "repeat-x scroll 0 0"
+        :height 30px
+        > tr
+            :color white
+            :font-weight bold
+            > th
+                :padding 10px
+    > tbody
+        > tr
+            > td
+                :padding 10px
+
+#training_announcements
+    //+accordion-behavior()
+    :margin-bottom 50px
+    h1
+        :padding 10px 10px
+        :background= !color_awesome_black_dark !image_button_overlay "repeat-x scroll 0 0"
+        :cursor pointer
+        :color white
+        :font-size 1.4em
+        :font-family= !font_stack_verdana
+        +border-radius(5px)
+    h1:hover
+        :background-color= !color_awesome_black
+    div.info
+        :background-color #ddeef6
+        :display none
+        :padding-bottom 20px
+        +border-bottom-right-radius(10px)
+        +border-bottom-left-radius(10px)
+        img
+            :border 10px solid #fff
+        p, > ul, h2
+            :margin 20px
+    table
+        thead
+            :background-color #555
+        tbody
+            :background-color #ddeef6
+    h1.current
+        +border-bottom-right-radius(0px)
+        +border-bottom-left-radius(0px)
+        :background-color= !color_awesome_black
+    h2
+        :font-size 1.4em
+        :font-family= !font_stack_verdana
+        :color= !color_awesome_magenta
+        :line-height 1.4
+
+// RPX NOW centering problem fix.
+.rpx_popup_table
+    :width auto
+

@@ -1,0 +1,44 @@
+body {
+    background: none;
+    width: 960px;
+    margin: 0px auto;
+}
+a.button.green {
+    float: right;
+    display: block;
+    cursor: pointer;
+    height: 40px;
+}
+#rpxnow_button {
+    margin-top: 40px;
+    cursor: pointer;
+}
+#presentation {
+    border: 8px solid silver;
+    margin-top: 20px;
+    height: 430px;
+    overflow: hidden;
+    width: 910px;
+}
+ul#user_account li a {
+    background: transparent url("../image/icon/user_account.png") no-repeat scroll 0 0;
+}
+ul#user_account li a#google {
+    background-position: 0 0;
+}
+ul#user_account li a#yahoo {
+    background-position: -34px 0;
+}
+ul#user_account li a#windows_live {
+    background-position: -68px 0;
+}
+ul#user_account li a#twitter {
+    background-position: -103px 0;
+}
+ul#user_account li a#open_id {
+    background-position: -138px 0;
+}
+ul#user_account li a#facebook {
+    background-position: -173px 0;
+}
+

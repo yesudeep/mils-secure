@@ -1,0 +1,9 @@
+User-agent: *
+Disallow: /blog/
+Disallow: /admin/
+Disallow: /console/
+Disallow: /api/
+Disallow: /worker/
+Disallow: /services/
+Disallow: /account/
+Disallow: /remote_api/

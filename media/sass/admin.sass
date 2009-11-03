@@ -1,0 +1,302 @@
+@import base.sass
+@import common.sass
+
+
+!color_light_gray = rgb(221, 221, 221)
+!color_white = #fff
+!color_dark_gray = #444
+!color_gray = rgb(192, 192, 192)
+
+
+!url_star_icon = url("../image/icon/star.png")
+
+body
+    :font-family= !font_serif
+    :color #778899
+section > div > h1
+    :font-family= !font_stack_helvetica
+    :font-size 1.9em
+    :font-weight bold
+    :color black
+    :line-height 1.4
+    :letter-spacing -0.03em
+section > div > h2c
+    :font-family= !font_stack_helvetica
+    :font-size 1em
+    :font-weight normal
+    :line-height 1.2
+    :color gray
+    :margin-bottom 30px
+header
+    :background-color #00131E
+    :color #337799
+    :min-height 40px
+    ul
+        :width 960px
+        :margin 0px auto
+        :font-variant small-caps
+        li
+            :line-height 1.5
+            :float right
+            
+#notification
+    :opacity 0.8
+    :width 500px
+    :min-height 50px
+    :background-color #002233
+    :display none
+
+body > nav
+    :padding-top 40px
+    :background-color #c0deed
+    :border-bottom 1px solid #b6c9d9
+    >ul
+        :width 960px
+        :margin 0px auto
+        //+display-inline-block()
+        >li
+            +display-inline-block()
+            margin-right: 5px
+            :font-family= !font_sans_serif
+            :font-size 0.9em
+            >a, >a:link, >a:visited
+                +awesome-top-tab()
+                :font-weight bold
+                :color= !color_white
+                :background-color= !color_awesome_blue
+            >a:hover, >a:visited:hover
+                :background-color= !color_awesome_blue_dark
+                :color= !color_white
+            >a.active
+                :background-color= !color_awesome_magenta
+            >a.active:hover
+                :background-color= !color_awesome_magenta_dark
+
+#trunk
+    :padding 10px
+    :border-top 1px solid white
+    :border-bottom 1px solid #c6d9e9
+    :background-color #ddeef6
+    div
+        :width 960px
+        :margin 0px auto
+
+#trunk_content
+    > h1
+        :text-transform capitalize
+    > h2
+        :line-height 1.5
+
+.data-list
+    +accordion
+
+#dashboard
+    +clearfix
+    >li
+        :margin 5px 20px 5px 0px
+        :line-height 1.4
+        :width= 960px / 2 - 40px
+        :display block
+        :float left
+    ul > li
+        :line-height 1.4
+        :margin 5px 0px
+    h1
+        :font-size 1.6em
+        :line-height 1.4
+        :border-bottom 1px solid #c6d9e9
+        :color #333
+        :text-shadow 0 2px 1px rgba(255, 255, 255, 0.8)
+.comments
+    blockquote
+        :font-style italic
+        //:background-color #002233
+        :background-color #fff
+        :color #666
+        //:color rgba(255, 255, 255, 0.8)
+        :margin 10px 0
+        :padding 15px
+        +border-radius(10px)
+        //+box-shadow(1px 1px 4px rgba(0, 0, 0, 0.2))
+    .author
+        :font-size 0.8em
+        :text-align right
+        :line-height 1.4
+        :margin-bottom 1.9em
+        >em
+            :font-style italic
+a:link, a:visited
+    :text-decoration none
+    :color #21759B
+a:hover, a:visited:hover
+    :color #d54e21
+
+
+a.awesome-button:link, a.awesome-button:visited, button, input[type="button"], input[type="submit"]
+    +awesome-button()
+    :color white
+a.awesome-button:hover, a.awesome-button:visited:hover, button:hover, input[type="button"]:hover, input[type="submit"]:hover
+    :background-color= !color_awesome_black_dark
+    :color white
+
+a.awesome-button.warm:link, a.awesome-button.warm:visited, button.warm
+    :background-color= !color_awesome_orange
+a.awesome-button.warm:hover, a.awesome-button.warm:visited:hover, button.warm:hover
+    :background-color= !color_awesome_orange_dark
+
+a.awesome-button.cool:link, a.awesome-button.cool:visited, button.cool
+    :background-color= !color_awesome_green
+a.awesome-button.cool:hover, a.awesome-button.cool:visited:hover, button.cool:hover
+    :background-color= !color_awesome_green_dark
+a.awesome-button.ice-cool:link, a.awesome-button.ice-cool:visited, button.ice-cool
+    :background-color= !color_awesome_blue
+a.awesome-button.ice-cool:hover, a.awesome-button.ice-cool:visited:hover, button.ice-cool:hover
+    :background-color= !color_awesome_blue_dark
+.awesome-button
+    :vertical-align middle
+    :padding 0
+.awesome-button > span.symbol
+    :font-weight bold
+    :padding-right 0.3em
+
+#notification
+    :font-family= !font_stack_verdana
+    :background-color rgba(0, 0, 0, 0.8)
+    :width 500px
+    :color white
+    :height 100px
+    :padding 20px
+    :position fixed
+    :top 0px
+    :left 50%
+    :margin-left -250px
+    +border-bottom-right-radius(10px)
+    +border-bottom-left-radius(10px)
+    :line-height 1.4
+    h1
+        :font-size 1.6em
+
+.lightbox-content
+    :font-family= !font_stack_helvetica
+    p
+        :font-size 1em
+    p.small
+        :font-family= !font_stack_verdana
+        :font-size 0.9em
+        :font-style italic
+        :line-height 1.4
+        :color #999
+    > .actions
+        :border-top 1px solid #ccc
+        :margin-top 1em
+        :padding-top 0.5em
+        :text-align right
+        > button
+            :margin-left 10px
+
+div.lightbox-body
+    :min-height 100px !important
+
+a.star
+    :background= "transparent" !url_star_icon "no-repeat scroll 0 0"
+    :display block
+    :width 16px
+    :height 16px
+    :float left
+    :margin-right 8px
+a.star:link, a.star:visited
+    :background-position 0 0
+a.star:hover, a.star:visited:hover
+    :background-position 0 -16px
+a.star.on:link, a.star.on:visited
+    :background-position 0 -32px
+a.star.on:hover, a.star.on:visited:hover
+    :background-position 0 -48px
+
+a.users[rel="new"]
+    :display none
+
+form.edit, form.new
+    :font-family= !font_stack_verdana
+    :font-size 0.8em
+    :min-width 650px
+    label
+        :margin-top 0px
+        :margin-bottom 5px
+    a.awesome-button, input[type=button], input[type=submit]
+        :font-size 1em
+    input
+        :margin-right 5px
+    img.cover, img.preview
+        :border 0px
+        :display block
+    .suffix
+        :display block
+        :margin 5px 0px 5px 210px
+
+.url_slug
+    :font-weight bold
+
+footer
+    :min-height 100px
+    :width 960px
+    :margin 40px auto
+    :color #666
+    > nav
+        :border-top 1px solid #dedede
+        > ul
+            >li
+                :margin-left 10px
+                :font-family= !font_sans_serif
+                :font-size 0.6em
+                +display-inline-block()
+
+div.info
+    :font-family= !font_stack_verdana
+    h2, h3
+        :font-size 1.2em
+        :font-weight bold
+        :line-height 1.4
+    h3
+        :font-size 1em
+
+ul.sub-data-list
+    :width 800px
+    :padding 10px
+    >li.data-item:first-child
+        :border-top 1px dotted silver
+    >li.data-item
+        :display block
+        :padding 10px 10px
+        :margin-bottom 2px
+        :border-bottom 1px dotted silver
+        span.subtitle
+            :display block
+        span.title
+            :line-height 1.4
+            :font-size 1.2em
+            :font-weight bold
+        a[rel="approve"]
+            :display none
+        a[rel="unapprove"]
+            :display block
+        a[rel="approve-payment"]
+            :display block
+    >li.data-item:hover
+        :background-color #efefef
+    >li.data-item.unapproved
+        a[rel="approve"]
+            :display block
+        a[rel="unapprove"]
+            :display none
+    >li.data-item.approved-payment
+        a[rel="approve-payment"]
+            :display none
+    .sub-actions
+        :margin-top 10px
+        li
+            +display-inline-block
+            :margin-right 5px
+            a
+                +awesome-button
+

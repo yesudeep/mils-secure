@@ -1,0 +1,247 @@
+
+#form_login {
+    margin-top: 20px;
+    font-size: 0.7em;
+}
+#form_login label {
+    display: block;
+}
+#form_login label span.prefix {
+    display: -moz-inline-block;
+    display: inline-block;
+    min-width: 150px;
+    text-align: right;
+}
+
+ul.horizontal li {
+    display: -moz-inline-block;
+    display: inline-block;
+}
+.button {
+    display: -moz-inline-block;
+    display: inline-block;
+    text-align: center;
+    text-decoration: none;
+}
+/*a.button {
+    line-height: 2.0;
+    margin: 5px 0px;
+}
+.button.green {
+    width: 210px;
+    height: 70px;
+    background: transparent url('../image/background/button.png') no-repeat 0 0;
+    color: white;
+    cursor: pointer;
+}*/
+
+/* Vertical layout for forms. */
+form.vertical label {
+    display: block;
+    margin: 10px 0px;
+}
+form.vertical label span.prefix {
+    display: block;
+    line-height: 1.6em;
+    padding-top: 10px;
+}
+
+/* Horizontal Layout for forms. */
+form.horizontal label {
+    margin-right: 10px;
+}
+form.horizontal fieldset {
+    display: inline;
+}
+
+/* Table layout for forms. */
+form.table label {
+    display: block;
+    line-height: 1.9em;
+    margin: 1.2em auto;
+}
+form.table label span.prefix {
+    width: 200px;
+    margin-right: 10px;
+    text-align: right;
+    display: block;
+    float: left;
+}
+form.table label input[type=checkbox],
+form.table input[type=image],
+form.table input[type=submit] {
+    margin-left: 210px; /* elem = $(form.table label span); this = elem.width + elem.margin-right */
+}
+
+/* Decorated form fields */
+form.decorated-fields input[type="text"],
+form.decorated-fields input[type="password"],
+form.decorated-fields textarea {
+    border: 1px solid #ddd /* #7c7c7c */;
+    /*border: 1px solid #ccc;*/
+    border-top: 1px solid #a4a4a4;
+    background: #fff url('../image/background/textfield_normal.png') repeat-x scroll 0 0;
+    padding: 6px;
+    font-family: "Lucida Grande","HelveticaNeue-Light","HelveticaNeue",Helvetica,Arial,FreeSans,sans-serif;
+    font-size: 1em;  /* Tame all input fields including textareas */
+}
+form.decorated-fields input[type="text"]:hover,
+form.decorated-fields input[type="password"]:hover,
+form.decorated-fields textarea:hover {
+    border: 1px solid white;
+}
+form.decorated-fields input[type="text"]:focus,
+form.decorated-fields input[type="password"]:focus,
+form.decorated-fields textarea:focus {
+    border: 1px solid #51ace1;
+}
+form.decorated-fields input[disabled="disabled"],
+form.decorated-fields textarea[disabled="disabled"],
+form.decorated-fields input[disabled="disabled"]:hover,
+form.decorated-fields textarea[disabled="disabled"]:hover {
+    border: 1px solid #e5e5e5;
+    background-image: none;
+    background-color: #e5e5e5;
+/* cursor: pointer; Not all disabled fields are clickable. */
+}
+form.decorated-fields input[readonly=readonly],
+form.decorated-fields textarea[readonly=readonly] {
+    background-image: url('../image/background/textfield_readonly.png');
+    background-color: #efefef;
+    color: silver;
+}
+form.decorated-fields option {
+    min-width: 40px;
+}
+form.decorated-fields option.instruction {
+    color: black;
+    font-style: italic;
+    text-align: right;
+}
+form.decorated-fields .error {
+    color: red;
+}
+form.decorated-fields .success {
+    color: green;
+}
+form.decorated-fields label span.prefix {
+/* Write the prefix text in lowercase by default.
+ * You can then capitalize them using text transformation, if need be.
+ * Acronym case is preserved by capitalization. */
+/* text-transform: capitalize; */
+}
+form.decorated-fields.vertical span.suffix {
+    line-height: 1.4;
+    font-size: 0.7em;
+    display: block;
+    margin-top: 5px;
+
+}
+form.decorated-fields legend {
+    font-size: 1.1em;
+    font-weight: bold;
+    line-height: 1.5;
+    padding-right: 15px;
+}
+
+/* Modal fields */
+form.modal-fields input[disabled="disabled"],
+form.modal-fields textarea[disabled="disabled"],
+form.modal-fields input[disabled="disabled"]:hover,
+form.modal-fields textarea[disabled="disabled"]:hover {
+    cursor: pointer;
+}
+
+
+blockquote {
+    quotes: "\201C" "\201D";
+}
+blockquote:before {
+    content: open-quote;
+    font-size: 3.6em;
+    font-weight: bold;
+    position: relative;
+    left: 0px;
+}
+blockquote:after {
+    content: close-quote;
+    font-size: 3.6em;
+    font-weight: bold;
+    margin-left: 400px;
+}
+
+
+/* the overlayed element */
+div.overlay {
+
+    /* growing background image */
+    background-image:url(../script/lib/chickoojs/src/jquery/tools/overlay/white.png);
+    background-repeat: no-repeat;
+
+    /* dimensions after the growing animation finishes  */
+    width:550px;
+    height:450px;
+
+    /* initially overlay is hidden */
+    display:none;
+
+    /* some padding to layout nested elements nicely  */
+    padding:55px;
+}
+
+/* default close button positioned on upper right corner */
+div.overlay div.close {
+    background-image:url(../script/lib/chickoojs/src/jquery/tools/overlay/close.png);
+    position:absolute;
+    right:5px;
+    top:5px;
+    cursor:pointer;
+    height:35px;
+    width:35px;
+}
+
+/* black */
+div.overlay.black {
+    background:url(../script/lib/chickoojs/src/jquery/tools/overlay/transparent.png) no-repeat !important;
+    color:#fff;
+}
+
+/* petrol */
+div.overlay.petrol {
+    background:url(../script/lib/chickoojs/src/jquery/tools/overlay/petrol.png) no-repeat !important;
+    color:#fff;
+}
+
+div.black h2, div.petrol h2 {
+    color:#ddd;
+}
+
+/* tooltip styling. uses a background image (a black box with an arrow) */
+div.tooltip {
+    background-color: white;
+    -moz-border-radius: 15px;
+    -webkit-border-radius: 15px;
+    min-height:150px;
+    padding:20px;
+    min-width:300px;
+    display:none;
+    color: black;
+}
+
+/* tooltip title element (h3) */
+div.tooltip h2 {
+}
+
+.rpx_popup_container {
+    background-image: url("../image/background/popup_bg.png") !important;
+}
+.rpx_popup_overlay {
+    background-image: url("../image/background/rpx_overlay.png") !important;
+}
+
+/* Used to hide anything.  Using classnames to hide something is MUCH faster than
+ * doing elem.show() or elem.hide().  Also classnames are better than applying styles individually. */
+.invisible {
+    display: none;
+}
+
