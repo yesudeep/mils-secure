@@ -34,7 +34,7 @@ class RPXTokenHandler(SessionRequestHandler):
         url = config.RPX_NOW_API_AUTH_URL
         args = {
             'format': 'json',
-            'apiKey': config.RPX_NOW_API_AUTH_KEY,
+            'apiKey': models.Api.get_api_key(name=config.RPX_NOW_DOMAIN),
             'token': token,
         }
         api_response = urlfetch.fetch(url=url,
