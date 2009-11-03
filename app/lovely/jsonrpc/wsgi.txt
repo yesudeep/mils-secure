@@ -1,0 +1,60 @@
+=============
+WSGI JSON-RPC
+=============
+
+An wsgi-application that dispatches registered apis to a specific
+entrypoint.
+
+    >>> from lovely.jsonrpc import wsgi
+
+The wsgi app is actually a subclass of dispacher. So we need to
+initialize it with some methods or an instance of an api.
+
+    >>> app = wsgi.WSGIJSONRPCApplication()
+
+Let us register a simple method.
+
+    >>> def echo(s):
+    ...     return s
+
+    >>> app.register_method(echo, 'echo')
+
+We start a simple server.
+
+    >>> from wsgiref.simple_server import make_server
+    >>> server = make_server('localhost', 12345, app)
+
+Let the server handle one request.
+
+    >>> import threading
+    >>> class OneRequest(threading.Thread):
+    ...     def run(self):
+    ...         server.handle_request()
+
+    >>> OneRequest().start()
+
+Let us set up a client.
+
+    >>> from lovely.jsonrpc import proxy
+    >>> client = proxy.ServerProxy('http://localhost:12345')
+    >>> client.echo(1)
+    1
+
+Let us register another method that fails.
+
+    >>> def zero_division():
+    ...     return 1/0
+
+    >>> app.register_method(zero_division, 'zero_division')
+
+    >>> OneRequest().start()
+
+We get a RemoteException now.
+
+    >>> client.zero_division()
+    Traceback (most recent call last):
+    ...
+    RemoteException: {'message': 'Server Exception ::
+    integer division or modulo by zero',
+    'type': "<type 'exceptions.ZeroDivisionError'>"}
+

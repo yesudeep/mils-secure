@@ -1,0 +1,120 @@
+=====================
+JSON-RPC Client Proxy
+=====================
+
+    >>> from lovely.jsonrpc import proxy
+
+This is a client side proxy that behaves like a local object but
+executes methods on remote jsonrpc services. By default python's
+httplib is used on the transport layer.
+
+We use a testing server to demonstrate this.
+
+    >>> from lovely.jsonrpc import testing
+    >>> server = testing.get_server()
+
+    >>> client = proxy.ServerProxy('http://localhost:12345')
+
+The testserver has an echo method that returns all args and
+kwargs. But we have to tell the server that it should handle a
+request. Additionally the request headers are also printed.
+
+    >>> testing.one_request(server)
+    >>> res = client.echo()
+    HTTP_ACCEPT application/json
+    HTTP_ACCEPT_ENCODING identity
+    HTTP_HOST localhost:12345
+    HTTP_USER_AGENT lovey.jsonpc.proxy (httplib)
+    >>> res
+    [[], {}]
+
+    >>> testing.one_request(server)
+    >>> res = client.echo(1)
+    HTTP_ACCEPT application/json
+    HTTP_ACCEPT_ENCODING identity
+    HTTP_HOST localhost:12345
+    HTTP_USER_AGENT lovey.jsonpc.proxy (httplib)
+    >>> res
+    [[1], {}]
+
+    >>> testing.one_request(server)
+    >>> res = client.echo(u'one', x=1, y={'first': 123})
+    HTTP_ACCEPT application/json
+    HTTP_ACCEPT_ENCODING identity
+    HTTP_HOST localhost:12345
+    HTTP_USER_AGENT lovey.jsonpc.proxy (httplib)
+
+    >>> res
+    [['one'], {'y': {'first': 123}, 'x': 1}]
+
+Session handling
+================
+
+In order to authenticate the rpc request a special session object is
+used. For basic authentication we can set credentials when
+constructing the session object.
+
+
+    >>> session = proxy.Session(username='mgr', password='pw')
+    >>> client = proxy.ServerProxy('http://localhost:12345', session=session)
+    >>> testing.one_request(server)
+
+Now we have basic auth headers.
+
+    >>> res = client.echo(1)
+    HTTP_ACCEPT application/json
+    HTTP_ACCEPT_ENCODING identity
+    HTTP_AUTHORIZATION Basic Vm9yc2NoYXU6SXN3d2Ruc3VkaTEw
+    HTTP_COOKIE
+    HTTP_HOST localhost:12345
+    HTTP_USER_AGENT lovey.jsonpc.proxy (httplib)
+
+    >>> res
+    [[1], {}]
+
+If a cookie was sent (which is done by our testing ap) it is sent with
+the next request.
+
+    >>> testing.one_request(server)
+    >>> res = client.echo(1)
+    HTTP_ACCEPT application/json
+    HTTP_ACCEPT_ENCODING identity
+    HTTP_AUTHORIZATION Basic Vm9yc2NoYXU6SXN3d2Ruc3VkaTEw
+    HTTP_COOKIE x=1
+    HTTP_HOST localhost:12345
+    HTTP_USER_AGENT lovey.jsonpc.proxy (httplib)
+
+    >>> res
+    [[1], {}]
+
+Appengine Transport
+===================
+
+There is also an appengine transport. With this transport it is
+possible to make remote calls from an appengine app.
+
+Note that we do not have a dependency on the google.appengine.*
+packages in this package, so we cannot test it here because it raises
+an ImportError.
+
+The proxy is created like this.
+
+    >>> c = proxy.ServerProxy('http://localhost:12345',
+    ...     transport_impl=proxy.GAEJSONRPCTransport)
+    Traceback (most recent call last):
+    ...
+    ImportError: No module named google.appengine.api
+
+
+Compatibility-Mode
+==================
+
+For compatibilty to JSONRPC v1.0 we have to pass the id to the request::
+
+    >>> testing.one_request(server)
+    >>> c = proxy.ServerProxy('http://localhost:12345', send_id=True)
+    >>> res = c.echo()
+    HTTP_ACCEPT application/json
+    HTTP_ACCEPT_ENCODING identity
+    HTTP_HOST localhost:12345
+    HTTP_USER_AGENT lovey.jsonpc.proxy (httplib)

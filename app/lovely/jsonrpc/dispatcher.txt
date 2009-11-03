@@ -1,0 +1,79 @@
+=================
+Method dispatcher
+=================
+
+    >>> from lovely.jsonrpc import dispatcher
+
+The dispatcher is responsible for dispatching methods on an API
+instance. Let us create a simple API for this.
+
+    >>> class MyAPI(object):
+    ...     def echo(self, s):
+    ...         return s
+    ...     def _private(self):
+    ...         return u'I am Legend'
+
+We create an instance of it.
+
+    >>> api = MyAPI()
+
+Now we can create a dispatcher object for it.
+
+    >>> d = dispatcher.JSONRPCDispatcher(api)
+
+Let us now have a look at the valid methods for this dispatcher.
+
+    >>> from pprint import pprint
+    >>> pprint(d.get_valid_methods())
+    {u'echo': <bound method MyAPI.echo of <MyAPI object at ...>>,
+     u'system.describe': <bound method JSONRPCDispatcher.system_describe of
+               <lovely.jsonrpc.dispatcher.JSONRPCDispatcher object at ...>>,
+     u'system.list_methods': <bound method JSONRPCDispatcher.system_list_methods
+            of <lovely.jsonrpc.dispatcher.JSONRPCDispatcher object at ...>>}
+
+There are 2 util methods.
+
+    >>> d.system_list_methods()
+    [{'name': u'echo'},
+     {'name': u'system.describe'},
+     {'name': u'system.list_methods'}]
+
+    >>> pprint(d.system_describe())
+    {'name': 'Python JSONRPC Service',
+     'procs': [{'name': u'echo'},
+               {'name': u'system.describe'},
+               {'name': u'system.list_methods'}],
+     'sdversion': '1.0',
+     'summary': 'Service dispatched by python JSONRPCDispatcher'}
+
+Let us dispatch json.
+
+    >>> import simplejson
+    >>> req = simplejson.dumps({'method':'echo'})
+    >>> pprint(simplejson.loads(d.dispatch(req)))
+    {'error': {'message': 'Server Exception ::
+    echo() takes exactly 2 arguments (1 given)',
+               'type': "<type 'exceptions.TypeError'>"},
+     'result': None}
+
+Now without exception.
+
+    >>> req = simplejson.dumps({'method':'echo', 'params':{0:'hello'}})
+    >>> pprint(simplejson.loads(d.dispatch(req)))
+    {'result': 'hello'}
+
+The special introspection methods are named like a namespace.
+
+    >>> req = simplejson.dumps({'method':'system.list_methods'})
+    >>> pprint(simplejson.loads(d.dispatch(req)))
+    {'result': [{'name': 'echo'},
+                {'name': 'system.describe'},
+                {'name': 'system.list_methods'}]}
+    >>> req = simplejson.dumps({'method':'system.describe'})
+    >>> pprint(simplejson.loads(d.dispatch(req)))
+    {'result': {'name': 'Python JSONRPC Service',
+                'procs': [{'name': 'echo'},
+                          {'name': 'system.describe'},
+                          {'name': 'system.list_methods'}],
+                'sdversion': '1.0',
+                'summary': 'Service dispatched by python JSONRPCDispatcher'}}
