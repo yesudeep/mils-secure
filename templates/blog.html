@@ -27,8 +27,10 @@
           <h1 class="title"><a href="/article/{{ article.when_published|datetimeformat('%Y/%m/%d') }}/{{ article.slug_title }}">{{ article.title }}</a></h1>
           <h2 class="authorline">{{ article.author.nickname() }}</h2>
           <div class="article-content">{{ article.content_html }}</div>
-          {% if show_comments %}
+          {% if show_comments == True %}
           <div id="disqus_thread"></div><script type="text/javascript" src="http://disqus.com/forums/milsalumni/embed.js"></script><noscript><a href="http://disqus.com/forums/milsalumni/?url=ref">View the discussion thread.</a></noscript><a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a>
+          {% else %}
+          <a href="/article/{{ article.when_published|datetimeformat('%Y/%m/%d') }}/{{ article.slug_title }}#disqus_thread">View and post comments.</a>
           {% endif %}
         </li>
       {% endfor %}
@@ -74,6 +76,7 @@
 {% endblock %}
 
 {% block tag_scripts_final %}
+{% if show_comments == True %}
 <script type="text/javascript">
 //<![CDATA[
 (function() {
@@ -88,4 +91,5 @@
 })();
 //]]>
 </script>
+{% endif %}
 {% endblock %}

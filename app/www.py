@@ -235,7 +235,22 @@ class TrainingAnnouncementsPageHandler(AuthorizedRequestHandler):
 
 class ArticleHandler(AuthorizedRequestHandler):
     def get(self, year, month, day, slug_title):
-        auth_level = self.is_user_authorized()
+        year = dec(year)
+        month = dec(month)
+        day = dec(day)
+        today = datetime.utcnow()
+        articles = [Article.get_article_for_day_with_slug(year, month, day, slug_title)]
+        logging.info(articles)
+        response = render_template('blog.html',
+            year_list=models.BLOG_YEAR_LIST,
+            month_list=models.MONTH_LIST,
+            current_year=today.year,
+            current_month=today.month,
+            articles=articles,
+            show_comments=True)
+        self.response.out.write(response)
+
+        """auth_level = self.is_user_authorized()
         if auth_level == models.AUTH_LEVEL_REGISTERED_USER:
             self.redirect('/account/activate/reminder/')
         elif auth_level == models.AUTH_LEVEL_ACTIVATED_USER:
@@ -256,7 +271,8 @@ class ArticleHandler(AuthorizedRequestHandler):
         else:
             response = render_template('index.html')
             self.response.out.write(response)
-
+        """
+            
 class TrainingAnnouncementRegistrationHandler(AuthorizedRequestHandler):
     def get(self, key):
         training_program = db.get(db.Key(key))

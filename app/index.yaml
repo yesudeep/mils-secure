@@ -29,6 +29,13 @@ indexes:
   properties:
   - name: is_active
   - name: is_deleted
+  - name: slug_title
+  - name: when_published
+
+- kind: Article
+  properties:
+  - name: is_active
+  - name: is_deleted
   - name: when_published
     direction: desc
 
