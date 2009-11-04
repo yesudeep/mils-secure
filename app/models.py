@@ -184,13 +184,20 @@ class Api(RegularModel):
     
     @classmethod
     def get_api_key(cls, name, mode=config.DEPLOYMENT_MODE):
-        cache_key = 'Api.get_api_key.' + name + '.' + mode
+        cache_key = 'Api.api_key.' + name + '.' + mode
         api_key = memcache.get(cache_key)
         if not api_key:
             api = db.Query(Api).filter('name =', name).filter('mode =', mode).get()
             api_key = api.api_key
-            memcache.set(cache_key, api_key, 120)
+            memcache.set(cache_key, api_key, 7200)
         return api_key
+        
+    @classmethod
+    def set_api_key(cls, name, api_key, mode=config.DEPLOYMENT_MODE):
+        api = db.Query(Api).filter('name =', name).filter('mode =', mode).get()
+        api.api_key = api_key
+        cache_key = 'Api.api_key.' + name + '.' + mode
+        memcache.set(cache_key, api_key)
 
 class Mail(RegularModel):
     
