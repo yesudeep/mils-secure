@@ -123,6 +123,7 @@ CSS_FILES = Split("""
 # any optimizations, then you may include them here.
 PLAIN_COPIES = SCRIPT_FILES + CSS_FILES + Split("""
     robots.txt
+    blank.html
 """)
 
 PLAIN_COPY_DIRECTORIES = Split("""

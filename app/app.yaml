@@ -10,13 +10,23 @@ handlers:
   static_dir: public
   secure: never
   expiration: 10s
+  
+- url: /blank.html
+  static_files: public/blank.html
+  upload: public/blank.html
+  secure: never
+  
 - url: /favicon.ico
   static_files: public/image/icon/favicon.png
   upload: public/image/icon/favicon.png
+  secure: never
+
 - url: /robots.txt
   static_files: public/robots.txt
   upload: public/robots.txt
   expiration: 7d
+  secure: never
+  
 - url: /console/static/
   static_dir: lib/console/app/view/static
   expiration: 7d
@@ -24,6 +34,7 @@ handlers:
 - url: /console.*
   script: lib/console/app/console.py
   login: admin
+  
 - url: /remote_api.*
   script: $PYTHON_LIB/google/appengine/ext/remote_api/handler.py
   login: admin
@@ -31,17 +42,21 @@ handlers:
 - url: /admin.*
   script: admin.py
   login: admin
+  
 - url: /worker.*
   script: workers.py
   login: admin
+  
 - url: /api.*
   script: api.py
   login: admin
+  
 - url: /rpc.*
   script: rpc.py
   login: admin
+  
 - url: /account.*
   script: accounts.py
+  
 - url: /.*
   script: www.py
-

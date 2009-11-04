@@ -250,7 +250,8 @@ class ArticleHandler(AuthorizedRequestHandler):
                 month_list=models.MONTH_LIST,
                 current_year=today.year,
                 current_month=today.month,
-                articles=articles)
+                articles=articles,
+                show_comments=True)
             self.response.out.write(response)
         else:
             response = render_template('index.html')

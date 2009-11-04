@@ -47,6 +47,7 @@ $LOADER_SCRIPT
 getScripts(window.scripts);
 </script>
 {% endblock %}
+{% block tag_scripts_final %}{% endblock %}
 
 {% if not LOCAL %}
 {% block tag_scripts_analytics %}
