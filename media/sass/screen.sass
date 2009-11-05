@@ -82,7 +82,9 @@ a
     :background-image= !url_logout_icon
     //:width 74px
     //:background-position -165px bottom
-
+#sponsors
+    :background-image= !url_sponsors_icon
+    
 #trunk
     clear: both
     min-height: 320px
@@ -127,11 +129,11 @@ form.decorated-fields.table
         margin-bottom: 3px
     
 // About //
-#about_alumni
+#about_alumni, .definitions
     li
         :overflow auto
         :clear both
-        :display none
+        :margin-bottom 10px
         img
             border: 8px solid #444
             margin-right: 15px
@@ -146,8 +148,9 @@ form.decorated-fields.table
             //font-family: "Lucida Grande", "HelveticaNeue-Light","HelveticaNeue",Helvetica,Arial,sans-serif
             //letter-spacing: -0.06em
             line-height: 1.5
-            
-                
+#about_alumni
+    li
+        :display none        
 
 // Photos
 ul.photos

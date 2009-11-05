@@ -97,6 +97,7 @@ IMAGE_FILES = Split("""
     image/about/3.jpg
     image/about/4.jpg
     image/about/5.jpg
+    image/icon/sponsors.png
 
     script/lib/chickoojs/src/blackbirdjs/blackbird_icons.png
     script/lib/chickoojs/src/blackbirdjs/blackbird_panel.png

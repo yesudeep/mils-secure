@@ -412,6 +412,11 @@ class ThankYouUnregisterHandler(AuthorizedRequestHandler):
         response = render_template('unregister_thanks.html', training_announcement=training_program)
         self.response.out.write(response)
 
+class SponsorsPage(AuthorizedRequestHandler):
+    def get(self):
+        response = render_template('sponsors.html')
+        self.response.out.write(response)
+
 urls = [
 	('/', IndexPage),
 	('/about/?', AboutPage),
@@ -429,6 +434,7 @@ urls = [
     ('/training_announcements/(.*)/registrant/(.*)/unregister/?', UnregisterRegistrantHandler),
     ('/training_announcements/(.*)/registrant/(.*)/unregister/thanks/?', ThankYouUnregisterHandler),
     ('/unsupported/browser/?', UnsupportedBrowserPage),
+    ('/sponsors/?', SponsorsPage),
 	#('/privacy', PrivacyPage),
 	#('/tos', TosPage),
 	#('/help', HelpPage),

@@ -24,6 +24,7 @@ HTML_FILES = Split("""
     base.html
     ie.html
     index.html
+    sponsors.html
     admin/generic_list.html
     admin/base.html
     admin/index.html
