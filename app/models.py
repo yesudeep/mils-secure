@@ -90,7 +90,7 @@ RAILWAY_LINE_TYPES = [k for k, v in RAILWAY_LINES.iteritems()]
 RAILWAY_LINE_TYPES.sort()
 RAILWAY_LINES_TUPLE_MAP = [(k, v) for k, v in RAILWAY_LINES.iteritems()]
 
-ADDRESS_TYPES = [
+ADDRESS_TYPES = (
     'home',
     'residence',
     'work',
@@ -98,16 +98,22 @@ ADDRESS_TYPES = [
     'permanent',
     'temporary',
     'other',
-]
+)
 
-PHONE_TYPES = [
+PHONE_TYPES = (
     'mobile',
     'home',
     'work',
     'fax',
     'pager',
     'other',
-]
+)
+
+PAYMENT_MODES = (
+    'electronic',
+    'cheque',
+    'cash',
+)
 
 AUTH_LEVEL_NEW_USER = 0
 AUTH_LEVEL_REGISTERED_USER = 1
@@ -198,6 +204,28 @@ class Api(RegularModel):
         api.api_key = api_key
         cache_key = 'Api.api_key.' + name + '.' + mode
         memcache.set(cache_key, api_key)
+
+class FirstAlumniMeetRegistrant(RegularModel):
+    email = db.EmailProperty(required=True)
+    company = db.StringProperty()
+    enrollment_fee = db.StringProperty()
+    designation = db.StringProperty()
+    first_name = db.StringProperty()
+    graduation_year = db.IntegerProperty()
+    last_name = db.StringProperty()
+    nearest_railway_line = db.StringProperty(choices=RAILWAY_LINE_TYPES)
+    payment_mode = db.StringProperty()
+    phone_number = db.StringProperty()
+    t_shirt_size = db.StringProperty(choices=T_SHIRT_TYPES)
+
+    @classmethod
+    def get_person_from_email(cls, email):
+        cache_key = 'FirstAlumniMeetRegistrant.email=' + email
+        person = memcache.get(cache_key)
+        if not person:
+            person = db.Query(FirstAlumniMeetRegistrant).filter('email =', email).get()
+            memcache.set(cache_key, person, 400)
+        return person
 
 class Mail(RegularModel):
     

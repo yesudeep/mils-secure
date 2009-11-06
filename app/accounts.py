@@ -16,15 +16,15 @@ try:
 except ImportError:
     from django.utils import simplejson as json
 from jinja2 import Environment, FileSystemLoader
-#from recaptcha.client import captcha
 from appengine_utilities.sessions import Session
 from data.countries import COUNTRY_NAME_ISO_ALPHA_3_TABLE
-from data.existing_users import USERS
 
-from utils import get_gravatar_url, birthdate_to_string, birthdate_to_tuple, queue_mail_task, queue_task, dec, render_template, SessionUser, SessionRequestHandler, AuthorizedRequestHandler
+from utils import get_gravatar_url, birthdate_to_string, birthdate_to_tuple, \
+    queue_mail_task, queue_task, dec, render_template, SessionUser, SessionRequestHandler, AuthorizedRequestHandler
 import utils
 from data import countries, calendar
 import models
+from models import FirstAlumniMeetRegistrant
 
 logging.basicConfig(level=logging.DEBUG)
 
@@ -61,8 +61,17 @@ class RPXTokenHandler(SessionRequestHandler):
                 birthdate_year, birthdate_month, birthdate_day = birthdate_to_tuple(birthdate)
                 birthdate = birthdate_to_string(birthdate_year, birthdate_month, birthdate_day)
                 email = profile.get('email', '')
-                existing_user = USERS.get(email, {})
-
+                existing_user = FirstAlumniMeetRegistrant.get_person_from_email(email)
+                
+                if existing_user:
+                    first_name = name.get('givenName', existing_user.first_name)
+                    last_name = name.get('familyName', existing_user.last_name)
+                    phone_number = profile.get('phoneNumber', existing_user.phone_number)
+                else:
+                    first_name = name.get('givenName', '')
+                    last_name = name.get('familyName', '')
+                    phone_number = profile.get('phoneNumber', '')
+                    
                 session_user = SessionUser(
                     identifier = identifier,
                     username = profile.get('preferredUsername'),
@@ -72,14 +81,14 @@ class RPXTokenHandler(SessionRequestHandler):
                     auth_provider = profile.get('providerName', ''),
                     profile_url = profile.get('url', ''),
                     formatted_name = name.get('formatted', ''),
-                    first_name = name.get('givenName', existing_user.get('first_name', '')),
-                    last_name = name.get('familyName', existing_user.get('last_name', '')),
+                    first_name = first_name,
+                    last_name = last_name,
                     middle_name = name.get('middleName', ''),
                     prefix = name.get('honorificPrefix', ''),
                     suffix = name.get('honorificSuffix', ''),
 
                     gender = profile.get('gender', 'male'),
-                    phone_number = profile.get('phoneNumber', existing_user.get('phone_number', '')),
+                    phone_number = phone_number,
                     photo = profile.get('photo', ''),
                     birthdate = birthdate,
                     birthdate_day = birthdate_day,
@@ -150,12 +159,19 @@ class AccountPage(AuthorizedRequestHandler):
             )
             email = session_user.email
             if email:
-                existing_user = USERS.get(email, {})
-                graduation_year = existing_user.get('graduation_year', models.MILS_YEAR_LIST[0])
-                designation = existing_user.get('designation', '')
-                company = existing_user.get('company', '')
-                t_shirt_size = existing_user.get('t_shirt_size', 'small')
-                nearest_railway_line = existing_user.get('nearest_railway_line', 'western')
+                existing_user = FirstAlumniMeetRegistrant.get_person_from_email(email)
+                if existing_user:
+                    graduation_year = existing_user.graduation_year
+                    designation = existing_user.designation
+                    company = existing_user.company
+                    t_shirt_size = existing_user.t_shirt_size
+                    nearest_railway_line = existing_user.nearest_railway_line
+                else:
+                    graduation_year = models.MILS_YEAR_LIST[0]
+                    designation = ''
+                    company = ''
+                    t_shirt_size = ''
+                    nearest_railway_line = 'western'
                 values.update({
                     'graduation_year': graduation_year,
                     'company': company,

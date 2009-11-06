@@ -7,11 +7,10 @@ from google.appengine.api import memcache
 from google.appengine.ext import webapp, db
 from google.appengine.ext.webapp.util import run_wsgi_app
 import models
-from data.existing_users import USERS
 from utils import dec, queue_mail_task, render_template, AuthorizedRequestHandler
 from django.utils import simplejson as json
 from utils import get_iso_datetime_string
-from models import TrainingProgram, TrainingProgramFee, Article, TrainingProgramRegistrant, Book
+from models import FirstAlumniMeetRegistrant, TrainingProgram, TrainingProgramFee, Article, TrainingProgramRegistrant, Book
 from datetime import datetime
 
 logging.basicConfig(level=logging.DEBUG)
@@ -201,19 +200,10 @@ class ExistingUserInfoHandler(webapp.RequestHandler):
         from datetime import datetime
         email_address = self.request.get('email_address')
         corporate_email_address = self.request.get('corporate_email_address')
-        existing_user = USERS.get(email_address, USERS.get(corporate_email_address, {
-            'company': '',
-            'designation': '',
-            'enrollment_fee': 0,
-            'first_name': '',
-            'graduation_year': 0,
-            'last_name': '',
-            'nearest_railway_line': 'western',
-            'payment_mode': '',
-            'phone_number': '',
-            't_shirt_size': 'medium',
-        }))
-        existing_user_json = json.dumps(existing_user)
+        existing_user = FirstAlumniMeetRegistrant.get_person_from_email(email_address)
+        if not existing_user:
+            existing_user = FirstAlumniMeetRegistrant.get_person_from_email(corporate_email_address)
+        existing_user_json = existing_user.to_json()
         logging.info('[existing_user] ' + existing_user_json)
         self.response.out.write(existing_user_json)
 
