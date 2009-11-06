@@ -38,3 +38,6 @@ templates/_build
 # Java ignores
 admin/war/WEB-INF/classes
 
+app/import_data.py
+app/existing_users.py
+
