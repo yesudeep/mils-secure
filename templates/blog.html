@@ -29,7 +29,7 @@
           <div class="article-content">
             {{ article.content_html }}
             {% if not show_comments == True %}
-            <a href="/article/{{ article.when_published|datetimeformat('%Y/%m/%d') }}/{{ article.slug_title }}#disqus_thread">View and post comments.</a>
+            <a class="awesome-button" href="/article/{{ article.when_published|datetimeformat('%Y/%m/%d') }}/{{ article.slug_title }}#disqus_thread">View and post comments.</a>
             {% endif %}          
           </div>
           {% if show_comments == True %}
