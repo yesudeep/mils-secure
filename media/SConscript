@@ -63,6 +63,7 @@ IMAGE_FILES = Split("""
     image/background/rpx_overlay.png
     image/background/popup_bg.png
     image/background/mils_building.jpg
+    image/background/mils_building_opt.jpg
     image/logo/text_en_US.png
     image/background/textfield_normal.png
     image/background/textfield_readonly.png
@@ -156,12 +157,19 @@ for f in IMAGE_FILES:
         env.Command(DEST_DIR + f, SRC_DIR + f, Copy("$TARGET", "$SOURCE"))
 
 # Stitching graphics together
-#STITCH_GROUP_NAVBAR = Split("""
-
-#""")
-#stitched_navbar = DEST_DIR + 'image/icon/navbar.png'
-#STITCH_GROUP_NAVBAR = [SRC_DIR + f for f in STITCH_GROUP_NAVBAR]
-#env.HStitchImages(stitched_navbar, STITCH_GROUP_NAVBAR)
+env.HStitchImages(DEST_DIR + 'image/icon/navbar.png', [SRC_DIR + f for f in Split("""
+        image/icon/about.png
+        image/icon/blog.png
+        image/icon/student.png
+        image/icon/nostalgia.png
+        image/icon/announcement.png
+        image/icon/sponsors.png
+        image/icon/logout.png
+    """)])
+env.HStitchImages(DEST_DIR + 'image/logo/logo_with_text.png', [SRC_DIR + f for f in Split("""
+        image/logo/mils_alumni.png
+        image/logo/text_en_US.png
+    """)])
 
 # Minification of the generated CSS and JS files.
 MINIFIABLE_FILES = SCRIPT_FILES + CSS_FILES + Split("""

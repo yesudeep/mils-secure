@@ -18,20 +18,19 @@
 			<ul class="logobar horizontal clearfix">
 			    <li>
 			        <a href="/">
-			            <img src="{{ MEDIA_URL }}image/logo/mils_alumni.png" alt="MILS Alumni Logo" />
-			            <img src="{{ MEDIA_URL }}image/logo/text_en_US.png" alt="MILS Alumni Text Logo" />
+			            <img src="{{ MEDIA_URL }}image/logo/logo_with_text.png" alt="MILS Alumni" />
 			        </a>
 			    </li>
 			</ul>
 			<ul class="navlinks">
 			    {% block tag_navlinks %}
-			    <li id="about"><a href="/about/">About</a></li>
-			    <li id="blog"><a href="/blog/">Blog</a></li>
-			    <li id="students_corner"><a href="/students/">Students' Corner</a></li>
-			    <li id="photos"><a target="_blank" href="{{ PICASA_WEB_ALBUMS_PUBLIC_URL }}">Nostalgia</a></li>
-			    <li id="announcements"><a href="/training_announcements/">Announcements</a></li>
-			    <li id="sponsors"><a href="/sponsors/">Sponsors</a></li>
-			    <li id="logout"><a href="/account/logout/">Logout</a></li>
+			    <li><a id="nav_about" href="/about/">About</a></li>
+			    <li><a id="nav_blog" href="/blog/">Blog</a></li>
+			    <li><a id="nav_students_corner" href="/students/">Students</a></li>
+			    <li><a id="nav_photos" target="_blank" href="{{ PICASA_WEB_ALBUMS_PUBLIC_URL }}">Nostalgia</a></li>
+			    <li><a id="nav_announcements" href="/training_announcements/">Announcements</a></li>
+			    <li><a id="nav_sponsors" href="/sponsors/">Sponsors</a></li>
+			    <li><a id="nav_logout" href="/account/logout/">Logout</a></li>
     			{% endblock %}
 			</ul>
 			{% endblock %}

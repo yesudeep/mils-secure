@@ -1,7 +1,7 @@
 @import base.sass
 
 body
-    background: white url('../image/background/mils_building.jpg') repeat-x 0 0
+    :background= "white" !url_background "repeat-x 0 0"
     font-family: Georgia, Gentium, serif
 h1, h2
     font-weight: normal
@@ -42,48 +42,34 @@ a
     .navlinks
         float: right
         margin-top: 15px
-        li
+        > li
+            :margin-left 5px
+            :margin-right 5px
+            :min-width 70px
             +display-inline-block
-            margin-left: 20px
-            :background-color transparent
-            :background-repeat no-repeat
-            :background-attachement scroll
-            :background-position center bottom
-            //:min-width 50px
-
-            a
+            > a
+                :background= "transparent" !url_navbar "no-repeat scroll"
                 :display block
                 :text-align center
                 :color #104E8B
                 :font-size 0.8em
                 :height 68px
+                :width 50px
                 :font-family "Lucida Grande", "Corbel", "Lucida Sans Unicode", "Lucida Sans", "DejaVu Sans", "Bitstream Vera Sans", "Liberation Sans", "Verdana", "Verdana Ref", "sans-serif"
-#about
-    :background-image= !url_about_icon
-    :width 50px
-    //:background-position 0px bottom
-#students_corner
-    :background-image= !url_student_icon
-    //:width 50px
-    //:background-position -3px bottom
-#blog
-    :background-image= !url_blog_icon
-    :width 38px
-    //:background-position -50px bottom
-#photos
-    :background-image= !url_photo_icon
-    //:width 96px
-    //:background-position -74px bottom
-#announcements
-    :background-image= !url_announcement_icon
-    //:width 144px
-    //:background-position -230px bottom
-#logout
-    :background-image= !url_logout_icon
-    //:width 74px
-    //:background-position -165px bottom
-#sponsors
-    :background-image= !url_sponsors_icon
+            #nav_about
+                :background-position 0 0
+            #nav_blog
+                :background-position -50px 0
+            #nav_students_corner
+                :background-position -100px 0
+            #nav_photos
+                :background-position -150px 0
+            #nav_announcements
+                :background-position -200px 0
+            #nav_sponsors
+                :background-position -250px 0
+            #nav_logout
+                :background-position -300px 0
     
 #trunk
     clear: both
