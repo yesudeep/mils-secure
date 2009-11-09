@@ -17,6 +17,7 @@ SCRIPT_FILES = Split("""
     script/signup.js
     script/blog.js
     script/main.js
+    script/base.js
     script/admin.js
     script/admin/mails.js
     script/admin/users.js
@@ -56,6 +57,7 @@ SCRIPT_FILES = Split("""
     script/lib/rightjs/ui/right-lightbox-src.js
     script/lib/chickoojs/src/jquery/defer/jquery.defer.js
     script/lib/chickoojs/src/jquery/liveFilter/jquery.liveFilter.js
+    script/lib/chickoojs/src/jquery/qtip/1.0.0-rc3/jquery.qtip.js
 """)
 
 IMAGE_FILES = Split("""
@@ -206,6 +208,8 @@ env.YuiCompressorMinify(page_index_js)
 
 PAGE_ABOUT_JS_FILES =  Split("""
     script/jquery.innerfade.js
+    script/lib/chickoojs/src/jquery/qtip/1.0.0-rc3/jquery.qtip.js
+    script/base.js
     script/about.js
     """)
 PAGE_ABOUT_JS_FILES = [SRC_DIR + f for f in PAGE_ABOUT_JS_FILES]
@@ -216,6 +220,8 @@ env.YuiCompressorMinify(page_about_js)
 PAGE_BLOG_JS_FILES =  Split("""
     script/lib/chickoojs/src/jquery/tools/1.1.1/tools.overlay-1.1.1.js
     script/lib/chickoojs/src/jquery/tools/1.1.1/tools.expose-1.0.5.js
+    script/lib/chickoojs/src/jquery/qtip/1.0.0-rc3/jquery.qtip.js
+    script/base.js
     script/blog.js
     """)
 PAGE_BLOG_JS_FILES = [SRC_DIR + f for f in PAGE_BLOG_JS_FILES]
@@ -229,7 +235,9 @@ LIB_SIGNUP_JS_FILES =  Split("""
     script/lib/chickoojs/src/jquery/validate/jquery.validate.js
     script/lib/chickoojs/src/jquery/validate/jquery.validate.extra.js
     script/lib/chickoojs/src/jquery/alphanumeric/jquery.alphanumeric.js
+    script/lib/chickoojs/src/jquery/qtip/1.0.0-rc3/jquery.qtip.js
     script/lib/chickoojs/src/titleCaps.js
+    script/base.js
     script/forms.js
     script/signup.js
     """)
@@ -243,6 +251,8 @@ PAGE_TRAINING_ANNOUNCEMENTS_JS_FILES =  Split("""
     script/lib/chickoojs/src/jquery/metadata/jquery.metadata.js
     script/lib/chickoojs/src/jquery/validate/jquery.validate.js
     script/lib/chickoojs/src/jquery/tools/1.1.1/tools.tabs-1.0.3.js
+    script/lib/chickoojs/src/jquery/qtip/1.0.0-rc3/jquery.qtip.js
+    script/base.js
     script/training_announcements.js
     """)
 PAGE_TRAINING_ANNOUNCEMENTS_JS_FILES = [SRC_DIR + f for f in PAGE_TRAINING_ANNOUNCEMENTS_JS_FILES]
@@ -254,6 +264,8 @@ PAGE_UNREGISTER_REGISTRANT_JS_FILES =  Split("""
     script/lib/chickoojs/src/jquery/form/jquery.form.js
     script/lib/chickoojs/src/jquery/metadata/jquery.metadata.js
     script/lib/chickoojs/src/jquery/validate/jquery.validate.js
+    script/lib/chickoojs/src/jquery/qtip/1.0.0-rc3/jquery.qtip.js
+    script/base.js
     script/unregister_registrant.js
     """)
 PAGE_UNREGISTER_REGISTRANT_JS_FILES = [SRC_DIR + f for f in PAGE_UNREGISTER_REGISTRANT_JS_FILES]
@@ -266,8 +278,10 @@ training_announcement_registration_JS_FILES =  Split("""
     script/lib/chickoojs/src/jquery/validate/jquery.validate.js
     script/lib/chickoojs/src/jquery/validate/jquery.validate.extra.js
     script/lib/chickoojs/src/jquery/alphanumeric/jquery.alphanumeric.js
+    script/lib/chickoojs/src/jquery/qtip/1.0.0-rc3/jquery.qtip.js
     script/lib/chickoojs/src/titleCaps.js
     script/forms.js
+    script/base.js
     script/training_announcement_registration.js
 """)
 training_announcement_registration_JS_FILES = [SRC_DIR + f for f in training_announcement_registration_JS_FILES]
