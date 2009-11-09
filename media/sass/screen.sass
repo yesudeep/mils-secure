@@ -172,13 +172,18 @@ ul.photos
         border-top: 2px dashed #0063a9
         clear: both
         p
-            clear: both
+            :clear both
         li.book-cover
-            clear: both
+            :clear both
+            :padding 5px
+            :overflow hidden
+            :cursor pointer
+            :border 1px solid transparent
             img
-                float: left
-                border: 1px solid white
-                margin-right: 10px
+                :float left
+                :border 1px solid white
+                :margin-right 10px
+                :margin-bottom 5px
                 :min-width 50px
             h1
                 font-size: 1em
@@ -186,6 +191,9 @@ ul.photos
             h2
                 font-size: 0.7em
                 color: #666
+        li.book-cover:hover
+            :border 1px dashed #999
+            :background-color rgba(0, 0, 0, 0.1)
 .articles
     margin-top: 40px
     width: 560px
