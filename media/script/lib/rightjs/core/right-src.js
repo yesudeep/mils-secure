@@ -13,7 +13,7 @@
  * Copyright (C) 2008-2009 Nikolay V. Nemshilov aka St. <nemshilov#gma-ilc-om>
  */
 var RightJS = {
-  version: "1.4.2",
+  version: "1.4.3",
   modules: ["core", "form", "cookie", "xhr", "fx"]
 };
 
@@ -231,16 +231,17 @@ function isNode(value) {
  * @param Object iterable
  * @return Array list
  */
-function $A(it) {
-  if (it.item) {
-    for (var a=[], i=0, length = it.length; i < length; i++)
-      a[i] = it[i];
-  } else {
-    var a = Array.prototype.slice.call(it);
-  }
-  
-  return a;
-};
+var $A = (function(slice) {
+  return function (it) {
+    try {
+      var a = slice.call(it);
+    } catch(e) {
+      for (var a=[], i=0, length = it.length; i < length; i++)
+        a[i] = it[i];
+    }
+    return a;
+  };
+})(Array.prototype.slice);
 
 /**
  * shortcut to instance new elements
@@ -1502,6 +1503,7 @@ var Observer = new Class({
   observes: function(event, callback) {
     if (this.$listeners) {
       if (!isString(event)) { callback = event; event = null; }
+      if (isString(callback)) callback = this[callback];
       
       return this.$listeners.some(function(i) {
         return (event && callback) ? i.e == event && i.f == callback :
@@ -1525,6 +1527,7 @@ var Observer = new Class({
   stopObserving: function(event, callback) {
     if (this.$listeners) {
       if (!isString(event)) { callback = event; event = null; }
+      if (isString(callback)) callback = this[callback];
       
       this.$listeners = this.$listeners.filter(function(i) {
         var result = (event && callback) ? (i.e != event || i.f != callback) :
@@ -1597,11 +1600,11 @@ var Observer = new Class({
      */
     createShortcuts: function(object, names) {
       (names || []).each(function(name) {
-        var shortcuts = {}, name = name.replace(/:/g, '_').camelize();
-        shortcuts[name] = function() {
+        var shortcuts = {}, method_name = name.replace(/:/g, '_').camelize();
+        shortcuts[method_name] = function() {
           return this.fire.apply(this, [name].concat($A(arguments)));
         };
-        shortcuts['on'+name.capitalize()] = function() {
+        shortcuts['on'+method_name.capitalize()] = function() {
           return this.on.apply(this, [name].concat($A(arguments)));
         };
         $ext(object, shortcuts, true);
@@ -2508,13 +2511,14 @@ Element.addMethods({
       top  = rect.top  + scrolls.y - doc.clientTop;
     } else {
       // Manual version
-      var element = this;
-      while (element && element.tagName) {
-        left += element.offsetLeft;
-        top  += element.offsetTop;
-        do 
-          element = element.parentNode;
-        while (element.tagName == 'P') // P tags screw the position calculation
+      left = this.offsetLeft;
+      top  = this.offsetTop;
+      
+      if (this.getStyle('position') != 'absolute') {
+        var body = this.ownerDocument.body, html = body.parentNode;
+        
+        left += body.offsetLeft + html.offsetLeft;
+        top  += body.offsetTop  + html.offsetTop;
       }
     }
     
@@ -2581,7 +2585,8 @@ Element.addMethods({
   /**
    * sets the element position (against the window corner)
    *
-   * @param Integer left position in pixels or an object like {x: 10, y: 20}
+   * @param Number left position in pixels or an object like {x: 10, y: 20}
+   * @param Number top position in pixels
    * @return Element self
    */
   moveTo: function(left, top) {
@@ -2590,13 +2595,10 @@ Element.addMethods({
       left = left.x;
     }
     
-    // FIXME make it for real
-    this.setStyle({
-      marginLeft: (left - this.position().x) + 'px',
-      marginTop: (top - this.position().y) + 'px'
+    return this.setStyle({
+      left: left + 'px',
+      top:  top  + 'px'
     });
-    
-    return this;
   },
   
   /**
@@ -3282,52 +3284,56 @@ Selector.Multiple  = new Class({
  *
  * Copyright (C) 2008-2009 Nikolay V. Nemshilov aka St. <nemshilov#gma-il>
  */
-$ext(self, {
-  /**
-   * returns the inner-sizes of the window
-   *
-   * @return Object x: d+, y: d+
-   */
-  sizes: function() {
-    return this.innerWidth ? {x: this.innerWidth, y: this.innerHeight} :
-      {x: document.documentElement.clientWidth, y: document.documentElement.clientHeight};
-  },
+$ext(self, (function(win) {
+  var old_scroll = win.scrollTo;
   
-  /**
-   * returns the scrolls for the window
-   *
-   * @return Object x: d+, y: d+
-   */
-  scrolls: function() {
-    return (this.pageXOffset || this.pageYOffset) ? {x: this.pageXOffset, y: this.pageYOffset} :
-      (this.document.body.scrollLeft || this.document.body.scrollTop) ? 
-      {x: this.document.body.scrollLeft, y: this.document.body.scrollTop} :
-      {x: this.document.documentElement.scrollLeft, y: this.document.documentElement.scrollTop};
-  },
-  
-  /**
-   * overloading the native scrollTo method to support hashes and element references
-   *
-   * @param mixed number left position, a hash position, element or a string element id
-   * @param number top position
-   * @return window self
-   */
-  scrollTo: function(left, top) {
-    if(isElement(left) || (isString(left) && $(left))) {
-      left = $(left).position();
+return {
+    /**
+     * returns the inner-sizes of the window
+     *
+     * @return Object x: d+, y: d+
+     */
+    sizes: function() {
+      return this.innerWidth ? {x: this.innerWidth, y: this.innerHeight} :
+        {x: document.documentElement.clientWidth, y: document.documentElement.clientHeight};
+    },
+
+    /**
+     * returns the scrolls for the window
+     *
+     * @return Object x: d+, y: d+
+     */
+    scrolls: function() {
+      return (this.pageXOffset || this.pageYOffset) ? {x: this.pageXOffset, y: this.pageYOffset} :
+        (this.document.body.scrollLeft || this.document.body.scrollTop) ? 
+        {x: this.document.body.scrollLeft, y: this.document.body.scrollTop} :
+        {x: this.document.documentElement.scrollLeft, y: this.document.documentElement.scrollTop};
+    },
+
+    /**
+     * overloading the native scrollTo method to support hashes and element references
+     *
+     * @param mixed number left position, a hash position, element or a string element id
+     * @param number top position
+     * @return window self
+     */
+    scrollTo: function(left, top) {
+      if(isElement(left) || (isString(left) && $(left))) {
+        left = $(left).position();
+      }
+
+      if (isHash(left)) {
+        top  = left.y;
+        left = left.x;
+      }
+      
+      old_scroll(left, top);
+
+      return this;
     }
-    
-    if (isHash(left)) {
-      top  = left.y;
-      left = left.x;
-    }
-    
-    this._scrollTo(left, top);
-    
-    return this;
-  },
-  _scrollTo: window.scrollTo
-});
+};
+
+})(window));
 
 /**
  * The dom-ready event handling code
@@ -4738,7 +4744,11 @@ Fx.Slide = new Class(Fx.Twin, {
 
     this.element.show();
     this.sizes = this.element.sizes();
-    this.styles = this._getStyle(this.element, $w('overflow height width marginTop marginLeft'));
+    
+    this.styles = {};
+    $w('overflow height width marginTop marginLeft').each(function(key) {
+      this.styles[key] = this.element.style[key];
+    }, this);
 
     this.element.style.overflow = 'hidden';
     this.onFinish('_getBack').onCancel('_getBack');

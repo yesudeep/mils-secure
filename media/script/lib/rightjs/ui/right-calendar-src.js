@@ -18,37 +18,62 @@ var Calendar = new Class(Observer, {
     EVENTS: $w('show hide select done'),
     
     Options: {
-      format:         'ISO', // a key out of the predefined formats or a format string
-      showTime:       false,
+      format:         'ISO',  // a key out of the predefined formats or a format string
+      showTime:       null,   // null for automatic, or true|false to enforce
       showButtons:    false,
       minDate:        null,
       maxDate:        null,
-      firstDay:       1,     // 1 for Monday, 0 for Sunday
+      firstDay:       1,      // 1 for Monday, 0 for Sunday
+      fxName:         'fade', // set to null if you don't wanna any fx
       fxDuration:     200,
-      numberOfMonths: 1,     // a number or [x, y] greed definition
-      timePeriod:     1,     // the timepicker minimal periods (in minutes, might be bigger than 60)
+      numberOfMonths: 1,      // a number or [x, y] greed definition
+      timePeriod:     1,      // the timepicker minimal periods (in minutes, might be bigger than 60)
       checkTags:      '*',
-      relName:        'calendar'
+      relName:        'calendar',
+      twentyFourHour: null    // null for automatic, or true|false to enforce
     },
     
     Formats: {
-      ISO:    '%Y-%m-%d',
-      POSIX:  '%Y/%m/%d',
-      EUR:    '%d-%m-%Y',
-      US:     '%m/%d/%Y'
+      ISO:            '%Y-%m-%d',
+      POSIX:          '%Y/%m/%d',
+      EUR:            '%d-%m-%Y',
+      US:             '%m/%d/%Y'
     },
     
     i18n: {
-      Done:  'Done',
-      Now:   'Now',
-      Next:  'Next Month',
-      Prev:  'Previous Month',
+      Done:           'Done',
+      Now:            'Now',
+      Next:           'Next Month',
+      Prev:           'Previous Month',
+      NextYear:       'Next Year',
+      PrevYear:       'Prev Year',
       
       dayNames:        $w('Sunday Monday Tuesday Wednesday Thursday Friday Saturday'),
       dayNamesShort:   $w('Sun Mon Tue Wed Thu Fri Sat'),
       dayNamesMin:     $w('Su Mo Tu We Th Fr Sa'),
       monthNames:      $w('January February March April May June July August September October November December'),
       monthNamesShort: $w('Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec')
+    },
+    
+    // scans for the auto-discoverable calendar inputs
+    rescan: function() {
+      var key       = Calendar.Options.relName;
+      var rel_id_re = new RegExp(key+'\\[(.+?)\\]');
+
+      $$(Calendar.Options.checkTags+'[rel*='+key+']').each(function(element) {
+        var data     = element.get('data-'+key+'-options');
+        var calendar = new Calendar(eval('('+data+')') || {});
+        
+        var rel_id   = element.get('rel').match(rel_id_re);
+        if (rel_id) {
+          var input = $(rel_id[1]);
+          if (input) {
+            calendar.assignTo(input, element);
+          }
+        } else {
+          calendar.assignTo(element);
+        }
+      });
     }
   },
   
@@ -70,37 +95,58 @@ var Calendar = new Class(Observer, {
    * @param Object options
    * @return Calendar this
    */
-  setOptions: function(options) {
-    this.$super(options);
+  setOptions: function(user_options) {
+    this.$super(user_options);
     
-    // merging the i18n tables
-    this.options.i18n = {};
-    for (var key in this.constructor.i18n) {
-      this.options.i18n[key] = isArray(this.constructor.i18n[key]) ? this.constructor.i18n[key].clone() : this.constructor.i18n[key];
+    var klass   = this.constructor;
+    var options = this.options;
+    
+    with (this.options) {
+      // merging the i18n tables
+      options.i18n = {};
+
+      for (var key in klass.i18n) {
+        i18n[key] = isArray(klass.i18n[key]) ? klass.i18n[key].clone() : klass.i18n[key];
+      }
+      $ext(i18n, (user_options || {}).i18n);
+      
+      // defining the current days sequence
+      options.dayNames = i18n.dayNamesMin;
+      if (firstDay) {
+        dayNames.push(dayNames.shift());
+      }
+      
+      // the monthes table cleaning up
+      if (!isArray(numberOfMonths)) {
+        numberOfMonths = [numberOfMonths, 1];
+      }
+      
+      // min/max dates preprocessing
+      if (minDate) minDate = this.parse(minDate);
+      if (maxDate) {
+        maxDate = this.parse(maxDate);
+        maxDate.setDate(maxDate.getDate() + 1);
+      }
+      
+      // format catching up
+      format = (klass.Formats[format] || format).trim();
+      
+      // setting up the showTime option
+      if (showTime === null) {
+        showTime = format.search(/%[HkIl]/) > -1;
+      }
+      
+      // setting up the 24-hours format
+      if (twentyFourHour === null) {
+        twentyFourHour = format.search(/%[Il]/) < 0;
+      }
+      
+      // enforcing the 24 hours format if the time threshold is some weird number
+      if (timePeriod > 60 && 12 % (timePeriod/60).ceil()) {
+        twentyFourHour = true;
+      }
     }
-    this.options.i18n = Object.merge(this.options.i18n, options||{});
-    
-    // defining the current days sequence
-    this.options.dayNames = this.options.i18n.dayNamesMin;
-    if (this.options.firstDay) {
-      this.options.dayNames.push(this.options.dayNames.shift());
-    }
-    
-    // the monthes table cleaning up
-    if (!isArray(this.options.numberOfMonths)) {
-      this.options.numberOfMonths = [this.options.numberOfMonths, 1];
-    }
-    
-    // min/max dates preprocessing
-    if (this.options.minDate) this.options.minDate = this.parse(this.options.minDate);
-    if (this.options.maxDate) {
-      this.options.maxDate = this.parse(this.options.maxDate);
-      this.options.maxDate.setDate(this.options.maxDate.getDate() + 1);
-    }
-    
-    // format catching up
-    this.options.format = (this.constructor.Formats[this.options.format] || this.options.format).trim();
-    
+
     return this;
   },
   
@@ -130,7 +176,8 @@ var Calendar = new Class(Observer, {
    * @return Calendar this
    */
   hide: function() {
-    this.element.hide('fade', {duration: this.options.fxDuration});
+    this.element.hide(this.options.fxName, {duration: this.options.fxDuration});
+    Calendar.current = null;
     return this;
   },
   
@@ -141,7 +188,8 @@ var Calendar = new Class(Observer, {
    * @return Calendar this
    */
   show: function(position) {
-    this.element.show('fade', {duration: this.options.fxDuration});
+    this.element.show(this.options.fxName, {duration: this.options.fxDuration});
+    Calendar.current = this;
     return this;
   },
   
@@ -169,7 +217,7 @@ Calendar.include({
   
   // updates the calendar view
   update: function(date) {
-    var date = new Date(date || this.date);
+    var date = new Date(date || this.date), options = this.options;
     
     var monthes     = this.element.select('div.right-calendar-month');
     var monthes_num = monthes.length;
@@ -183,11 +231,11 @@ Calendar.include({
     
     this.updateNextPrevMonthButtons(date, monthes_num);
     
-    if (this.options.showTime) {
-      this.hours.value = this.options.timePeriod < 60 ? date.getHours() :
-        (date.getHours()/(this.options.timePeriod/60)).round() * (this.options.timePeriod/60);
+    if (options.showTime) {
+      this.hours.value = options.timePeriod < 60 ? date.getHours() :
+        (date.getHours()/(options.timePeriod/60)).round() * (options.timePeriod/60);
       
-      this.minutes.value = (date.getMinutes() / (this.options.timePeriod % 60)).round() * this.options.timePeriod;
+      this.minutes.value = (date.getMinutes() / (options.timePeriod % 60)).round() * options.timePeriod;
     }
     
     return this;
@@ -210,6 +258,8 @@ Calendar.include({
       td.className = 'right-calendar-day-blank';
     });
     
+    var options = this.options;
+    
     for (var i=1; i <= days_number; i++) {
       date.setDate(i);
       var day_num = date.getDay();
@@ -221,7 +271,7 @@ Calendar.include({
       cells[day_num].innerHTML = ''+i;
       cells[day_num].className = cur_day == (date.getTime() / 86400000).ceil() ? 'right-calendar-day-selected' : '';
       
-      if ((this.options.minDate && this.options.minDate > date) || (this.options.maxDate && this.options.maxDate < date))
+      if ((options.minDate && options.minDate > date) || (options.maxDate && options.maxDate < date))
         cells[day_num].className = 'right-calendar-day-disabled';
         
       cells[day_num].date = new Date(date);
@@ -231,24 +281,31 @@ Calendar.include({
       }
     }
     
-    element.first('div.right-calendar-month-caption').update(this.options.i18n.monthNames[date.getMonth()]+" "+date.getFullYear());
+    var caption = (options.listYears ? options.i18n.monthNamesShort[date.getMonth()] + ',' :
+      options.i18n.monthNames[date.getMonth()])+' '+date.getFullYear();
+    
+    element.first('div.right-calendar-month-caption').update(caption);
   },
   
   updateNextPrevMonthButtons: function(date, monthes_num) {
-    if (this.options.minDate) {
+    var options = this.options;
+    if (options.minDate) {
       var beginning = new Date(date.getFullYear(),0,1,0,0,0);
-      beginning.setMonth(date.getMonth() - (monthes_num - monthes_num/2).ceil());
+      var min_date = new Date(options.minDate.getFullYear(),0,1,0,0,0);
       
-      var min_date = new Date(this.options.minDate.getFullYear(), this.options.minDate.getMonth(), 1, 0,0,0);
+      this.hasPrevYear = beginning > min_date;
+      
+      beginning.setMonth(date.getMonth() - (monthes_num - monthes_num/2).ceil());
+      min_date.setMonth(options.minDate.getMonth());
       
       this.hasPrevMonth = beginning >= min_date;
     } else {
-      this.hasPrevMonth = true;
+      this.hasPrevMonth = this.hasPrevYear = true;
     }
     
-    if (this.options.maxDate) {
+    if (options.maxDate) {
       var end = new Date(date);
-      var max_date = new Date(this.options.maxDate);
+      var max_date = new Date(options.maxDate);
       [end, max_date].each(function(date) {
         date.setDate(32);
         date.setMonth(date.getMonth() - 1);
@@ -260,12 +317,21 @@ Calendar.include({
       });
       
       this.hasNextMonth = end < max_date;
+      
+      // checking the next year
+      [end, max_date].each('setMonth', 0);
+      this.hasNextYear = end < max_date;
     } else {
-      this.hasNextMonth = true;
+      this.hasNextMonth = this.hasNextYear = true;
     }
     
     this.nextButton[this.hasNextMonth ? 'removeClass':'addClass']('right-ui-button-disabled');
     this.prevButton[this.hasPrevMonth ? 'removeClass':'addClass']('right-ui-button-disabled');
+    
+    if (this.nextYearButton) {
+      this.nextYearButton[this.hasNextYear ? 'removeClass':'addClass']('right-ui-button-disabled');
+      this.prevYearButton[this.hasPrevYear ? 'removeClass':'addClass']('right-ui-button-disabled');
+    }
   },
 
   // builds the calendar
@@ -274,16 +340,17 @@ Calendar.include({
     
     // building the calendars greed
     var greed = tbody = $E('table', {'class': 'right-calendar-greed'}).insertTo(this.element);
+    var options = this.options;
     if (Browser.OLD) tbody = $E('tbody').insertTo(greed);
     
-    for (var y=0; y < this.options.numberOfMonths[1]; y++) {
+    for (var y=0; y < options.numberOfMonths[1]; y++) {
       var row   = $E('tr').insertTo(tbody);
-      for (var x=0; x < this.options.numberOfMonths[0]; x++) {
+      for (var x=0; x < options.numberOfMonths[0]; x++) {
         $E('td').insertTo(row).insert(this.buildMonth());
       }
     }
     
-    this.buildTime();
+    if (options.showTime) this.buildTime();
     this.buildButtons();
     
     return this;
@@ -291,51 +358,68 @@ Calendar.include({
   
   // builds the monthes swapping buttons
   buildSwaps: function() {
+    var i18n = this.options.i18n;
+    
     this.prevButton = $E('div', {'class': 'right-ui-button right-calendar-prev-button',
-        html: '&lsaquo;', title: this.options.i18n.Prev}).insertTo(this.element);
+        html: '&lsaquo;', title: i18n.Prev}).insertTo(this.element);
     this.nextButton = $E('div', {'class': 'right-ui-button right-calendar-next-button',
-        html: '&rsaquo;', title: this.options.i18n.Next}).insertTo(this.element);
+        html: '&rsaquo;', title: i18n.Next}).insertTo(this.element);
+        
+    if (this.options.listYears) {
+      this.prevYearButton = $E('div', {'class': 'right-ui-button right-calendar-prev-year-button',
+        html: '&laquo;', title: i18n.PrevYear}).insertTo(this.prevButton, 'after');
+      this.nextYearButton = $E('div', {'class': 'right-ui-button right-calendar-next-year-button',
+        html: '&raquo;', title: i18n.NextYear}).insertTo(this.nextButton, 'before');
+    }
   },
   
   // builds a month block
   buildMonth: function() {
-    return $E('div', {'class': 'right-calendar-month'}).insert([
-      $E('div', {'class': 'right-calendar-month-caption'}),
-      $E('table').insert(
-        '<thead><tr>'+
-          this.options.dayNames.map(function(name) {return '<th>'+name+'</th>';}).join('')+
-        '</tr></thead><tbody>'+
+    return $E('div', {'class': 'right-calendar-month'}).insert(
+      '<div class="right-calendar-month-caption"></div>'+
+      '<table><thead><tr>'+
+        this.options.dayNames.map(function(name) {return '<th>'+name+'</th>';}).join('')+
+      '</tr></thead><tbody>'+
           '123456'.split('').map(function() {return '<tr><td><td><td><td><td><td><td></tr>'}).join('')+
-        '</tbody>'
-      )
-    ]);
+      '</tbody></table>'
+    );
   },
   
   // builds the time selection block
   buildTime: function() {
-    if (!this.options.showTime) return;
+    var options = this.options;
+    var time_picker = $E('div', {'class': 'right-calendar-time', html: ':'}).insertTo(this.element);
     
-    this.hours = $E('select');
-    this.minutes = $E('select');
+    this.hours = $E('select').insertTo(time_picker, 'top');
+    this.minutes = $E('select').insertTo(time_picker);
     
-    var minute_options_number = 60 / this.options.timePeriod;
+    var minutes_threshold = options.timePeriod < 60 ? options.timePeriod : 60;
+    var hours_threshold   = options.timePeriod < 60 ? 1 : (options.timePeriod / 60).ceil();
     
-    (minute_options_number == 0 ? 1 : minute_options_number).times(function(i) {
-      i = i * this.options.timePeriod;
-      var c = i < 10 ? '0'+i : i;
-      this.minutes.insert($E('option', {value: i, html: c}));
+    (60).times(function(i) {
+      var caption = (i < 10 ? '0' : '') + i;
+      
+      if (i < 24 && i % hours_threshold == 0) {
+        if (options.twentyFourHour)
+          this.hours.insert($E('option', {value: i, html: caption}));
+        else if (i < 12) {
+          this.hours.insert($E('option', {value: i, html: i == 0 ? 12 : i}));
+        }
+      }
+      
+      if (i % minutes_threshold == 0) {
+        this.minutes.insert($E('option', {value: i, html: caption}));
+      }
     }, this);
     
-    var hour_options_number = this.options.timePeriod > 59 ? (24 * 60 / this.options.timePeriod) : 24;
-    
-    (hour_options_number == 0 ? 1 : hour_options_number).times(function(i) {
-      if (this.options.timePeriod > 59) i = (i * this.options.timePeriod / 60).floor();
-      var c = i < 10 ? '0'+i : i;
-      this.hours.insert($E('option', {value: i, html: c}));
-    }, this);
-    
-    $E('div', {'class': 'right-calendar-time'}).insertTo(this.element)
-      .insert([this.hours, document.createTextNode(":"), this.minutes]);
+    // adding the meridian picker if it's a 12 am|pm picker
+    if (!options.twentyFourHour) {
+      this.meridian = $E('select').insertTo(time_picker);
+      
+      (options.format.includes(/%P/) ? ['am', 'pm'] : ['AM', 'PM']).each(function(value) {
+        this.meridian.insert($E('option', {value: value.toLowerCase(), html: value}));
+      }, this);
+    }
   },
   
   // builds the bottom buttons block
@@ -356,6 +440,33 @@ Calendar.include({
  *
  * Copyright (C) 2009 Nikolay V. Nemshilov aka St.
  */
+ 
+// the document keybindings hookup
+document.onKeydown(function(event) {
+ if (Calendar.current) {
+   var name;
+
+   switch(event.keyCode) {
+     case 27: name = 'hide';      break;
+     case 37: name = 'prevDay';   break;
+     case 39: name = 'nextDay';   break;
+     case 38: name = 'prevWeek';  break;
+     case 40: name = 'nextWeek';  break;
+     case 34: name = 'nextMonth'; break;
+     case 33: name = 'prevMonth'; break;
+     case 13:
+        Calendar.current.select(Calendar.current.date);
+        name = 'done';
+        break;
+   }
+
+   if (name) {
+     Calendar.current[name]();
+     event.stop();
+   }
+ }
+});
+ 
 Calendar.include({
   /**
    * Initiates the 'select' event on the object
@@ -379,39 +490,65 @@ Calendar.include({
     return this.fire('done', this.date);
   },
   
-  /**
-   * Switches to one month forward
-   *
-   * @return Calendar this
-   */
-  next: function() {
-    this.prevDate = new Date(this.prevDate || this.date);
-    
-    if (this.hasNextMonth) {
-      this.prevDate.setMonth(this.prevDate.getMonth() + 1);
-    }
-    return this.update(this.prevDate);
+  nextDay: function() {
+    return this.changeDate({'Date': 1});
   },
   
-  /**
-   * Switches to on month back
-   *
-   * @return Calendar this
-   */
-  prev: function() {
-    this.prevDate = new Date(this.prevDate || this.date);
-    
-    if (this.hasPrevMonth) {
-      this.prevDate.setMonth(this.prevDate.getMonth() - 1);
-    }
-    return this.update(this.prevDate);
+  prevDay: function() {
+    return this.changeDate({'Date': -1});
   },
+  
+  nextWeek: function() {
+    return this.changeDate({'Date': 7});
+  },
+  
+  prevWeek: function() {
+    return this.changeDate({'Date': -7});
+  },
+  
+  nextMonth: function() {
+    return this.changeDate({Month: 1});
+  },
+  
+  prevMonth: function() {
+    return this.changeDate({Month: -1});
+  },
+  
+  nextYear: function() {
+    return this.changeDate({FullYear: 1});
+  },
+  
+  prevYear: function() {
+    return this.changeDate({FullYear: -1});
+  },
+  
 // protected
+
+  // changes the current date according to the hash
+  changeDate: function(hash) {
+    var date = new Date(this.date);
+    
+    for (var key in hash) {
+      date['set'+key](date['get'+key]() + hash[key]);
+    }
+    
+    // checking the date range constrains
+    if (!(
+      (this.options.minDate && this.options.minDate > date) ||
+      (this.options.maxDate && this.options.maxDate < date)
+    )) this.date = date;
+    
+    return this.update(this.date);
+  },
   
   connectEvents: function() {
     // connecting the monthes swapping
-    this.prevButton.onClick(this.prev.bind(this));
-    this.nextButton.onClick(this.next.bind(this));
+    this.prevButton.onClick(this.prevMonth.bind(this));
+    this.nextButton.onClick(this.nextMonth.bind(this));
+    if (this.nextYearButton) {
+      this.prevYearButton.onClick(this.prevYear.bind(this));
+      this.nextYearButton.onClick(this.nextYear.bind(this));
+    }
     
     // connecting the calendar day-cells
     this.element.select('div.right-calendar-month table tbody td').each(function(cell) {
@@ -420,7 +557,7 @@ Calendar.include({
           var prev = this.element.first('.right-calendar-day-selected');
           if (prev) prev.removeClass('right-calendar-day-selected');
           cell.addClass('right-calendar-day-selected');
-          this.setDay(cell.date);
+          this.setTime(cell.date);
         }
       }.bind(this));
     }, this);
@@ -429,6 +566,9 @@ Calendar.include({
     if (this.hours) {
       this.hours.on('change', this.setTime.bind(this));
       this.minutes.on('change', this.setTime.bind(this));
+      if (!this.options.twentyFourHour) {
+        this.meridian.on('change', this.setTime.bind(this));
+      }
     }
     
     // connecting the bottom buttons
@@ -444,16 +584,19 @@ Calendar.include({
   },
   
   // sets the date without nucking the time
-  setDay: function(date) {
-    this.date.setYear(date.getFullYear());
-    this.date.setMonth(date.getMonth());
-    this.date.setDate(date.getDate());
-    return this.select(this.date);
-  },
-  
-  setTime: function() {
-    this.date.setHours(this.hours.value);
-    this.date.setMinutes(this.minutes.value);
+  setTime: function(date) {
+    // from clicking a day in a month table
+    if (date instanceof Date) {
+      this.date.setYear(date.getFullYear());
+      this.date.setMonth(date.getMonth());
+      this.date.setDate(date.getDate());
+    }
+    
+    if (this.hours) {
+      this.date.setHours(this.hours.value.toInt() + (!this.options.twentyFourHour && this.meridian.value == 'pm' ? 12 : 0));
+      this.date.setMinutes(this.minutes.value);
+    }
+
     return this.select(this.date);
   }
   
@@ -489,7 +632,7 @@ Calendar.include({
     } else {
       input.on({
         focus: this.showAt.bind(this, input),
-        click: function(e) { e.stop(); },
+        click: function(e) { e.stop(); if (this.element.hidden()) this.showAt(input); }.bind(this),
         keyDown: function(e) {
           if (e.keyCode == 9 && this.element.visible())
             this.hide();
@@ -512,17 +655,6 @@ Calendar.include({
     var element = $(element), dims = element.dimensions();
     this.setDate(this.parse(element.value));
     
-    // RightJS < 1.4.1 bug handling
-    if (RightJS.version < '1.4.1') {
-      if (Browser.WebKit) {
-        dims.left += document.body.scrolls().x;
-        dims.top  += document.body.scrolls().y;
-      } else if (Browser.Konqueror) {
-        dims.left = element.offsetLeft;
-        dims.top  = element.offsetTop;
-      }
-    }
-    
     this.element.setStyle({
       position: 'absolute',
       margin: '0',
@@ -534,7 +666,7 @@ Calendar.include({
     this.on(this.doneButton ? 'done' : 'select', function() {
       element.value = this.format();
     }.bind(this));
-      
+    
     return this.hideOthers().show();
   },
   
@@ -597,6 +729,7 @@ Calendar.include({
  * Copyright (C) 2009 Nikolay V. Nemshilov aka St.
  */
 Calendar.include({
+
   /**
    * Parses out the given string based on the current date formatting
    *
@@ -715,22 +848,7 @@ Calendar.include({
  *
  * Copyright (C) 2009 Nikolay V. Nemshilov aka St.
  */
-document.onReady(function() {
-  var calendar = new Calendar();
-  var rel_id_re = new RegExp(Calendar.Options.relName+'\\[(.+?)\\]');
-  
-  $$(Calendar.Options.checkTags+'[rel*='+Calendar.Options.relName+']').each(function(element) {
-    var rel_id = element.get('rel').match(rel_id_re);
-    if (rel_id) {
-      var input = $(rel_id[1]);
-      if (input) {
-        calendar.assignTo(input, element);
-      }
-    } else {
-      calendar.assignTo(element);
-    }
-  });
-});
+document.onReady(Calendar.rescan);
 
 
-document.write("<style type=\"text/css\">*.right-ui-button{display:inline-block;*display:inline;*zoom:1;height:1em;line-height:1em;padding:.2em .5em;text-align:center;border:1px solid #CCC;border-radius:.2em;-moz-border-radius:.2em;-webkit-border-radius:.2em;cursor:pointer;color:#555;background-color:#FFF}*.right-ui-button:hover{color:#222;border-color:#BA8;background-color:#FB6}*.right-ui-button-disabled,*.right-ui-button-disabled:hover{color:#888;background:#EEE;border-color:#CCC;cursor:default}*.right-ui-buttons{margin-top:.5em}div.right-calendar{position:absolute;height:auto;border:1px solid #BBB;position:relative;padding:.5em;border-radius:.3em;-moz-border-radius:.3em;-webkit-border-radius:.3em;cursor:default;background-color:#EEE;-moz-box-shadow:.2em .4em .8em #666;-webkit-box-shadow:.2em .4em .8em #666}div.right-calendar-inline{position:relative;display:inline-block;*display:inline;*zoom:1;-moz-box-shadow:none;-webkit-box-shadow:none}div.right-calendar-prev-button,div.right-calendar-next-button{position:absolute;float:left;width:1em;padding:.15em .4em}div.right-calendar-next-button{right:.5em}div.right-calendar-month-caption{text-align:center;height:1.2em;line-height:1.2em}table.right-calendar-greed{border-spacing:0px;border:none;background:none;width:auto}table.right-calendar-greed td{vertical-align:top;border:none;background:none;margin:0;padding:0;padding-right:.4em}table.right-calendar-greed td:last-child{padding:0}div.right-calendar-month table{margin:0;padding:0;border:none;width:auto;margin-top:.2em;border-spacing:1px;border-collapse:separate;border:none;background:none}div.right-calendar-month table th{color:#777;text-align:center;border:none;background:none;padding:0;margin:0}div.right-calendar-month table td,div.right-calendar-month table td:last-child{text-align:right;padding:.1em .3em;background-color:#FFF;border:1px solid #CCC;cursor:pointer;border-radius:.2em;-moz-border-radius:.2em;-webkit-border-radius:.2em}div.right-calendar-month table td:hover{background-color:#FB6;border-color:#BA8}div.right-calendar-month table td.right-calendar-day-blank{background:transparent;cursor:default;border:none}div.right-calendar-month table td.right-calendar-day-selected{background-color:#FB6;border-color:#BA8;color:brown}div.right-calendar-month table td.right-calendar-day-disabled{color:#888;background:#EEE;border-color:#CCC;cursor:default}div.right-calendar-time{text-align:center}div.right-calendar-time select{margin:0 .4em}div.right-calendar-buttons div.right-ui-button{width:3.2em}div.right-calendar-done-button{position:absolute;right:.5em}</style>");
+document.write("<style type=\"text/css\">*.right-ui-button{display:inline-block;*display:inline;*zoom:1;height:1em;line-height:1em;padding:.2em .5em;text-align:center;border:1px solid #CCC;border-radius:.2em;-moz-border-radius:.2em;-webkit-border-radius:.2em;cursor:pointer;color:#555;background-color:#FFF}*.right-ui-button:hover{color:#222;border-color:#999;background-color:#CCC}*.right-ui-button-disabled,*.right-ui-button-disabled:hover{color:#888;background:#EEE;border-color:#CCC;cursor:default}*.right-ui-buttons{margin-top:.5em}div.right-calendar{position:absolute;height:auto;border:1px solid #BBB;position:relative;padding:.5em;border-radius:.3em;-moz-border-radius:.3em;-webkit-border-radius:.3em;cursor:default;background-color:#EEE;-moz-box-shadow:.2em .4em .8em #666;-webkit-box-shadow:.2em .4em .8em #666}div.right-calendar-inline{position:relative;display:inline-block;*display:inline;*zoom:1;-moz-box-shadow:none;-webkit-box-shadow:none}div.right-calendar-prev-button,div.right-calendar-next-button,div.right-calendar-prev-year-button,div.right-calendar-next-year-button{position:absolute;float:left;width:1em;padding:.15em .4em}div.right-calendar-next-button{right:.5em}div.right-calendar-prev-year-button{left:2.55em}div.right-calendar-next-year-button{right:2.55em}div.right-calendar-month-caption{text-align:center;height:1.2em;line-height:1.2em}table.right-calendar-greed{border-spacing:0px;border:none;background:none;width:auto}table.right-calendar-greed td{vertical-align:top;border:none;background:none;margin:0;padding:0;padding-right:.4em}table.right-calendar-greed td:last-child{padding:0}div.right-calendar-month table{margin:0;padding:0;border:none;width:auto;margin-top:.2em;border-spacing:1px;border-collapse:separate;border:none;background:none}div.right-calendar-month table th{color:#777;text-align:center;border:none;background:none;padding:0;margin:0}div.right-calendar-month table td,div.right-calendar-month table td:last-child{text-align:right;padding:.1em .3em;background-color:#FFF;border:1px solid #CCC;cursor:pointer;color:#555;border-radius:.2em;-moz-border-radius:.2em;-webkit-border-radius:.2em}div.right-calendar-month table td:hover{background-color:#CCC;border-color:#AAA;color:#000}div.right-calendar-month table td.right-calendar-day-blank{background:transparent;cursor:default;border:none}div.right-calendar-month table td.right-calendar-day-selected{background-color:#BBB;border-color:#AAA;color:#222;font-weight:bold;padding:.1em .2em}div.right-calendar-month table td.right-calendar-day-disabled{color:#888;background:#EEE;border-color:#CCC;cursor:default}div.right-calendar-time{border-top:1px solid #ccc;margin-top:.3em;padding-top:.5em;text-align:center}div.right-calendar-time select{margin:0 .4em}div.right-calendar-buttons div.right-ui-button{width:3.2em}div.right-calendar-done-button{position:absolute;right:.5em}</style>");
