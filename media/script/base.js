@@ -23,7 +23,10 @@ jQuery(function(){
             tip: 'topMiddle'
         },
         show: {
-            delay: 5
+            delay: 10
+        },
+        hide: {
+            delay: 150
         }
     });
 });
