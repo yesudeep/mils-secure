@@ -17,8 +17,8 @@
 			{% block tag_header_content %}
 			<ul class="logobar horizontal clearfix">
 			    <li>
-			        <a href="/">
-			            <img src="{{ MEDIA_URL }}image/logo/logo_with_text.png" alt="MILS Alumni" />
+			        <a id="nav_logo" href="/">
+			            #*<img src="{{ MEDIA_URL }}image/logo/logo_with_text.png" alt="MILS Alumni" />*#
 			        </a>
 			    </li>
 			</ul>
@@ -59,3 +59,8 @@
 	{% endblock %}
 {% endblock %}
 
+{% block tag_scripts_base %}
+<script type="text/javascript">
+    window.scripts.push("{{ MEDIA_URL }}script/page/base{{ MINIFIED }}.js");
+</script>
+{% endblock %}

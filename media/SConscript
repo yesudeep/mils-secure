@@ -160,6 +160,8 @@ for f in IMAGE_FILES:
 
 # Stitching graphics together
 env.HStitchImages(DEST_DIR + 'image/icon/navbar.png', [SRC_DIR + f for f in Split("""
+        image/logo/mils_alumni.png
+        image/logo/text_en_US.png
         image/icon/about.png
         image/icon/blog.png
         image/icon/student.png
@@ -196,6 +198,13 @@ for f in minifiables(MINIFIABLE_FILES, NON_MINIFIABLE_FILES):
 #
 # Warning:  THE ORDER MATTERS.
 #
+page_base_js = env.Concatenate([DEST_DIR + 'script/page/base.js'], [SRC_DIR + f for f in Split("""
+    script/lib/chickoojs/src/jquery/qtip/1.0.0-rc3/jquery.qtip.js
+    script/base.js
+    """)])
+env.YuiCompressorMinify(page_base_js)
+#env.JsminMinify(page_base_js)
+
 PAGE_INDEX_JS_FILES =  Split("""
     script/lib/chickoojs/src/jquery/tools/1.1.1/tools.flashembed-1.0.4.js
     script/flash.presentation.js
@@ -208,8 +217,6 @@ env.YuiCompressorMinify(page_index_js)
 
 PAGE_ABOUT_JS_FILES =  Split("""
     script/jquery.innerfade.js
-    script/lib/chickoojs/src/jquery/qtip/1.0.0-rc3/jquery.qtip.js
-    script/base.js
     script/about.js
     """)
 PAGE_ABOUT_JS_FILES = [SRC_DIR + f for f in PAGE_ABOUT_JS_FILES]
@@ -220,8 +227,6 @@ env.YuiCompressorMinify(page_about_js)
 PAGE_BLOG_JS_FILES =  Split("""
     script/lib/chickoojs/src/jquery/tools/1.1.1/tools.overlay-1.1.1.js
     script/lib/chickoojs/src/jquery/tools/1.1.1/tools.expose-1.0.5.js
-    script/lib/chickoojs/src/jquery/qtip/1.0.0-rc3/jquery.qtip.js
-    script/base.js
     script/blog.js
     """)
 PAGE_BLOG_JS_FILES = [SRC_DIR + f for f in PAGE_BLOG_JS_FILES]
@@ -235,9 +240,7 @@ LIB_SIGNUP_JS_FILES =  Split("""
     script/lib/chickoojs/src/jquery/validate/jquery.validate.js
     script/lib/chickoojs/src/jquery/validate/jquery.validate.extra.js
     script/lib/chickoojs/src/jquery/alphanumeric/jquery.alphanumeric.js
-    script/lib/chickoojs/src/jquery/qtip/1.0.0-rc3/jquery.qtip.js
     script/lib/chickoojs/src/titleCaps.js
-    script/base.js
     script/forms.js
     script/signup.js
     """)
@@ -251,8 +254,6 @@ PAGE_TRAINING_ANNOUNCEMENTS_JS_FILES =  Split("""
     script/lib/chickoojs/src/jquery/metadata/jquery.metadata.js
     script/lib/chickoojs/src/jquery/validate/jquery.validate.js
     script/lib/chickoojs/src/jquery/tools/1.1.1/tools.tabs-1.0.3.js
-    script/lib/chickoojs/src/jquery/qtip/1.0.0-rc3/jquery.qtip.js
-    script/base.js
     script/training_announcements.js
     """)
 PAGE_TRAINING_ANNOUNCEMENTS_JS_FILES = [SRC_DIR + f for f in PAGE_TRAINING_ANNOUNCEMENTS_JS_FILES]
@@ -264,8 +265,6 @@ PAGE_UNREGISTER_REGISTRANT_JS_FILES =  Split("""
     script/lib/chickoojs/src/jquery/form/jquery.form.js
     script/lib/chickoojs/src/jquery/metadata/jquery.metadata.js
     script/lib/chickoojs/src/jquery/validate/jquery.validate.js
-    script/lib/chickoojs/src/jquery/qtip/1.0.0-rc3/jquery.qtip.js
-    script/base.js
     script/unregister_registrant.js
     """)
 PAGE_UNREGISTER_REGISTRANT_JS_FILES = [SRC_DIR + f for f in PAGE_UNREGISTER_REGISTRANT_JS_FILES]
@@ -278,17 +277,14 @@ training_announcement_registration_JS_FILES =  Split("""
     script/lib/chickoojs/src/jquery/validate/jquery.validate.js
     script/lib/chickoojs/src/jquery/validate/jquery.validate.extra.js
     script/lib/chickoojs/src/jquery/alphanumeric/jquery.alphanumeric.js
-    script/lib/chickoojs/src/jquery/qtip/1.0.0-rc3/jquery.qtip.js
     script/lib/chickoojs/src/titleCaps.js
     script/forms.js
-    script/base.js
     script/training_announcement_registration.js
 """)
 training_announcement_registration_JS_FILES = [SRC_DIR + f for f in training_announcement_registration_JS_FILES]
 page_training_announcement_registration_js = env.Concatenate([DEST_DIR + 'script/page/training_announcement_registration.js'], training_announcement_registration_JS_FILES)
 env.YuiCompressorMinify(page_training_announcement_registration_js)
 #env.JsminMinify(page_training_announcement_registration_js)
-
 
 LIB_ADMIN_COMMON_JS_FILES =  Split("""
     script/lib/chickoojs/src/json2.js
@@ -316,8 +312,6 @@ admin_all_css_files =  Split("""
 admin_all_css_files = [SRC_DIR + f for f in admin_all_css_files]
 admin_all_css = env.Concatenate([DEST_DIR + 'css/admin-all.css'], admin_all_css_files)
 env.YuiCompressorMinify(admin_all_css)
-
-
 
 # Include licenses.
 #c3 = env.Concatenate([DEST_DIR + 'script/lib/all-min.js'], [

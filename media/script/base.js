@@ -7,7 +7,7 @@ jQuery(function(){
         position: {
             corner: {
                 target: 'bottomMiddle',
-                tooltip: 'center'
+                tooltip: 'topMiddle'
             }
         },
         content: {

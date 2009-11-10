@@ -19,6 +19,8 @@ a
     &:hover:
         color: #0099ee
 
+!navlink_icon_top_offset = 0px
+!navlink_icon_left_offset = -301px
 
 #header
     overflow: auto
@@ -49,27 +51,30 @@ a
             :min-width 70px
             +display-inline-block
             > a
-                :background= "transparent" !url_navbar "no-repeat scroll"
+                :background= "transparent" !url_navbar "no-repeat scroll 0 0"
                 :display block
-                :text-align center
-                :color transparent 
-                :font-size 0.8em
-                :height 68px
+                :height 50px
                 :width 50px
             #nav_about
-                :background-position 0 0
+                :background-position= !navlink_icon_left_offset !navlink_icon_top_offset
             #nav_blog
-                :background-position -50px 0
+                :background-position= (!navlink_icon_left_offset - 50px) !navlink_icon_top_offset 
             #nav_students_corner
-                :background-position -100px 0
+                :background-position= (!navlink_icon_left_offset - 100px) !navlink_icon_top_offset
             #nav_photos
-                :background-position -150px 0
+                :background-position= (!navlink_icon_left_offset - 150px) !navlink_icon_top_offset
             #nav_announcements
-                :background-position -200px 0
+                :background-position= (!navlink_icon_left_offset - 200px) !navlink_icon_top_offset
             #nav_sponsors
-                :background-position -250px 0
+                :background-position= (!navlink_icon_left_offset - 250px) !navlink_icon_top_offset
             #nav_logout
-                :background-position -300px 0
+                :background-position= (!navlink_icon_left_offset - 300px) !navlink_icon_top_offset
+
+#nav_logo
+    :background= "transparent" !url_navbar "no-repeat scroll 0 0"
+    :height 76px
+    :width 301px
+    :display block
 
 #trunk
     clear: both
