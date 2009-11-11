@@ -316,7 +316,7 @@ class User(RegularModel):
         cache_key = 'User.get_all'
         users = memcache.get(cache_key)
         if not users:
-            users = db.Query(User).order('nickname').fetch(FETCH_ALL_VALUES)
+            users = db.Query(User).order('-when_created').order('nickname').fetch(FETCH_ALL_VALUES)
             memcache.set(cache_key, users, 15)
         return users
 
@@ -408,7 +408,26 @@ class Phone(RegularModel):
 class PersonPhone(Phone):
     person = db.ReferenceProperty(Person, collection_name='phones')
 
+class Sponsor(RegularModel):
+    title = db.StringProperty()
+    description = db.StringProperty()
+    website_url = db.URLProperty()
+    
+    @classmethod
+    def get_all(cls):
+        cache_key = 'Sponsor.get_all'
+        sponsors = memcache.get(cache_key)
+        if not sponsors:
+            sponsors = db.Query(Sponsor).fetch(FETCH_ALL_VALUES)
+            memcache.set(cache_key, sponsors, 120)
+        return sponsors
 
+class SponsorImage(RegularModel):
+    sponsor = db.ReferenceProperty(Sponsor, collection_name='images')
+    image = db.BlobProperty()
+    image_filename = db.StringProperty()
+    image_extension = db.StringProperty()
+    image_type = db.StringProperty()
 
 # Blog
 class Article(RegularModel):
