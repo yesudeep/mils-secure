@@ -61,6 +61,12 @@
 
 {% block tag_scripts_base %}
 <script type="text/javascript">
-    window.scripts.push("{{ MEDIA_URL }}script/page/base{{ MINIFIED }}.js");
+    window.scripts.push(
+        {% if LOCAL %}
+        "{{ MEDIA_URL }}script/lib/chickoojs/src/jquery/tools/1.1.2/jquery.tools.min.js",
+        {% else %}
+        "http://cdn.jquerytools.org/1.1.2/full/jquery.tools.min.js",
+        {% endif %}
+        "{{ MEDIA_URL }}script/page/base{{ MINIFIED }}.js");
 </script>
 {% endblock %}

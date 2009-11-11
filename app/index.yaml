@@ -82,3 +82,9 @@ indexes:
   properties:
   - name: training_program
   - name: when_created
+
+- kind: User
+  properties:
+  - name: when_created
+    direction: desc
+  - name: nickname
