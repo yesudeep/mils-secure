@@ -76,6 +76,8 @@ a
     :width 301px
     :display block
 
+
+
 #trunk
     clear: both
     min-height: 320px
@@ -123,7 +125,6 @@ form.decorated-fields.table
 #about_alumni, .definitions
     li
         :overflow auto
-        :clear both
         :margin-bottom 10px
         img
             border: 8px solid #444
@@ -139,9 +140,23 @@ form.decorated-fields.table
             //font-family: "Lucida Grande", "HelveticaNeue-Light","HelveticaNeue",Helvetica,Arial,sans-serif
             //letter-spacing: -0.06em
             line-height: 1.5
-#about_alumni
+
+.definitions
     li
-        :display none        
+        :clear both
+
+#about_scrollable
+    :position relative
+    :overflow hidden
+    :width 900px
+    :height 200px
+
+#about_alumni
+    :width 20000em
+    :position absolute
+    li
+        +display-inline-block
+        :display none    
 
 // Photos
 ul.photos
