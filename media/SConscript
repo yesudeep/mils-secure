@@ -226,9 +226,9 @@ page_about_js = env.Concatenate([DEST_DIR + 'script/page/about.js'], PAGE_ABOUT_
 env.YuiCompressorMinify(page_about_js)
 #env.JsminMinify(lib_signup_js)
 
+"""    script/lib/chickoojs/src/jquery/tools/1.1.1/tools.overlay-1.1.1.js
+    script/lib/chickoojs/src/jquery/tools/1.1.1/tools.expose-1.0.5.js"""
 PAGE_BLOG_JS_FILES =  Split("""
-    script/lib/chickoojs/src/jquery/tools/1.1.1/tools.overlay-1.1.1.js
-    script/lib/chickoojs/src/jquery/tools/1.1.1/tools.expose-1.0.5.js
     script/blog.js
     """)
 PAGE_BLOG_JS_FILES = [SRC_DIR + f for f in PAGE_BLOG_JS_FILES]
@@ -255,9 +255,9 @@ PAGE_TRAINING_ANNOUNCEMENTS_JS_FILES =  Split("""
     script/lib/chickoojs/src/jquery/form/jquery.form.js
     script/lib/chickoojs/src/jquery/metadata/jquery.metadata.js
     script/lib/chickoojs/src/jquery/validate/jquery.validate.js
-    script/lib/chickoojs/src/jquery/tools/1.1.1/tools.tabs-1.0.3.js
     script/training_announcements.js
     """)
+"""script/lib/chickoojs/src/jquery/tools/1.1.1/tools.tabs-1.0.3.js"""
 PAGE_TRAINING_ANNOUNCEMENTS_JS_FILES = [SRC_DIR + f for f in PAGE_TRAINING_ANNOUNCEMENTS_JS_FILES]
 page_training_announcements_js = env.Concatenate([DEST_DIR + 'script/page/training_announcements.js'], PAGE_TRAINING_ANNOUNCEMENTS_JS_FILES)
 env.YuiCompressorMinify(page_training_announcements_js)
