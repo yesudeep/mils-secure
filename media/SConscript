@@ -32,10 +32,12 @@ SCRIPT_FILES = Split("""
     script/lib/chickoojs/src/load.js
     script/lib/chickoojs/src/loader.js
     script/lib/chickoojs/src/json2.js
+    script/lib/chickoojs/src/jquery/tools/1.1.2/jquery.tools.min.js
     script/lib/chickoojs/src/jquery/tools/1.1.1/tools.flashembed-1.0.4.js
     script/lib/chickoojs/src/jquery/tools/1.1.1/tools.tabs-1.0.3.js
     script/lib/chickoojs/src/jquery/tools/1.1.1/tools.overlay-1.1.1.js
     script/lib/chickoojs/src/jquery/tools/1.1.1/tools.expose-1.0.5.js
+    script/lib/chickoojs/src/jquery/tools/1.1.1/tools.scrollable.navigator-1.0.1.js
     script/lib/chickoojs/src/jquery/validate/jquery.validate.js
     script/lib/chickoojs/src/jquery/validate/jquery.validate.extra.js
     script/lib/chickoojs/src/jquery/template/jquery.template.js
@@ -216,7 +218,7 @@ env.YuiCompressorMinify(page_index_js)
 #env.JsminMinify(lib_signup_js)
 
 PAGE_ABOUT_JS_FILES =  Split("""
-    script/jquery.innerfade.js
+    script/lib/chickoojs/src/jquery/tools/1.1.1/tools.scrollable.navigator-1.0.1.js
     script/about.js
     """)
 PAGE_ABOUT_JS_FILES = [SRC_DIR + f for f in PAGE_ABOUT_JS_FILES]

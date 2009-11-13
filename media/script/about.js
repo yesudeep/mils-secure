@@ -1,4 +1,4 @@
-jQuery(function(){
+/*jQuery(function(){
     jQuery("#about_alumni").innerfade({
       animationtype: 'fade',
       speed: 'slow',
@@ -7,5 +7,8 @@ jQuery(function(){
       containerheight: '250px'
     });
 });
+jQuery(function(){
+    jQuery("#browsable li").scrollable().navigator();
 
-    
+});*/
+console.log("Hey!");
