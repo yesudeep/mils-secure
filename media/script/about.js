@@ -7,6 +7,10 @@
       timeout: 12000,
       type: 'sequence',
       containerheight: '250px'
-    });*/
+});*/
 
-console.log("Hey!");
+jQuery(function(){
+    jQuery("#browsable li").scrollable().navigator();
+    console.log("dkfj");
+
+});
