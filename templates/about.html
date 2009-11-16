@@ -1,11 +1,5 @@
 {% extends "base.html" %}
 
-{% block tag_additional_stylesheets %}
-    <link rel="stylesheet" type="text/css" href="http://static.flowplayer.org/tools/css/scrollable-horizontal.css" />
-    <link rel="stylesheet" type="text/css" href="http://static.flowplayer.org/tools/css/scrollable-buttons.css" />
-    <link rel="stylesheet" type="text/css" href="http://static.flowplayer.org/tools/css/scrollable-navigator.css" />
-{% endblock %}
-
 {% block tag_header_additional_content %}
     <h1 class="title">About the Alumni.</h1>
     #*<h2 class="subtitle">Why the alumni exists?</h2>*#
@@ -13,42 +7,37 @@
 
 {% block tag_trunk_content %}
     {{ about_content }}
-	<div class="navi">
-        <a href="#0" class="active"/> 
-        <a href="#1" class=""/> 
-        <a href="#2" class=""/>
-        <a href="#3" class=""/>
-        <a href="#4" class=""/>
-
+    
+    <div id="slider">
+        <ul>
+            <li>
+                <img src="{{ MEDIA_URL }}image/about/1.jpg" title="about" />
+                <h1>Green Day: American Idiot</h1>
+                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing.</p>
+            </li>
+            <li>
+            <img src="{{ MEDIA_URL }}image/about/2.jpg" title="ert" />
+            <h1>Max Payne II</h1>
+            <p>ease of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+          </li>
+          <li>
+            <img src="{{ MEDIA_URL }}image/about/3.jpg" title="about" />
+            <h1>Max Payne III</h1>
+            <p>but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+          </li>
+          <li>
+            <img src="{{ MEDIA_URL }}image/about/4.jpg" title="about" />
+            <h1>Bon Jovi: Lost Highway</h1>
+            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not.</p>
+          </li>
+          <li>
+            <img src="{{ MEDIA_URL }}image/about/5.jpg" title="about" />
+            <h1>Bon Jovi</h1>
+            <p>Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+          </li>
+        </ul>
     </div>
-    <ul id="browsable" class="scrollable">
-      <li id="0">
-        <img src="{{ MEDIA_URL }}image/about/1.jpg" title="about" />
-        <h1>Green Day: American Idiot</h1>
-        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing.</p>
-      </li>
-      <li id="1">
-        <img src="{{ MEDIA_URL }}image/about/2.jpg" title="ert" />
-        <h1>Max Payne II</h1>
-        <p>ease of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
-      </li>
-      <li id="2">
-        <img src="{{ MEDIA_URL }}image/about/3.jpg" title="about" />
-        <h1>Max Payne III</h1>
-        <p>but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
-      </li>
-      <li id="3">
-        <img src="{{ MEDIA_URL }}image/about/4.jpg" title="about" />
-        <h1>Bon Jovi: Lost Highway</h1>
-        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not.</p>
-      </li>
-      <li id="4">
-        <img src="{{ MEDIA_URL }}image/about/5.jpg" title="about" />
-        <h1>Bon Jovi</h1>
-        <p>Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
-      </li>
-    </ul>
-{% endblock %}
+    {% endblock %}
 
 {% block tag_scripts %}
 <script type="text/javascript">

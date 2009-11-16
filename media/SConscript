@@ -15,10 +15,12 @@ SCRIPT_FILES = Split("""
     script/flash.presentation.js
     script/presentation.js
     script/signup.js
+    script/about.js
     script/blog.js
     script/main.js
     script/base.js
     script/admin.js
+    script/easySlider1.7.js
     script/admin/mails.js
     script/admin/users.js
     script/admin/books.js
@@ -38,6 +40,7 @@ SCRIPT_FILES = Split("""
     script/lib/chickoojs/src/jquery/tools/1.1.1/tools.overlay-1.1.1.js
     script/lib/chickoojs/src/jquery/tools/1.1.1/tools.expose-1.0.5.js
     script/lib/chickoojs/src/jquery/tools/1.1.1/tools.scrollable.navigator-1.0.1.js
+    script/lib/chickoojs/src/jquery/easing/jquery.easing.1.3.js
     script/lib/chickoojs/src/jquery/validate/jquery.validate.js
     script/lib/chickoojs/src/jquery/validate/jquery.validate.extra.js
     script/lib/chickoojs/src/jquery/template/jquery.template.js
@@ -119,7 +122,6 @@ CSS_FILES = Split("""
     css/articles.css
     css/admin.css
     css/ie.css
-
     script/lib/chickoojs/src/blackbirdjs/blackbird.css
 """)
 
@@ -217,14 +219,6 @@ page_index_js = env.Concatenate([DEST_DIR + 'script/page/index.js'], PAGE_INDEX_
 env.YuiCompressorMinify(page_index_js)
 #env.JsminMinify(lib_signup_js)
 
-PAGE_ABOUT_JS_FILES =  Split("""
-    script/lib/chickoojs/src/jquery/tools/1.1.1/tools.scrollable.navigator-1.0.1.js
-    script/about.js
-    """)
-PAGE_ABOUT_JS_FILES = [SRC_DIR + f for f in PAGE_ABOUT_JS_FILES]
-page_about_js = env.Concatenate([DEST_DIR + 'script/page/about.js'], PAGE_ABOUT_JS_FILES)
-env.YuiCompressorMinify(page_about_js)
-#env.JsminMinify(lib_signup_js)
 
 """    script/lib/chickoojs/src/jquery/tools/1.1.1/tools.overlay-1.1.1.js
     script/lib/chickoojs/src/jquery/tools/1.1.1/tools.expose-1.0.5.js"""
@@ -234,6 +228,15 @@ PAGE_BLOG_JS_FILES =  Split("""
 PAGE_BLOG_JS_FILES = [SRC_DIR + f for f in PAGE_BLOG_JS_FILES]
 page_blog_js = env.Concatenate([DEST_DIR + 'script/page/blog.js'], PAGE_BLOG_JS_FILES)
 env.YuiCompressorMinify(page_blog_js)
+#env.JsminMinify(lib_blog_js)
+
+PAGE_ABOUT_JS_FILES =  Split("""
+    script/easySlider1.7.js
+    script/about.js
+    """)
+PAGE_ABOUT_JS_FILES = [SRC_DIR + f for f in PAGE_ABOUT_JS_FILES]
+page_about_js = env.Concatenate([DEST_DIR + 'script/page/about.js'], PAGE_ABOUT_JS_FILES)
+env.YuiCompressorMinify(page_about_js)
 #env.JsminMinify(lib_blog_js)
 
 LIB_SIGNUP_JS_FILES =  Split("""
@@ -298,6 +301,7 @@ LIB_ADMIN_COMMON_JS_FILES =  Split("""
     script/lib/chickoojs/src/jquery/metadata/jquery.metadata.js
     script/lib/chickoojs/src/jquery/defer/jquery.defer.js
     script/lib/chickoojs/src/jquery/liveFilter/jquery.liveFilter.js
+    script/lib/chickoojs/src/jquery/tools/1.1.1/tools.scrollable-1.1.1.js
     script/lib/chickoojs/src/isbnjs/isbn.js
     script/lib/chickoojs/src/jquery/validate/jquery.validate.js
     script/lib/chickoojs/src/jquery/validate/jquery.validate.extra.js

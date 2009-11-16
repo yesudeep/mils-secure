@@ -158,6 +158,7 @@ form.decorated-fields.table
         +display-inline-block
         :display none    
 
+
 // Photos
 ul.photos
     overflow: hidden
@@ -243,7 +244,17 @@ ul.photos
             margin-left: -150px
             margin-right: 15px
             padding: 5px 15px 0 0
-            width: 135px
+            width: 135pxbackground:#DAF3F8;
+		    color:#555;
+		    padding:0 10px;
+		    text-decoration:none;
+		}
+	ol#controls li.current a{
+		background:#5DC9E1;
+		color:#fff;
+		}
+	ol#controls li a:focus, #prevBtn a:focus, #nextBtn a:focus{outline:none;}
+
             float: left
             text-align: right
             min-height: 50px
@@ -385,7 +396,11 @@ table
         :color= !color_awesome_magenta
         :line-height 1.4
 
-// RPX NOW centering problem fix.
 .rpx_popup_table
     :width auto
 
+//About page styling
+
+#slider
+    :width 600px
+    :height 200px
