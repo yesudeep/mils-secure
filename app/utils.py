@@ -52,7 +52,7 @@ class PythonLoader(FileSystemLoader):
 def datetimeformat(value, format='%H:%M / %d-%m-%Y'):
     return value.strftime(format)
 
-jinja_env = Environment(loader=FileSystemLoader(['templates']))
+jinja_env = Environment(loader=PythonLoader(['templates']))
 jinja_env.filters['datetimeformat'] = datetimeformat
 
 
