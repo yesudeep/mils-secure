@@ -143,7 +143,7 @@ class ArticleEditHandler(webapp.RequestHandler):
         article.content_html = markdown(content)
         article.put()
 
-        self.response.out.write(article.to_json('title', 'is_draft', 'is_deleted', 'is_active', 'is_starred'))
+        self.response.out.write(article.to_json('title', 'section_type', 'is_draft', 'is_deleted', 'is_active', 'is_starred'))
 
 class BookEditHandler(webapp.RequestHandler):
     def get(self, key):
