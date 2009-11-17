@@ -3,6 +3,7 @@
 *.bak
 *~
 *.swp
+*.log
 
 .sconsign.dblite
 
