@@ -70,6 +70,7 @@ if SERVER_PORT and SERVER_PORT != '80':
     SECURE_URL = '/'
     #MINIFIED = '-min'
     MINIFIED = ''
+    MEDIA_URL = 'http://%s/s/' % (HOST_NAME, )
 else:
     # Production mode.
     DEPLOYMENT_MODE = MODE_PRODUCTION
@@ -78,10 +79,10 @@ else:
     DEBUG = False
     SECURE_URL = 'https://%s.appspot.com/' % APPLICATION_ID
     MINIFIED = '-min'
+    MEDIA_URL = "http://static.milsalumni.org/u/3035045/public/"
 
 ABSOLUTE_ROOT_URL = 'http://%s/' % (HOST_NAME, )
 PRIMARY_URL = ABSOLUTE_ROOT_URL
-MEDIA_URL = PRIMARY_URL + 's/'
 
 # rpxnow.com
 RPX_NOW_TOKEN_URL = 'http://%s/account/rpx' % (HOST_NAME, )

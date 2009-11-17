@@ -1,44 +1,206 @@
-body {
-    background: none;
-    width: 960px;
-    margin: 0px auto;
-}
-a.button.green {
-    float: right;
-    display: block;
-    cursor: pointer;
-    height: 40px;
-}
-#rpxnow_button {
-    margin-top: 40px;
-    cursor: pointer;
-}
-#presentation {
-    border: 8px solid silver;
-    margin-top: 20px;
-    height: 430px;
-    overflow: hidden;
-    width: 910px;
-}
-ul#user_account li a {
-    background: transparent url("../image/icon/user_account.png") no-repeat scroll 0 0;
-}
-ul#user_account li a#google {
-    background-position: 0 0;
-}
-ul#user_account li a#yahoo {
-    background-position: -34px 0;
-}
-ul#user_account li a#windows_live {
-    background-position: -68px 0;
-}
-ul#user_account li a#twitter {
-    background-position: -103px 0;
-}
-ul#user_account li a#open_id {
-    background-position: -138px 0;
-}
-ul#user_account li a#facebook {
-    background-position: -173px 0;
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, font, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  font-weight: inherit;
+  font-style: inherit;
+  font-size: 100%;
+  font-family: inherit;
+  vertical-align: baseline;
 }
 
+*:focus {
+  outline: 0;
+}
+
+body {
+  line-height: 1em;
+  color: black;
+  background: #fff;
+}
+
+ol, ul {
+  list-style: none;
+}
+
+/* tables still need 'cellspacing="0"' in the markup */
+table {
+  border-collapse: separate;
+  border-spacing: 0;
+  vertical-align: middle;
+}
+
+caption, th, td {
+  text-align: left;
+  font-weight: normal;
+  vertical-align: middle;
+}
+
+q, blockquote {
+  quotes: "" "";
+}
+q:before, q:after, blockquote:before, blockquote:after {
+  content: "";
+}
+
+img a {
+  border: none;
+}
+
+a.awesome-button:link, a.awesome-button:visited, button, input[type="button"], input[type="submit"] {
+  background: #222222 url('../image/background/button_overlay.png');
+  text-shadow: 0 1px 1px rgba(0, 0, 0, .4);
+  text-decoration: none;
+  padding: 5px 10px;
+  cursor: pointer;
+  font-family: Lucida Grande, Corbel, Lucida Sans Unicode, Lucida Sans, DejaVu Sans, Bitstream Vera Sans, Liberation Sans, Verdana, Verdana Ref, sans-serif;
+  font-weight: bold;
+  line-height: 1;
+  color: white;
+  display: -moz-inline-block;
+  display: inline-block;
+  *display: inline;
+  zoom: 1;
+  border: 0;
+  border-bottom: 1px solid rgba(0, 0, 0, .4);
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  font-size: 0.8em;
+  color: white;
+}
+
+a.awesome-button:hover, a.awesome-button:visited:hover, button:hover, input[type="button"]:hover, input[type="submit"]:hover {
+  background-color: #111111;
+  color: white;
+}
+
+a.awesome-button.warm:link, a.awesome-button.warm:visited, button.warm {
+  background-color: #ff5c00;
+}
+
+a.awesome-button.warm:hover, a.awesome-button.warm:visited:hover, button.warm:hover {
+  background-color: #d45500;
+}
+
+a.awesome-button.disabled:link, a.awesome-button.disabled:visited, button.disabled {
+  background-color: #c3c3c3;
+  color: #cccccc;
+}
+
+a.awesome-button.disabled:hover, a.awesome-button.disabled:visited:hover, button.disabled:hover {
+  background-color: #6b6b6b;
+  color: #cccccc;
+}
+
+a.awesome-button.cool:link, a.awesome-button.cool:visited, button.cool {
+  background-color: #91bd09;
+}
+
+a.awesome-button.cool:hover, a.awesome-button.cool:visited:hover, button.cool:hover {
+  background-color: #749a02;
+}
+
+a.awesome-button.cooler:link, a.awesome-button.cooler:visited, button.cooler {
+  background-color: #719600;
+}
+
+a.awesome-button.cooler:hover, a.awesome-button.cooler:visited:hover, button.cooler:hover {
+  background-color: #5d7b00;
+}
+
+a.awesome-button.coolest:link, a.awesome-button.coolest:visited, button.coolest {
+  background-color: #a7de00;
+}
+
+a.awesome-button.coolest:hover, a.awesome-button.coolest:visited:hover, button.coolest:hover {
+  background-color: #93c300;
+}
+
+a.awesome-button.ice-cool:link, a.awesome-button.ice-cool:visited, button.ice-cool {
+  background-color: #2daebf;
+}
+
+a.awesome-button.ice-cool:hover, a.awesome-button.ice-cool:visited:hover, button.ice-cool:hover {
+  background-color: #007d9a;
+}
+
+.awesome-button {
+  vertical-align: middle;
+  padding: 0;
+}
+
+.awesome-button > span.symbol {
+  font-weight: bold;
+  padding-right: 0.3em;
+}
+
+a.awesome-button.large {
+  font-size: 1.1em;
+  padding: 10px;
+}
+
+section, article, aside, header, footer, nav, dialog, figure {
+  display: block;
+}
+
+body {
+  background: none;
+  width: 960px;
+  margin: 0px auto;
+}
+
+a.button.green {
+  float: right;
+  display: block;
+  cursor: pointer;
+  height: 40px;
+}
+
+#rpxnow_button {
+  margin-top: 40px;
+  cursor: pointer;
+}
+
+#presentation {
+  border: 8px solid silver;
+  margin-top: 20px;
+  height: 430px;
+  overflow: hidden;
+  width: 910px;
+}
+
+ul#user_account li a {
+  background: transparent url('../image/icon/user_account.png') no-repeat scroll 0 0;
+}
+
+ul#user_account li a#google {
+  background-position: 0 0;
+}
+
+ul#user_account li a#yahoo {
+  background-position: -34px 0;
+}
+
+ul#user_account li a#windows_live {
+  background-position: -68px 0;
+}
+
+ul#user_account li a#twitter {
+  background-position: -103px 0;
+}
+
+ul#user_account li a#open_id {
+  background-position: -138px 0;
+}
+
+ul#user_account li a#facebook {
+  background-position: -173px 0;
+}
