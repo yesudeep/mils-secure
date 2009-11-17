@@ -11,8 +11,8 @@
 
 jQuery(function(){
     jQuery("#slider").easySlider({
-        continuous: true,
-        numeric: true
+        numeric: true,
+        speed: 500
 
     });
 });

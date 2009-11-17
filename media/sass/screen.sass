@@ -121,42 +121,13 @@ form.decorated-fields.table
     p
         margin-bottom: 3px
     
-// About //
-#about_alumni, .definitions
-    li
-        :overflow auto
-        :margin-bottom 10px
-        img
-            border: 8px solid #444
-            margin-right: 15px
-            float: left
-            width: 200px
-        p
-            width: 700px
-            float: left
-        h1
-            float: left
-            font-size: 1.6em
-            //font-family: "Lucida Grande", "HelveticaNeue-Light","HelveticaNeue",Helvetica,Arial,sans-serif
-            //letter-spacing: -0.06em
-            line-height: 1.5
+
 
 .definitions
     li
         :clear both
 
-#about_scrollable
-    :position relative
-    :overflow hidden
-    :width 900px
-    :height 200px
-
-#about_alumni
-    :width 20000em
-    :position absolute
-    li
-        +display-inline-block
-        :display none    
+    
 
 
 // Photos
@@ -244,21 +215,12 @@ ul.photos
             margin-left: -150px
             margin-right: 15px
             padding: 5px 15px 0 0
-            width: 135pxbackground:#DAF3F8;
-		    color:#555;
-		    padding:0 10px;
-		    text-decoration:none;
-		}
-	ol#controls li.current a{
-		background:#5DC9E1;
-		color:#fff;
-		}
-	ol#controls li a:focus, #prevBtn a:focus, #nextBtn a:focus{outline:none;}
+            width: 135px
+            background:#DAF3F8
+            color:#555
+            padding:0 10px
+            text-decoration:none
 
-            float: left
-            text-align: right
-            min-height: 50px
-            border-right: 1px solid silver
 #create_account
     width: 750px
     float: left
@@ -399,8 +361,41 @@ table
 .rpx_popup_table
     :width auto
 
-//About page styling
+// About //
+#about_alumni, .definitions
+    :overflow auto
+    li
+        :overflow auto
+        :margin-bottom 10px
+        img
+            border: 8px solid #444
+            margin-right: 20px
+            float: left
+            width: 200px
+        div
+            :float left
+            :width 700px
+            :padding-right 24px
+        
+            h1
+                font-size: 1.6em
+                line-height: 1.5
 
+#controls
+    :margin 20px 0px 0px 10px 
+    li
+        :display inline-block
+        :margin-right 10px
+        a
+            :padding 5px 10px
+            :background-color #dfefff
+            :color #555
+            :border 1px solid #104e8b
 #slider
-    :width 600px
+    //:width 600px
     :height 200px
+ol#controls li.current a
+    :background #104e8b
+    :color #fff	
+
+
