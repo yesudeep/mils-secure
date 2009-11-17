@@ -10,7 +10,9 @@
 });*/
 
 jQuery(function(){
-    jQuery("#browsable li").scrollable().navigator();
-    console.log("dkfj");
+    jQuery("#slider").easySlider({
+        continuous: true,
+        numeric: true
 
+    });
 });
