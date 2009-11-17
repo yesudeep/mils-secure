@@ -6,6 +6,9 @@
 {% endblock %}
 
 {% block tag_trunk_content %}
+  {% if not training_announcements %}
+    <p>Training event announcements arriving shortly.</p>
+  {% endif %}
   <div id="training_announcements">
     {% for training_announcement in training_announcements %}
       <h1>{{ training_announcement.title }}</h1>
@@ -41,7 +44,7 @@
         <p><img src="{{ training_announcement.brochure_url }}" /></p>
         <p><a class="awesome-button large ice-cool" href="/announcement/{{ training_announcement.key() }}/register/">Register for the Event</a></p>
 
-        <h2>Who has registered already?</h2>
+        <h2>Who has registered already? {{ training_announcement.participant_count }}</h2>
         <ul>
           {% for registrant in training_announcement.registrants %}
           {% if registrant.is_active %}
