@@ -1,9 +1,5 @@
 {% extends "base.html" %}
 
-{% block tag_additional_stylesheets %}
-        <link rel="stylesheet" href="{{ MEDIA_URL }}css/articles-min.css" type="text/css" media="screen" charset="utf-8" />
-{% endblock %}
-
 {% block tag_header_additional_content %}
     <h1 class="title">Meet. Belong. Collaborate.</h1>
     <h2 class="subtitle">Time for some coffee with old friends.</h2>
@@ -35,7 +31,6 @@
           {% if show_comments == True %}
           <div id="disqus_thread"></div><script type="text/javascript" src="http://disqus.com/forums/milsalumni/embed.js"></script><noscript><a href="http://disqus.com/forums/milsalumni/?url=ref">View the discussion thread.</a></noscript><a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a>
           {% endif %}
-          
         </li>
       {% endfor %}
     </ul>

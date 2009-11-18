@@ -135,7 +135,7 @@ PLAIN_COPIES = SCRIPT_FILES + CSS_FILES + Split("""
 """)
 
 PLAIN_COPY_DIRECTORIES = Split("""
-
+    image/picture/
 """)
 
 # Recursively add all the files in the directories to files to copy.
