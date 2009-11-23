@@ -17,7 +17,7 @@
 {% block tag_nav_content %}
     <ul>
         #*<li><a {% if page_name == 'dashboard' %}class="active"{% endif %} id="nav_dashboard" href="/admin/">Dashboard</a></li>*#
-        <li><a {% if page_name == 'users' %}class="active"{% endif %} id="nav_users" href="/admin/users/">Users</a></li>
+        <li><a {% if page_name == 'users' %}class="active"{% endif %} id="nav_users" href="/admin/users/">Users ({{ user_count }})</a></li>
         <li><a {% if page_name == 'articles' %}class="active"{% endif %} id="nav_articles" href="/admin/articles/">Blog Articles</a></li>
         <li><a {% if page_name == 'books' %}class="active"{% endif %} id="nav_books" href="/admin/books/">Books</a></li>
         <li><a {% if page_name == 'announcements' %}class="active"{% endif %} id="nav_announcements" href="/admin/announcements/">Event Announcements</a></li>

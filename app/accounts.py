@@ -313,7 +313,9 @@ class AccountPage(AuthorizedRequestHandler):
 
         # Batch write all non-dependent entities.
         db.put(to_store)
+        models.User.increment_user_count()
         queue_mail_task(url='/worker/mail/signup_notification/' + str(user.key()), method='GET')
+        
         rendered_template = render_template('activation_reminder.html')
         self.response.out.write(rendered_template)
 
