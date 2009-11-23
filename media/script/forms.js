@@ -43,10 +43,11 @@ jQuery(function(){
             elem.val(HTTP + value);
         }
     });
-    elements.capitalization_fields.live('change', function(event){
-       var o = jQuery(this), value = jQuery.trim(o.val());
-       o.val(value.sanitizeCapitalization());
-    });
+    function onCapitalization(event){
+        var o = jQuery(this), value = jQuery.trim(o.val());
+        o.val(value.sanitizeCapitalization());        
+    }
+    elements.capitalization_fields.live('change', onCapitalization).blur(onCapitalization);
 
     elements.form_decorated_fields.validate({
         rules: {
