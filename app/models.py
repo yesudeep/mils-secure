@@ -305,6 +305,8 @@ class User(RegularModel):
                 users = db.Query(User).filter('is_active =', False).filter('is_deleted =', False)
             elif filter_name == 'deleted':
                 users = db.Query(User).filter('is_deleted =', True)
+            elif filter_name == 'none':
+                users = []
             else:
                 users = db.Query(User)
             users = users.fetch(FETCH_ALL_VALUES)

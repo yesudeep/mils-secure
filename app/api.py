@@ -212,6 +212,7 @@ TO_USERS_CHOICES = [
     'approved',
     'registered',
     'deleted',
+    'none'
 ]
 
 class MailEditHandler(webapp.RequestHandler):
