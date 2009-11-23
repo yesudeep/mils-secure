@@ -62,7 +62,7 @@ DEFAULT_BIRTHDATE_STRING = '%d-%d-%d' % DEFAULT_BIRTHDATE
 
 GENDER_CHOICES = (
     'male',
-    'female'
+    'female',
 )
 
 BLOG_CONTENT_TYPES = (

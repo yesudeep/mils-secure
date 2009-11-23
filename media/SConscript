@@ -106,6 +106,7 @@ IMAGE_FILES = Split("""
     image/about/4.jpg
     image/about/5.jpg
     image/icon/sponsors.png
+    image/sponsors/happychickoo.jpg
 
     script/lib/chickoojs/src/blackbirdjs/blackbird_icons.png
     script/lib/chickoojs/src/blackbirdjs/blackbird_panel.png
@@ -230,8 +231,9 @@ page_blog_js = env.Concatenate([DEST_DIR + 'script/page/blog.js'], PAGE_BLOG_JS_
 env.YuiCompressorMinify(page_blog_js)
 #env.JsminMinify(lib_blog_js)
 
+"""script/easySlider1.7.js
+"""
 PAGE_ABOUT_JS_FILES =  Split("""
-    script/easySlider1.7.js
     script/about.js
     """)
 PAGE_ABOUT_JS_FILES = [SRC_DIR + f for f in PAGE_ABOUT_JS_FILES]

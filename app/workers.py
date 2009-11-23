@@ -51,7 +51,7 @@ class SignupNotificationWorker(webapp.RequestHandler):
             body = render_template('email/thank_you_for_registering.text', nickname=user.nickname)
             mail.send_mail(sender=sender,
                 to=user.email,
-                bcc=MAIL_SENDER,
+                bcc=ADMIN_MAIL_SENDER,
                 subject=subject,
                 body=body)
             logging.info('/worker/mail/signup_notification/ sent to ' + user.email + ' from ' + sender)

@@ -8,57 +8,25 @@
 {% block tag_trunk_content %}
     {{ about_content }}
     
-    <div id="slider">
-        <ul id="about_alumni">
-            <li>
-                <img src="{{ MEDIA_URL }}image/picture/rainbow_shade_tree.jpg" title="about" />
-                    <p class="courtesy">Image courtesy Sarah "EssjayNZ" Macmillan.  Licensed under Creative Commons License.  Source flickr.com.</p>
-                    <div>                
-                    <h1>Rainbow, shade tree.</h1>
-                    <blockquote>It took 7 colors and a million raindrops to make that picture, we call a rainbow.</blockquote>
-                    <h2>United we stand.  Divided we're history.</h2>
-                    <p>We come from different areas of the industry, play different roles at work, belong to diverse age groups, even graduated in different years, but there's one thing that unites us: our institute.</p>
-                    <p>Tremendous amount of energy, time and effort has gone into bringing about a reunion through this Website.</p>
-                    <blockquote>So, stick around&mdash;you're the rainbow.</blockquote>
+    <img src="{{ MEDIA_URL }}image/picture/rainbow_shade_tree.jpg" title="about" />
+    <p class="courtesy">Image courtesy Sarah "EssjayNZ" Macmillan.  Licensed under Creative Commons License.  Source flickr.com.</p>
+    <h1>Rainbow, shade tree.</h1>
+    <blockquote>It took 7 colors and a million raindrops to make that picture, we call a rainbow.</blockquote>
+    <h2>United we stand.  Divided we're history.</h2>
+    <p>We come from different areas of the industry, play different roles at work, belong to diverse age groups, even graduated in different years, but there's one thing that unites us: our institute.</p>
+    <p>Tremendous amount of energy, time and effort has gone into bringing about a reunion through this Website.</p>
+    <blockquote>So, stick around&mdash;you're the rainbow.</blockquote>
 
-                </div>
-            </li>
-            <li>
-            <img src="{{ MEDIA_URL }}image/picture/8260_rupesh_basu.jpg" title="ert" />
-            <div>
-                <h1>Max Payne II</h1>
-                <p>Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
-            </div>
-          </li>
-          <li>
-            <img src="{{ MEDIA_URL }}image/picture/8296_devdutt_kadrekar.jpg" title="about" />
-            <div>
-                <h1>Max Payne III</h1>
-                <p>but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
-            </div>
-          </li>
-          <li>
-            <img src="{{ MEDIA_URL }}image/picture/8317_b_s_hegde.jpg" title="about" />
-            <div>                
-                <h1>Bon Jovi: Lost Highway</h1>
-                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not.</p>
-            </div>
-          </li>
-          <li>
-            <img src="{{ MEDIA_URL }}image/picture/8342_d_u_menon.jpg" title="about" />
-            <div>
-                <h1>Bon Jovi</h1>
-                <p>Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
-            </div>
-          </li>
-          <li>
-            <img src="{{ MEDIA_URL }}image/picture/8477_group.jpg" title="about" />
-            <div>
-                <h1>Backstreet Boys</h1>
-                <p>Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
-            </div>
-          </li>
-        </ul>
+    #*<a class="nextPage browse right"></a>
+    <a class="prevPage browse left"></a>*#
+    <div class="scrollable">
+        <div class="items">
+            <img src="{{ MEDIA_URL }}image/picture/8260_rupesh_basu.jpg" />
+            <img src="{{ MEDIA_URL }}image/picture/8296_devdutt_kadrekar.jpg" />
+            <img src="{{ MEDIA_URL }}image/picture/8317_b_s_hegde.jpg" />
+            <img src="{{ MEDIA_URL }}image/picture/8342_d_u_menon.jpg" />
+            <img src="{{ MEDIA_URL }}image/picture/8477_group.jpg" />
+        </div>
     </div>
     {% endblock %}
 

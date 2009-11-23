@@ -10,8 +10,9 @@
 });*/
 
 jQuery(function(){
-    jQuery("#slider").easySlider({
+    /*jQuery("#slider").easySlider({
         numeric: true,
         speed: 200
-    });
+    });*/
+    //jQuery('div.scrollable').scrollable();
 });

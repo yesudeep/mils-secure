@@ -8,7 +8,7 @@ from google.appengine.ext.webapp.util import run_wsgi_app
 from utils import queue_mail_task, render_template, dec, parse_iso_datetime_string, split_emails
 import logging
 import models
-from models import Article, User, Person, TrainingProgram, TrainingProgramRegistrant, Book, TrainingProgramFee, TrainingProgramBrochure, ARTICLE_SECTION_TYPES, Mail, MailReceiver
+from models import PHONE_TYPES, Article, User, Person, TrainingProgram, TrainingProgramRegistrant, Book, TrainingProgramFee, TrainingProgramBrochure, ARTICLE_SECTION_TYPES, Mail, MailReceiver
 from datetime import datetime
 from django.utils import simplejson as json
 from decimal import Decimal
@@ -426,7 +426,7 @@ class UserEditHandler(webapp.RequestHandler):
             mils_year_list=models.MILS_YEAR_LIST,
             birthdate_day=person_birthdate.day,
             birthdate_month=person_birthdate.month,
-            birthdate_year=person_birthdate.year
+            birthdate_year=person_birthdate.year,
         )
 
         response = render_template('admin/edit_user.html', user_key=key, user=user, person=person, **values)
@@ -454,6 +454,16 @@ class UserEditHandler(webapp.RequestHandler):
         birthdate_month = dec(self.request.get('birthdate_month'))
         birthdate_year = dec(self.request.get('birthdate_year'))
         person.birthdate = datetime(birthdate_year, birthdate_month, birthdate_day).date()
+
+        phone_count = dec(self.request.get('phone_count'))
+        if phone_count:
+            phones = []
+            for i in xrange(phone_count):
+                phone_key = self.request.get('phone_' + str(i + 1) + '_key')
+                phone = db.get(db.Key(phone_key))
+                phone.number = self.request.get('phone_' + str(i + 1))
+                phones.append(phone)
+            db.put(phones)
 
         is_student = self.request.get('is_student')
         if is_student == 'yes':

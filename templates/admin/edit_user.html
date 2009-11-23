@@ -28,6 +28,16 @@
     <span class="suffix"></span>
   </label>
 
+  <input type="hidden" name="phone_count" value="{{ person.phones.count() }}" />
+  {% for phone in person.phones %}
+    <label for="phone_{{ loop.index }}">
+        <span class="prefix">phone {{ loop.index }}</span>
+        <input type="hidden" name="phone_{{ loop.index }}_key" value="{{ phone.key() }}" />
+        <input type="text" name="phone_{{ loop.index }}" value="{{ phone.number }}" />
+        <span class="suffix"></span>
+    </label>
+  {% endfor %}
+
   <label for="company">
     <span class="prefix">company</span>
     <input type="text" name="company" value="{{ person.company }}" />
