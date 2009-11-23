@@ -33,7 +33,8 @@
             <div class="column">
                 <label for="graduation_year">
                     <span class="prefix">graduation year</span>
-                    <select name="graduation_year">
+                    <select name="graduation_year" class="required digits">
+                        <option value="" {% if not graduation_year %}selected="selected"{% endif %}>Choose a year...</option>
                     {% for year in mils_year_list %}
                         <option value="{{ year }}" {% if year == graduation_year %}selected="selected"{% endif %}>{{ year }}</option>
                     {% endfor %}
