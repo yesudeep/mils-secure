@@ -309,7 +309,8 @@ class User(RegularModel):
                 users = []
             else:
                 users = db.Query(User)
-            users = users.fetch(FETCH_ALL_VALUES)
+            if users:
+                users = users.fetch(FETCH_ALL_VALUES)
             memcache.set(cache_key, users)
         return users
 
