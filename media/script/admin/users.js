@@ -10,7 +10,7 @@ function defaultActions(type, item){
 }
 
 function createItemHTML(user){
-    return dataListEntry(user, user.nickname, defaultActions('users', user), defaultTags());
+    return dataListEntry(user, user.nickname + ' (' + user.auth_provider + ')', defaultActions('users', user), defaultTags());
 }
 
 function editItem(){

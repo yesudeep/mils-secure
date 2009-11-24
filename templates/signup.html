@@ -74,17 +74,20 @@
             <div class="column">
                 <label for="birthdate">
                     <span class="prefix">birthdate</span>
-                    <select name="birthdate_day">
+                    <select name="birthdate_day" class="required digits">
+                        <option value="" selected="selected">Day</option>
                         {% for day in range(1, 32) %}
                             <option value="{{ day }}" {% if day == birthdate_day %}selected="selected"{% endif %}>{{ day }}</option>
                         {% endfor %}
                     </select>
-                    <select name="birthdate_month">
+                    <select name="birthdate_month" class="required digits">
+                        <option value="" selected="selected">Month</option>
                         {% for month in month_list %}
                             <option value="{{ loop.index }}" {% if loop.index == birthdate_month %}selected="selected"{% endif %}>{{ month }}</option>
                         {% endfor %}
                     </select>
-                    <select name="birthdate_year">
+                    <select name="birthdate_year" class="required digits">
+                        <option value="" selected="selected">Year</option>
                         {% for year in year_list %}
                             <option value="{{ year }}" {% if year == birthdate_year %}selected="selected"{% endif %}>{{ year }}</option>
                         {% endfor %}
@@ -98,7 +101,7 @@
                             <option value="{{ size.0 }}" {% if size.0 == t_shirt_size %}selected="selected"{% endif %}>{{ size.1 }}</option>
                         {% endfor %}
                     </select>
-                    <span class="suffix"></span>
+                    <span class="suffix">Pick the right size and who knows you might get one for free.</span>
                 </label>
             </div>
         </fieldset>

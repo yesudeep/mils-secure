@@ -19,7 +19,7 @@
   <label for="email">
     <span class="prefix">email</span>
     <input type="text" name="email" value="{{ user.email }}" />
-    <span class="suffix"></span>
+    <span class="suffix"><strong>{{ user.signin_email }}</strong> via <strong>{{ user.auth_provider }}</strong> (OpenID: {{ user.identifier }})</span>
   </label>
 
   <label for="corporate_email">
@@ -54,7 +54,7 @@
       <span class="prefix">graduation year</span>
       <select name="graduation_year">
       {% for year in mils_year_list %}
-          <option value="{{ year }}" {% if year == graduation_year %}selected="selected"{% endif %}>{{ year }}</option>
+          <option value="{{ year }}" {% if year == person.graduation_year %}selected="selected"{% endif %}>{{ year }}</option>
       {% endfor %}
       </select>
       <span class="suffix"></span>

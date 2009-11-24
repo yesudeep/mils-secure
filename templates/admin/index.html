@@ -17,7 +17,7 @@
 {% block tag_nav_content %}
     <ul>
         #*<li><a {% if page_name == 'dashboard' %}class="active"{% endif %} id="nav_dashboard" href="/admin/">Dashboard</a></li>*#
-        <li><a {% if page_name == 'users' %}class="active"{% endif %} id="nav_users" href="/admin/users/">Users ({{ user_count }}; approved: {{ approved_user_count }}; deleted: {{ deleted_user_count }})</a></li>
+        <li><a {% if page_name == 'users' %}class="active"{% endif %} id="nav_users" href="/admin/users/">Users {% if user_count %}({{ user_count }}; active: {{ approved_user_count - deleted_user_count }}; &#10004;: {{ approved_user_count }}; &times;: {{ deleted_user_count }}){% endif %}</a></li>
         <li><a {% if page_name == 'articles' %}class="active"{% endif %} id="nav_articles" href="/admin/articles/">Blog Articles</a></li>
         <li><a {% if page_name == 'books' %}class="active"{% endif %} id="nav_books" href="/admin/books/">Books</a></li>
         <li><a {% if page_name == 'announcements' %}class="active"{% endif %} id="nav_announcements" href="/admin/announcements/">Event Announcements</a></li>
