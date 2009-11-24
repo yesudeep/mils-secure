@@ -289,7 +289,6 @@ class User(RegularModel):
     def __str__(self):
         return 'username: %s, nickname: %s, email: %s, identifier: %s, auth_provider: %s' % (self.username, self.nickname, self.email, self.identifier, self.auth_provider)
 
-    # Active participants count
     @classmethod
     def get_user_count(cls):
         return Counter('User.user_count').count
@@ -308,6 +307,46 @@ class User(RegularModel):
         user_count = Counter('User.user_count')
         if user_count.count > 0:
             user_count.increment(incr=-1)
+
+    # Approved participants count
+    @classmethod
+    def get_approved_user_count(cls):
+        return Counter('User.approved_user_count').count
+
+    @classmethod
+    def set_approved_user_count(cls, count):
+        Counter('User.approved_user_count').count = count
+
+    @classmethod
+    def increment_approved_user_count(cls, incr=1):
+        Counter('User.approved_user_count').increment(incr=incr)
+
+    @classmethod
+    def decrement_approved_user_count(cls):
+        user_count = Counter('User.approved_user_count')
+        if user_count.count > 0:
+            user_count.increment(incr=-1)
+
+
+    # deleted participants count
+    @classmethod
+    def get_deleted_user_count(cls):
+        return Counter('User.deleted_user_count').count
+
+    @classmethod
+    def set_deleted_user_count(cls, count):
+        Counter('User.deleted_user_count').count = count
+
+    @classmethod
+    def increment_deleted_user_count(cls, incr=1):
+        Counter('User.deleted_user_count').increment(incr=incr)
+
+    @classmethod
+    def decrement_deleted_user_count(cls):
+        user_count = Counter('User.deleted_user_count')
+        if user_count.count > 0:
+            user_count.increment(incr=-1)
+
 
     @classmethod
     def purge_deleted(cls):

@@ -36,7 +36,11 @@ class IndexHandler(webapp.RequestHandler):
 
 class UsersHandler(webapp.RequestHandler):
     def get(self):
-        response = render_template('admin/generic_list.html', user_count=models.User.get_user_count(), page_name='users', page_description='Approving, editing, and sending messages to users is easy.  Just click on a name to perform any of these operations.')
+        response = render_template('admin/generic_list.html', approved_user_count=models.User.get_approved_user_count(),
+            user_count=models.User.get_user_count(), 
+            deleted_user_count=models.User.get_deleted_user_count(),
+            page_name='users', 
+            page_description='Approving, editing, and sending messages to users is easy.  Just click on a name to perform any of these operations.')
         self.response.out.write(response)
 
 class ArticlesHandler(webapp.RequestHandler):
