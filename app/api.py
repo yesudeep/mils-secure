@@ -23,6 +23,7 @@ class UserApproveHandler(webapp.RequestHandler):
         user.is_active = True
         user.wants_activation = False
         user.put()
+        User.increment_approved_user_count()
         queue_mail_task(url='/worker/mail/account_activation_notification/' + key, method='GET')
         self.response.out.write(user.is_active)
 
@@ -31,7 +32,24 @@ class UserUnapproveHandler(webapp.RequestHandler):
         user = db.get(db.Key(key))
         user.is_active = False
         user.put()
+        User.decrement_approved_user_count()
         self.response.out.write(user.is_active)
+
+class UserDeleteHandler(webapp.RequestHandler):
+    def get(self, key):
+        o = db.get(db.Key(key))
+        o.is_deleted = True
+        o.put()
+        User.increment_deleted_user_count()
+        self.response.out.write(o.is_deleted)
+
+class UserUndeleteHandler(webapp.RequestHandler):
+    def get(self, key):
+        o = db.get(db.Key(key))
+        o.is_deleted = False
+        o.put()
+        User.decrement_deleted_user_count()
+        self.response.out.write(o.is_deleted)
 
 class AnnouncementApproveHandler(webapp.RequestHandler):
     def get(self, key):
@@ -570,8 +588,8 @@ class AnnouncementUnapproveHandler(webapp.RequestHandler):
         self.response.out.write(training_program.is_active)
 
 urls = [
-    (r'/api/users/(.*)/delete/?', DeleteHandler),
-    (r'/api/users/(.*)/undelete/?', UndeleteHandler),
+    (r'/api/users/(.*)/delete/?', UserDeleteHandler),
+    (r'/api/users/(.*)/undelete/?', UserUndeleteHandler),
     (r'/api/users/(.*)/approve/?', UserApproveHandler),
     (r'/api/users/(.*)/unapprove/?', UserUnapproveHandler),
     (r'/api/users/(.*)/toggle_star/?', ToggleStarHandler),

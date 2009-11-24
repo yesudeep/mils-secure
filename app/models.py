@@ -290,6 +290,65 @@ class User(RegularModel):
         return 'username: %s, nickname: %s, email: %s, identifier: %s, auth_provider: %s' % (self.username, self.nickname, self.email, self.identifier, self.auth_provider)
 
     @classmethod
+    def get_user_count(cls):
+        return Counter('User.user_count').count
+
+    @classmethod
+    def set_user_count(cls, count):
+        Counter('User.user_count').count = count
+    #user_count = property(get_user_count, set_user_count)
+
+    @classmethod
+    def increment_user_count(cls, incr=1):
+        Counter('User.user_count').increment(incr=incr)
+
+    @classmethod
+    def decrement_user_count(cls):
+        user_count = Counter('User.user_count')
+        if user_count.count > 0:
+            user_count.increment(incr=-1)
+
+    # Approved participants count
+    @classmethod
+    def get_approved_user_count(cls):
+        return Counter('User.approved_user_count').count
+
+    @classmethod
+    def set_approved_user_count(cls, count):
+        Counter('User.approved_user_count').count = count
+
+    @classmethod
+    def increment_approved_user_count(cls, incr=1):
+        Counter('User.approved_user_count').increment(incr=incr)
+
+    @classmethod
+    def decrement_approved_user_count(cls):
+        user_count = Counter('User.approved_user_count')
+        if user_count.count > 0:
+            user_count.increment(incr=-1)
+
+
+    # deleted participants count
+    @classmethod
+    def get_deleted_user_count(cls):
+        return Counter('User.deleted_user_count').count
+
+    @classmethod
+    def set_deleted_user_count(cls, count):
+        Counter('User.deleted_user_count').count = count
+
+    @classmethod
+    def increment_deleted_user_count(cls, incr=1):
+        Counter('User.deleted_user_count').increment(incr=incr)
+
+    @classmethod
+    def decrement_deleted_user_count(cls):
+        user_count = Counter('User.deleted_user_count')
+        if user_count.count > 0:
+            user_count.increment(incr=-1)
+
+
+    @classmethod
     def purge_deleted(cls):
         db.delete(db.Query(User).filter('is_deleted', True))
 
