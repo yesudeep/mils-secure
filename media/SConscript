@@ -40,6 +40,7 @@ SCRIPT_FILES = Split("""
     script/lib/chickoojs/src/jquery/tools/1.1.1/tools.tabs-1.0.3.js
     script/lib/chickoojs/src/jquery/tools/1.1.1/tools.overlay-1.1.1.js
     script/lib/chickoojs/src/jquery/tools/1.1.1/tools.expose-1.0.5.js
+    script/lib/chickoojs/src/jquery/tools/1.1.1/tools.scrollable-1.1.1.js
     script/lib/chickoojs/src/jquery/tools/1.1.1/tools.scrollable.navigator-1.0.1.js
     script/lib/chickoojs/src/jquery/easing/jquery.easing.1.3.js
     script/lib/chickoojs/src/jquery/validate/jquery.validate.js
@@ -236,6 +237,9 @@ env.YuiCompressorMinify(page_blog_js)
 """script/easySlider1.7.js
 """
 PAGE_ABOUT_JS_FILES =  Split("""
+    script/lib/chickoojs/src/jquery/tools/1.1.1/tools.scrollable-1.1.1.js
+    script/lib/chickoojs/src/jquery/tools/1.1.1/tools.scrollable.navigator-1.0.1.js
+    script/lib/chickoojs/src/jquery/tools/1.1.1/tools.tabs-1.0.3.js
     script/about.js
     """)
 PAGE_ABOUT_JS_FILES = [SRC_DIR + f for f in PAGE_ABOUT_JS_FILES]

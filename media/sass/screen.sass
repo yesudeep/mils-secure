@@ -116,7 +116,7 @@ a
 
 #trunk
     clear: both
-    //:overflow auto
+    :overflow auto
     :min-height 400px
 form.decorated-fields
     :font-family= !font_stack_verdana
@@ -155,6 +155,7 @@ form.decorated-fields.table
 #footer
     clear: both
     font-size: 0.8em
+    :margin-top 100px
     p
         margin-bottom: 3px
     
@@ -172,6 +173,22 @@ ul.photos
         height: 100px
 
 // Articles
+.article-content
+    font-family: "Georgia", "Gentium", "Palatino Linotype", "Palatino", "Palladio", "URW Palladio L", "Book Antiqua", "Baskerville", "Bookman Old Style", "Bitstream Charter", "Nimbus Roman No9 L", "Garamond", "Apple Garamond", "ITC Garamond Narrow", "New Century Schoolbook", "Century Schoolbook", "Century Schoolbook L", "Georgia", "serif"
+    ul, ol
+        margin-bottom: 10px
+        li
+            line-height: 1.5
+    pre
+        font-family: Monaco, Anonymous, Consolas, "Liberation Mono", monospace
+        background-color: whitesmoke
+        border: 1px solid #dcdcdc
+        padding: 10px
+        margin-bottom: 10px
+        :font-size 0.9em
+        :line-height 1.5
+        :color #444
+        
 #sidebar
     margin-top: 40px
     margin-left: 20px
@@ -444,105 +461,45 @@ table
                 :margin-top 15px
   
 
-// About //
-//.definitions
-    :overflow auto
-    li
-        :overflow auto
-        :margin-bottom 10px
-        :width 600px
-        //:height 350px
-        img
-            :border 6px solid white
-            +box-shadow(1px 1px 8px #444)
-            margin: 0 20px 10px 0
-            //float: left
-            //width: 200px
-        a
-            :display block
-            :width 200px
-            :height 200px
-        a#happychickoo
-            :background transparent url("../image/sponsors/happychickoo.jpg") no-repeat scroll 0px 0px
-        div
-            //:float left
-            //:width 500px
-            :padding-right 24px
-
-//#about_alumni
-    li
-        :width 600px
-
-div.scrollable
+// About //     
+#about_content
+    :float left
+    :width 600px
     img
-        :float left
-        :height 300px
-        :width 300px
-        :margin 10px
-        :border 4px solid white
+        border: 6px solid white
         +box-shadow(1px 1px 8px #444)
-        
-//div.scrollable
-    position: relative 
-    //overflow: hidden 
-    width: 660px 
-    height: 0px 
-//div.scrollable div.items  
-    width: 20000em 
-    position: absolute 
-//div.scrollable div.items div  
-    float: left 
-//div.items div.active  
-    border: 1px inset #ccc 
-    background-color: #fff 
-
-//#about_alumni_scrollable
-    :width 960px
-    :height 800px
-    .items li
-        :width 600px
-
-//.scrollable
-    :position relative
-    :overflow hidden
-    :width 960px
-    :height 400px
-    .items
-        :width= 600px * 10
-        :position absolute
-        li
-            :float left
-
-//#controls
-    :margin 20px 0px 0px 10px 
+    
+#alumni_photos
+    :float left
+    //:width 350px
+   
+#item_numbers
+    :margin 20px 0px 0px 10px
     li
-        :display inline-block
+        +display-inline-block
         :margin-right 10px
         a
+            :background-color #104E8B
             :padding 5px 10px
-            :background-color #dfefff
-            :color #555
-            :border 1px solid #104e8b
-//#slider
-    //:width 600px
-    :height 200px
-//ol#controls li.current a
-    :background #104e8b
-    :color #fff	
+            :color white
+            :border 1px solid silver
+        a:hover
+            :background-color #033d79
+        a.current
+            :background-color #3477bc
+            :border 1px solid #033d79
+
+#items
+    li
+        :display none
+        :min-height 300px
+        :float left
+        img
+            :height 300px
+            :width 300px
+            :margin 10px
+            :border 4px solid white
+            +box-shadow(1px 1px 8px #444)            
 
 
-.article-content
-    font-family: "Georgia", "Gentium", "Palatino Linotype", "Palatino", "Palladio", "URW Palladio L", "Book Antiqua", "Baskerville", "Bookman Old Style", "Bitstream Charter", "Nimbus Roman No9 L", "Garamond", "Apple Garamond", "ITC Garamond Narrow", "New Century Schoolbook", "Century Schoolbook", "Century Schoolbook L", "Georgia", "serif"
-    ul, ol
-        margin-bottom: 10px
-        li
-            line-height: 1.5
-    pre
-        font-family: Monaco, Anonymous, Consolas, "Liberation Mono", monospace
-        background-color: whitesmoke
-        border: 1px solid #dcdcdc
-        padding: 10px
-        margin-bottom: 10px
-        :font-size 0.9em
-        :line-height 1.5
-        :color #444
+

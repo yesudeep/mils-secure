@@ -13,6 +13,17 @@ jQuery(function(){
     /*jQuery("#slider").easySlider({
         numeric: true,
         speed: 200
+    });
+    jQuery('#items').scrollable({size: 1}).navigator({
+        navi: "item_numbers",
+        naviItem: 'a',
+        activeClass: 'current'
     });*/
-    //jQuery('div.scrollable').scrollable();
+    jQuery("#item_numbers").tabs("#items > li", {
+          effect: 'horizontal',
+          //fadeOutSpeed: "slow",
+          rotate: true
+    }).slideshow({
+          autoplay: true        
+    });
 });
