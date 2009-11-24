@@ -57,7 +57,7 @@ class RPXTokenHandler(SessionRequestHandler):
                 session_user = cached_session_user
             else:
                 # Handle birthdate.
-                birthdate = profile.get('birthday', models.DEFAULT_BIRTHDATE_STRING)
+                birthdate = profile.get('birthday', '1800-00-00') #models.DEFAULT_BIRTHDATE_STRING)
                 birthdate_year, birthdate_month, birthdate_day = birthdate_to_tuple(birthdate)
                 birthdate = birthdate_to_string(birthdate_year, birthdate_month, birthdate_day)
                 email = profile.get('email', '')
