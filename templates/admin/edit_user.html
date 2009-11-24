@@ -19,7 +19,7 @@
   <label for="email">
     <span class="prefix">email</span>
     <input type="text" name="email" value="{{ user.email }}" />
-    <span class="suffix"></span>
+    <span class="suffix"><strong>{{ user.signin_email }}</strong> via <strong>{{ user.auth_provider }}</strong> (OpenID: {{ user.identifier }})</span>
   </label>
 
   <label for="corporate_email">
