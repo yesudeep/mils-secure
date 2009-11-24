@@ -402,15 +402,47 @@ table
         :margin-bottom 10px
         :width 700px
         //:height 350px
-        a
-            :margin 0 20px 10px 0
+        .logo
             :display block
+            :margin 0 20px 10px 0
             :width 200px
             :height 200px
-        #happychickoo
             :border 6px solid white
             +box-shadow(1px 1px 8px #444)
+            :float left
+        #happychickoo
             :background transparent url("../image/sponsors/happychickoo.jpg") no-repeat scroll 0px 0px
+        #hypercity
+            :background transparent url("../image/sponsors/hypercity.jpg") no-repeat scroll 0px 0px
+#tabs
+    :margin-left 10px
+    //:font-family= !font_stack_verdana
+    > li
+        //:padding 20px
+        +display-inline-block
+        > a
+            +awesome-button()            
+            //:display block
+            //:color white
+            :padding 10px
+            :margin-right 10px
+            //:margin-right 10px
+            //+border-radius(10px)
+            //:background-color #bd1212
+
+#panes
+    //:color white
+    //:font-family= !font_stack_verdana
+    > li
+        +border-radius(10px)
+        :display none
+        //:margin-left 30px
+        :margin-bottom 10px
+        :padding 20px
+        ul
+            >li
+                :margin-top 15px
+  
 
 // About //
 //.definitions

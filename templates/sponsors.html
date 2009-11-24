@@ -1,19 +1,40 @@
 {% extends "base.html" %}
 
 {% block tag_header_additional_content %}
-    <h1 class="title">Sponsors.</h1>
+    <h1 class="title">Our Resources.</h1>
     #*<h2 class="subtitle">People who support us.</h2>*#
 {% endblock %}
 
 {% block tag_trunk_content %}
     {{ about_content }}
-    <ul id="sponsors_list" class="definitions">
-      <li>
-        <a id="happychickoo" href="http://www.happychickoo.com" target="_blank"></a>
-        <h1>happychickoo <em>design studio</em></h1>
-        <p>A handful of color-crazy people who dream of making the Web more beautiful.</p>
-        <p>More information at this Website:  <a href="http://www.happychickoo.com/">www.happychickoo.com</a></p>
+    <ul id="tabs">
+      <li><a href="#trainers">Trainers</a></li>
+      <li><a href="#sponsors">Sponsors</a></li>      
+    </ul>
+    <ul id="panes">
+      <li id="trainers">
+        Coming Soon!
+      </li>
+      <li id="sponsors">
+        <ul id="sponsors_list" class="definitions">
+          <li>
+            <a id="happychickoo" class="logo" href="http://www.happychickoo.com" target="_blank"></a>
+            <h1>happychickoo <em>design studio</em></h1>
+            <p>A handful of color-crazy people who dream of making the Web more beautiful.</p>
+            <p>More information at this Website:  <a href="http://www.happychickoo.com/">www.happychickoo.com</a></p>
+          </li>
+          <li>
+            <a id="hypercity" class="logo" href="http://www.hypercityindia.com" target="_blank"></a>
+            <h1>Hypercity Retail (India) Ltd.</h1>
+            <p> Hypercity Retail (India) Ltd. is part of the K. Raheja Corp. Group, a leader in the Indian retail sector. Hypercity  is  a  hypermarket  in  the  true sense and offers its customers a dominating assortment of quality products at great value in a large, modern and exciting format.</p>
+            <p>More information at this Website:  <a href="http://www.hypercityindia.com/">www.hypercityindia.com</a></p>
+          </li>
+        </ul>
       </li>
     </ul>
 {% endblock %}
-
+{% block tag_scripts %}
+<script type="text/javascript">
+window.scripts.push("{{ MEDIA_URL }}script/page/sponsors{{ MINIFIED }}.js");
+</script>
+{% endblock %}

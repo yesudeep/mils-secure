@@ -28,6 +28,7 @@ SCRIPT_FILES = Split("""
     script/admin/announcements.js
     script/admin/common.js
     script/training_announcements.js
+    script/sponsors.js
     script/training_announcement_registration.js
     script/unregister_registrant.js
     script/lib/chickoojs/src/jquery/jquery-1.3.2.js
@@ -107,6 +108,7 @@ IMAGE_FILES = Split("""
     image/about/5.jpg
     image/icon/sponsors.png
     image/sponsors/happychickoo.jpg
+    image/sponsors/hypercity.jpg
 
     script/lib/chickoojs/src/blackbirdjs/blackbird_icons.png
     script/lib/chickoojs/src/blackbirdjs/blackbird_panel.png
@@ -277,6 +279,14 @@ PAGE_UNREGISTER_REGISTRANT_JS_FILES =  Split("""
 PAGE_UNREGISTER_REGISTRANT_JS_FILES = [SRC_DIR + f for f in PAGE_UNREGISTER_REGISTRANT_JS_FILES]
 page_unregister_registrant_js = env.Concatenate([DEST_DIR + 'script/page/unregister_registrant.js'], PAGE_UNREGISTER_REGISTRANT_JS_FILES)
 env.YuiCompressorMinify(page_unregister_registrant_js)
+
+PAGE_SPONSORS_JS_FILES =  Split("""
+    script/lib/chickoojs/src/jquery/tools/1.1.1/tools.tabs-1.0.3.js
+    script/sponsors.js
+    """)
+PAGE_SPONSORS_JS_FILES = [SRC_DIR + f for f in PAGE_SPONSORS_JS_FILES]
+page_sponsors_js = env.Concatenate([DEST_DIR + 'script/page/sponsors.js'], PAGE_SPONSORS_JS_FILES)
+env.YuiCompressorMinify(page_sponsors_js)
 
 training_announcement_registration_JS_FILES =  Split("""
     script/lib/chickoojs/src/jquery/form/jquery.form.js
