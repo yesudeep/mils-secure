@@ -24,6 +24,6 @@ jQuery(function(){
           //fadeOutSpeed: "slow",
           rotate: true
     }).slideshow({
-          autoplay: true        
+          autoplay: true
     });
 });
