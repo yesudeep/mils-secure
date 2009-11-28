@@ -2,3 +2,6 @@
 [submodule "media/script/lib/chickoojs"]
 	path = media/script/lib/chickoojs
 	url = git://github.com/yesudeep/chickoojs.git
+[submodule "app/haggoo"]
+	path = app/haggoo
+	url = git://github.com/yesudeep/haggoo.git
