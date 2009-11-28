@@ -50,7 +50,8 @@ class SignupNotificationWorker(webapp.RequestHandler):
             subject = '[MILS Alumni] Account Signup Notification'
             body = render_template('email/thank_you_for_registering.text', nickname=user.nickname)
             mail.send_mail(sender=sender,
-                to=[user.email, user.corporate_email],
+                #to=[user.email, user.corporate_email],
+                to=user.email,
                 bcc=ADMIN_MAIL_SENDER,
                 subject=subject,
                 body=body)
@@ -68,7 +69,8 @@ class AccountActivationNotificationWorker(webapp.RequestHandler):
             subject = '[MILS Alumni] Your account has been activated.'
             body = render_template('email/account_activation_notification.text', nickname=user.nickname)
             mail.send_mail(sender=sender,
-                to=[user.email, user.corporate_email],
+                #to=[user.email, user.corporate_email],
+                to=user.email,
                 subject=subject,
                 body=body)
             logging.info('/worker/mail/account_activation_notification/ sent to ' + user.email + ' from ' + sender)
