@@ -23,14 +23,12 @@ class IndexPage(AuthorizedRequestHandler):
     def get(self):
         if self.is_logged_in():
             self.redirect('/blog')
-        cache_key = 'index_page'
-        cached_html = memcache.get(cache_key)
-        if cached_html:
-            self.response.out.write(cached_html)
-        else:
+        cache_key = 'index.html'
+        response = memcache.get(cache_key)
+        if not response:
             response = render_template('index.html')
             memcache.set(cache_key, response, 900)
-            self.response.out.write(response)
+        self.response.out.write(response)
 
 class UnsupportedBrowserPage(webapp.RequestHandler):
     def get(self):
@@ -128,8 +126,13 @@ class AboutPage(AuthorizedRequestHandler):
         #else:
         #    response = render_template('index.html')
         #    self.response.out.write(response)
-        response = render_template('about.html')
+        cache_key = 'about.html'
+        response = memcache.get(cache_key)
+        if not response:
+            response = render_template('about.html')
+            memcache.set(cache_key, response, 900)
         self.response.out.write(response)
+
 
 class JsonBlogHandler(AuthorizedRequestHandler):
     def get(self):
@@ -408,8 +411,13 @@ class ThankYouUnregisterHandler(AuthorizedRequestHandler):
 
 class SponsorsPage(AuthorizedRequestHandler):
     def get(self):
-        response = render_template('sponsors.html')
+        cache_key = 'sponsors.html'
+        response = memcache.get(cache_key)
+        if not response:
+            response = render_template('sponsors.html')
+            memcache.set(cache_key, response, 900)
         self.response.out.write(response)
+
 
 urls = [
     ('/', IndexPage),
