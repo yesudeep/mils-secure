@@ -29,7 +29,7 @@ class IndexPage(AuthorizedRequestHandler):
             self.response.out.write(cached_html)
         else:
             response = render_template('index.html')
-            memcache.set(cache_key, response, 120)
+            memcache.set(cache_key, response, 900)
             self.response.out.write(response)
 
 class UnsupportedBrowserPage(webapp.RequestHandler):
