@@ -59,4 +59,4 @@ handlers:
   script: accounts.py
   
 - url: /.*
-  script: www.py
+  script: handlers.py
