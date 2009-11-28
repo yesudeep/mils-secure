@@ -7,6 +7,7 @@ SRC_DIR = './'
 MEDIA_SRC_DIR = '../' + env['MEDIA_SRC_DIR'] + '/'
 DEST_DIR = '../' + env['TEMPLATES_DEST_DIR'] + '/'
 TEMPLATE_BUILD_DIR = './_build/'
+TEMPLATE_MINIFIED_DIR=  './_build_min/'
 
 base_site_pickle = env.Pickle('base_site_vars.pkl', Value({
     'LOADER_SCRIPT': open(MEDIA_SRC_DIR + 'script/lib/chickoojs/src/loader-min.js', 'r').read()
@@ -78,6 +79,8 @@ for f in set(PLAIN_COPIES):
     env.Command(DEST_DIR + f, SRC_DIR + f, Copy("$TARGET", "$SOURCE"))
 
 for f in set(MINIFIABLE_FILES):
-    env.HTMLMinify(DEST_DIR + f, TEMPLATE_BUILD_DIR + f, HTML_MINIFY_INLINE=True)
+    env.HTMLMinify(TEMPLATE_MINIFIED_DIR + f, TEMPLATE_BUILD_DIR + f, HTML_MINIFY_INLINE=True)
+    env.Jinja2Compile(DEST_DIR + f, TEMPLATE_MINIFIED_DIR + f, jinja2_base_dir='_build_min/')
     #env.Command(DEST_DIR + f, TEMPLATE_BUILD_DIR + f, Copy("$TARGET", "$SOURCE"))
+
 
