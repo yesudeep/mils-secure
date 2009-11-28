@@ -4,6 +4,8 @@
 *~
 *.swp
 *.log
+\#*\#
+.\#*
 
 .sconsign.dblite
 
@@ -35,6 +37,7 @@ app/templates
 #app/index.yaml
 templates/*.pkl
 templates/_build
+templates/_build_min
 
 # Java ignores
 admin/war/WEB-INF/classes
