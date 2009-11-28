@@ -1,0 +1,84 @@
+diff -r 7ffaa999771a jinja2/compiler.py
+--- a/jinja2/compiler.py	Sun Jul 26 11:48:41 2009 +0200
++++ b/jinja2/compiler.py	Mon Jul 27 13:43:32 2009 -0300
+@@ -682,16 +682,18 @@ class CodeGenerator(NodeVisitor):
+
+     # -- Statement Visitors
+
+     def visit_Template(self, node, frame=None):
+         assert frame is None, 'no root frame allowed'
+         from jinja2.runtime import __all__ as exported
+         self.writeline('from __future__ import division')
+         self.writeline('from jinja2.runtime import ' + ', '.join(exported))
++        self.writeline('def run(environment):')
++        self.indent()
+
+         # do we have an extends tag at all?  If not, we can save some
+         # overhead by just not processing any inheritance code.
+         have_extends = node.find(nodes.Extends) is not None
+
+         # find all blocks
+         for block in node.find_all(nodes.Block):
+             if block.name in self.blocks:
+@@ -767,16 +769,19 @@ class CodeGenerator(NodeVisitor):
+
+         self.writeline('blocks = {%s}' % ', '.join('%r: block_%s' % (x, x)
+                                                    for x in self.blocks),
+                        extra=1)
+
+         # add a function that returns the debug info
+         self.writeline('debug_info = %r' % '&'.join('%s=%s' % x for x
+                                                     in self.debug_info))
++
++        self.writeline('return locals()')
++        self.outdent()
+
+     def visit_Block(self, node, frame):
+         """Call a block and register it for the template."""
+         level = 1
+         if frame.toplevel:
+             # if we know that we are a child template, there is no need to
+             # check if we are one
+             if self.has_known_extends:
+diff -r 7ffaa999771a jinja2/environment.py
+--- a/jinja2/environment.py	Sun Jul 26 11:48:41 2009 +0200
++++ b/jinja2/environment.py	Mon Jul 27 13:43:32 2009 -0300
+@@ -611,32 +611,33 @@ class Template(object):
+
+     @classmethod
+     def from_code(cls, environment, code, globals, uptodate=None):
+         """Creates a template object from compiled code and the globals.  This
+         is used by the loaders and environment to create a template object.
+         """
+         t = object.__new__(cls)
+         namespace = {
+-            'environment':          environment,
+             '__jinja_template__':   t
+         }
+         exec code in namespace
++        # execute the run() function from the source code.
++        tpl_vars = namespace['run'](environment)
+         t.environment = environment
+         t.globals = globals
+-        t.name = namespace['name']
++        t.name = tpl_vars['name']
+         t.filename = code.co_filename
+-        t.blocks = namespace['blocks']
++        t.blocks = tpl_vars['blocks']
+
+         # render function and module
+-        t.root_render_func = namespace['root']
++        t.root_render_func = tpl_vars['root']
+         t._module = None
+
+         # debug and loader helpers
+-        t._debug_info = namespace['debug_info']
++        t._debug_info = tpl_vars['debug_info']
+         t._uptodate = uptodate
+
+         return t
+
+     def render(self, *args, **kwargs):
+         """This method accepts the same arguments as the `dict` constructor:
+         A dict, a dict subclass or some keyword arguments.  If no arguments
+         are given the context will be empty.  These two calls do the same::

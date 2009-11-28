@@ -1,0 +1,4 @@
+Gaefy is developed by Rodrigo Moraes.
+
+The acl module is based on a concept from SolarPHP framework, developed by
+Paul M. Jones and released under the BSD license. See http://solarphp.com/.
