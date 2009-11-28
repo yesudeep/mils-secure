@@ -1,17 +1,21 @@
 #!/usr/bin/env python -U
 # -*- coding: utf-8 -*-
 
-import configuration as config
+import configuration
 import logging
 from google.appengine.api import memcache
 from google.appengine.ext import webapp, db
 from google.appengine.ext.webapp.util import run_wsgi_app
 import models
-from utils import dec, queue_mail_task, render_template, AuthorizedRequestHandler
+from utils import dec, queue_mail_task, AuthorizedRequestHandler
 from django.utils import simplejson as json
 from utils import get_iso_datetime_string
 from models import FirstAlumniMeetRegistrant, TrainingProgram, TrainingProgramFee, Article, TrainingProgramRegistrant, Book
 from datetime import datetime
+from gaefy.jinja2.code_loaders import FileSystemCodeLoader
+from haggoo.template.jinja2 import render_generator
+
+render_template = render_generator(loader=FileSystemCodeLoader, builtins=configuration.TEMPLATE_BUILTINS)
 
 logging.basicConfig(level=logging.DEBUG)
 
@@ -111,7 +115,7 @@ class PhotosPage(AuthorizedRequestHandler):
         if auth_level == models.AUTH_LEVEL_REGISTERED_USER:
             self.redirect('/account/activate/reminder/')
         elif auth_level == models.AUTH_LEVEL_ACTIVATED_USER:
-            self.redirect(config.PICASA_WEB_ALBUMS_PUBLIC_URL)
+            self.redirect(configuration.PICASA_WEB_ALBUMS_PUBLIC_URL)
 
 class AboutPage(AuthorizedRequestHandler):
     def get(self):
@@ -133,7 +137,7 @@ class JsonBlogHandler(AuthorizedRequestHandler):
         month = self.request.get('month')
         #auth_level = self.is_user_authorized()
         #if auth_level == models.AUTH_LEVEL_ACTIVATED_USER:
-            #self.redirect(config.PICASA_WEB_ALBUMS_PUBLIC_URL)
+            #self.redirect(configuration.PICASA_WEB_ALBUMS_PUBLIC_URL)
         articles = models.Article.get_all_published_for_month(dec(year), dec(month))
         articles_list = [
             dict(title=a.title,
@@ -408,31 +412,31 @@ class SponsorsPage(AuthorizedRequestHandler):
         self.response.out.write(response)
 
 urls = [
-	('/', IndexPage),
-	('/about/?', AboutPage),
+    ('/', IndexPage),
+    ('/about/?', AboutPage),
     ('/article/([0-9]*)/([0-9]*)/([0-9]*)/(.*)/?', ArticleHandler),
-	('/blog/?', BlogPage),
-	('/students/?', StudentsPage),
-	('/photos/?', PhotosPage),
-	('/json/blog/?', JsonBlogHandler),
+    ('/blog/?', BlogPage),
+    ('/students/?', StudentsPage),
+    ('/photos/?', PhotosPage),
+    ('/json/blog/?', JsonBlogHandler),
     ('/json/books/?', JsonBooksHandler),
     ('/json/books/buy/?', BooksPurchaseHandler),
     ('/json/existing_user/?', ExistingUserInfoHandler),
-	('/announcement/(.*)/register/?', TrainingAnnouncementRegistrationHandler),
-	('/training_announcements/?', TrainingAnnouncementsPageHandler),
-	('/training_announcements/check_email_available/?', TrainingAnnouncementsEmailAvailableHandler),
+    ('/announcement/(.*)/register/?', TrainingAnnouncementRegistrationHandler),
+    ('/training_announcements/?', TrainingAnnouncementsPageHandler),
+    ('/training_announcements/check_email_available/?', TrainingAnnouncementsEmailAvailableHandler),
     ('/training_announcements/(.*)/registrant/(.*)/unregister/?', UnregisterRegistrantHandler),
     ('/training_announcements/(.*)/registrant/(.*)/unregister/thanks/?', ThankYouUnregisterHandler),
     ('/unsupported/browser/?', UnsupportedBrowserPage),
     ('/sponsors/?', SponsorsPage),
-	#('/privacy', PrivacyPage),
-	#('/tos', TosPage),
-	#('/help', HelpPage),
-]
-application = webapp.WSGIApplication(urls, debug=config.DEBUG)
+    #('/privacy', PrivacyPage),
+    #('/tos', TosPage),
+    #('/help', HelpPage),
+    ]
 
 def main():
     from gaefy.db.datastore_cache import DatastoreCachingShim
+    application = webapp.WSGIApplication(urls, debug=configuration.DEBUG)
     DatastoreCachingShim.Install()
     run_wsgi_app(application)
     DatastoreCachingShim.Uninstall()

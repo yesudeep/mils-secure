@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import configuration as config
+import configuration
 import hashlib
 import urllib
 import logging
@@ -20,21 +20,25 @@ from appengine_utilities.sessions import Session
 from data.countries import COUNTRY_NAME_ISO_ALPHA_3_TABLE
 
 from utils import get_gravatar_url, birthdate_to_string, birthdate_to_tuple, \
-    queue_mail_task, queue_task, dec, render_template, SessionUser, SessionRequestHandler, AuthorizedRequestHandler
+    queue_mail_task, queue_task, dec, SessionUser, SessionRequestHandler, AuthorizedRequestHandler
 import utils
 from data import countries, calendar
 import models
 from models import FirstAlumniMeetRegistrant
+from gaefy.jinja2.code_loaders import FileSystemCodeLoader
+from haggoo.template.jinja2 import render_generator
+
+render_template = render_generator(loader=FileSystemCodeLoader, builtins=configuration.TEMPLATE_BUILTINS)
 
 logging.basicConfig(level=logging.DEBUG)
 
 class RPXTokenHandler(SessionRequestHandler):
     def get(self):
         token = self.request.get('token')
-        url = config.RPX_NOW_API_AUTH_URL
+        url = configuration.RPX_NOW_API_AUTH_URL
         args = {
             'format': 'json',
-            'apiKey': models.Api.get_api_key(name=config.RPX_NOW_DOMAIN),
+            'apiKey': models.Api.get_api_key(name=configuration.RPX_NOW_DOMAIN),
             'token': token,
         }
         api_response = urlfetch.fetch(url=url,
@@ -346,10 +350,10 @@ urls = [
     ('/account/activate/reminder/?', AccountActivateReminderPage),
     ('/account/logout/?', AccountLogoutPage),
 ]
-application = webapp.WSGIApplication(urls, debug=config.DEBUG)
 
 def main():
     from gaefy.db.datastore_cache import DatastoreCachingShim
+    application = webapp.WSGIApplication(urls, debug=configuration.DEBUG)
     DatastoreCachingShim.Install()
     run_wsgi_app(application)
     DatastoreCachingShim.Uninstall()

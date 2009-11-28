@@ -78,9 +78,11 @@ for f in set(TEMPLATE_FILES):
 for f in set(PLAIN_COPIES):
     env.Command(DEST_DIR + f, SRC_DIR + f, Copy("$TARGET", "$SOURCE"))
 
+from haggoo.template.jinja2 import default_filters
+
 for f in set(MINIFIABLE_FILES):
     env.HTMLMinify(TEMPLATE_MINIFIED_DIR + f, TEMPLATE_BUILD_DIR + f, HTML_MINIFY_INLINE=True)
-    env.Jinja2Compile(DEST_DIR + f, TEMPLATE_MINIFIED_DIR + f, jinja2_base_dir='_build_min/')
+    env.Jinja2Compile(DEST_DIR + f, TEMPLATE_MINIFIED_DIR + f, jinja2_base_dir='_build_min/', jinja2_filters=default_filters)
     #env.Command(DEST_DIR + f, TEMPLATE_BUILD_DIR + f, Copy("$TARGET", "$SOURCE"))
 
 

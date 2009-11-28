@@ -1,17 +1,22 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import configuration as config
+import configuration
 from google.appengine.ext import db, webapp
 from google.appengine.api import memcache, users
 from google.appengine.ext.webapp.util import run_wsgi_app
-from utils import queue_mail_task, render_template, dec, parse_iso_datetime_string, split_emails
+from utils import queue_mail_task, dec, parse_iso_datetime_string, split_emails
 import logging
 import models
 from models import PHONE_TYPES, Article, User, Person, TrainingProgram, TrainingProgramRegistrant, Book, TrainingProgramFee, TrainingProgramBrochure, ARTICLE_SECTION_TYPES, Mail, MailReceiver
 from datetime import datetime
 from django.utils import simplejson as json
 from decimal import Decimal
+from gaefy.jinja2.code_loaders import FileSystemCodeLoader
+from haggoo.template.jinja2 import render_generator
+
+render_template = render_generator(loader=FileSystemCodeLoader, builtins=configuration.TEMPLATE_BUILTINS)
+
 
 MAX_FETCH_LIMIT = 400
 
@@ -641,10 +646,10 @@ urls = [
     (r'/api/registrants/(.*)/confirm_payment/(.*)/?', RegistrantConfirmPaymentHandler),
     (r'/api/registrants/(.*)/unapprove/(.*)/?', RegistrantUnapproveHandler),
 ]
-application = webapp.WSGIApplication(urls, debug=config.DEBUG)
 
 def main():
     from gaefy.db.datastore_cache import DatastoreCachingShim
+    application = webapp.WSGIApplication(urls, debug=configuration.DEBUG)
     DatastoreCachingShim.Install()
     run_wsgi_app(application)
     DatastoreCachingShim.Uninstall()

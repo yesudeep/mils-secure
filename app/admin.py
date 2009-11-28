@@ -1,17 +1,20 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import configuration as config
+import configuration
 import logging
 from google.appengine.api import users, memcache
 from google.appengine.ext import webapp
 from google.appengine.ext.webapp.util import run_wsgi_app
-from utils import render_template, dec
+from utils import dec
 import utils
 import models
+from gaefy.jinja2.code_loaders import FileSystemCodeLoader
+from haggoo.template.jinja2 import render_generator
+
+render_template = render_generator(loader=FileSystemCodeLoader, builtins=configuration.TEMPLATE_BUILTINS)
 
 logging.basicConfig(level=logging.DEBUG)
-
 
 class IndexHandler(webapp.RequestHandler):
     def get(self):
@@ -70,18 +73,18 @@ class LogoutHandler(webapp.RequestHandler):
             self.redirect(users.create_logout_url('/admin'))
 
 urls = [
-	('/admin/?', UsersHandler),
-	('/admin/mails/?', MailHandler),
+    ('/admin/?', UsersHandler),
+    ('/admin/mails/?', MailHandler),
     ('/admin/users/?', UsersHandler),
     ('/admin/books/?', BooksHandler),
     ('/admin/articles/?', ArticlesHandler),
     ('/admin/announcements/?', AnnouncementsHandler),
     ('/admin/logout/?', LogoutHandler),
 ]
-application = webapp.WSGIApplication(urls, debug=config.DEBUG)
 
 def main():
     from gaefy.db.datastore_cache import DatastoreCachingShim
+    application = webapp.WSGIApplication(urls, debug=configuration.DEBUG)
     DatastoreCachingShim.Install()
     run_wsgi_app(application)
     DatastoreCachingShim.Uninstall()
