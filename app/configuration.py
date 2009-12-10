@@ -163,10 +163,6 @@ _gaq.push(['_trackPageview']);
   doc.documentElement.firstChild.appendChild(ga);
 })();
 </script>
-<script type="text/javascript">
-var _wh = ((document.location.protocol=='https:') ? "https://sec1.woopra.com" : "http://static.woopra.com");
-document.write(unescape("%3Cscript src='" + _wh + "/js/woopra.js' type='text/javascript'%3E%3C/script%3E"));
-</script>
 """ % dict(GOOGLE_ANALYTICS_ID=GOOGLE_ANALYTICS_ID)
 
 

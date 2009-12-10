@@ -44,6 +44,12 @@ getScripts(window.scripts);
 
 {% block tag_scripts_analytics %}
 {{ ANALYTICS_CODE }}
+
+<script type="text/javascript">
+  var _wh = ((document.location.protocol=='https:') ? "https://sec1.woopra.com" : "http://static.woopra.com");
+  document.write(unescape("%3Cscript src='" + _wh + "/js/woopra.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+
 {% endblock %}
 
 
