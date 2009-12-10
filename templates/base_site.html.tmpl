@@ -51,17 +51,33 @@ getScripts(window.scripts);
 
 {% if not LOCAL %}
 {% block tag_scripts_analytics %}
-{% block tag_scripts_google_analytics %}<script type="text/javascript">
-var gaJsHost=(("https:"==document.location.protocol)?"https://ssl.":"http://www.");
-document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
-</script>
+{% block tag_scripts_google_analytics %}
+
 <script type="text/javascript">
-try{var pageTracker=_gat._getTracker("UA-7340598-3");pageTracker._trackPageview();}catch(err){}
-</script>{% endblock %}
-{% block tag_scripts_woopra_analytics %}<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', '{{ GOOGLE_ANALYTICS_ID }}']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script');
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' :
+        'http://www') + '.google-analytics.com/ga.js';
+    ga.setAttribute('async', 'true');
+    document.documentElement.firstChild.appendChild(ga);
+  })();
+
+</script>
+{% endblock %}
+
+{% block tag_scripts_woopra_analytics %}
+
+<script type="text/javascript">
 var _wh = ((document.location.protocol=='https:') ? "https://sec1.woopra.com" : "http://static.woopra.com");
 document.write(unescape("%3Cscript src='" + _wh + "/js/woopra.js' type='text/javascript'%3E%3C/script%3E"));
-</script>{% endblock %}
+</script>
+
+{% endblock %}
+
 {% endblock %}
 {% endif %}
 

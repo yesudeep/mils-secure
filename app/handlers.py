@@ -50,16 +50,19 @@ class BlogPage(AuthorizedRequestHandler):
         elif auth_level == models.AUTH_LEVEL_ACTIVATED_USER:
             today = datetime.utcnow()
 
-            year = self.request.get('year')
-            month = self.request.get('month')
+            request_year = self.request.get('year')
+            request_month = self.request.get('month')
 
-            if not year or not month:
+            if not request_year or not request_month:
                 year = today.year
                 month = today.month
             else:
-                year = dec(year)
-                month = dec(month)
+                year = dec(request_year)
+                month = dec(request_month)
             articles = Article.get_all_published_for_month(year, month)
+            if not articles:
+                month = month - 1
+                articles = Article.get_all_published_for_month(year, month)
             books = Book.get_latest(count=10)
             response = render_template('blog.html',
                 year_list=models.BLOG_YEAR_LIST,
@@ -82,16 +85,19 @@ class StudentsPage(AuthorizedRequestHandler):
         elif auth_level == models.AUTH_LEVEL_ACTIVATED_USER:
             today = datetime.utcnow()
 
-            year = self.request.get('year')
-            month = self.request.get('month')
+            request_year = self.request.get('year')
+            request_month = self.request.get('month')
 
-            if not year or not month:
+            if not request_year or not request_month:
                 year = today.year
                 month = today.month
             else:
                 year = dec(year)
                 month = dec(month)
             articles = Article.get_all_published_student_articles_for_month(year, month)
+            if not articles:
+                month = month - 1
+                articles = Article.get_all_published_student_articles_for_month(year, month)
             books = Book.get_latest(count=10)
             response = render_template('blog_students.html',
                 year_list=models.BLOG_YEAR_LIST,
