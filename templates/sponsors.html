@@ -10,7 +10,7 @@
     <ul id="tabs">
       <li><a href="#trainers">Trainers</a></li>
       <li><a href="#sponsors">Sponsors</a></li>
-      <li><a href="#recruiters">Recruiters</a></li>      
+      <li><a href="#recruiters">Recruiters</a></li>
     </ul>
     <ul id="panes">
     <li id="trainers">
@@ -46,6 +46,6 @@
 {% endblock %}
 {% block tag_scripts %}
 <script type="text/javascript">
-window.scripts.push("{{ MEDIA_URL }}script/page/sponsors{{ MINIFIED }}.js");
+window.scripts.push("{{ TEXT_MEDIA_URL }}script/page/sponsors{{ JS_MINIFIED }}.js");
 </script>
 {% endblock %}

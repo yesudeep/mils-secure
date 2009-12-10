@@ -1,5 +1,5 @@
 application: mils-secure
-version: development
+version: optimized
 runtime: python
 api_version: 1
 

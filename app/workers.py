@@ -133,7 +133,7 @@ class TrainingAnnouncementRegistrationNotificationWorker(webapp.RequestHandler):
             subject = '[MILS Alumni] Thank you for registering for the training event'
             body = render_template('email/training_announcement_registration_notification.text',
                 nickname=registrant.full_name,
-                unregister_url= config.ABSOLUTE_ROOT_URL + 'training_announcements/' + training_program_key + '/registrant/' + registrant_key + '/unregister/',
+                unregister_url= config.ROOT_URL + 'training_announcements/' + training_program_key + '/registrant/' + registrant_key + '/unregister/',
                 training_program_title=training_program.title)
 
             mail.send_mail(sender=sender,
@@ -160,7 +160,7 @@ class TrainingAnnouncementPaymentNotificationWorker(webapp.RequestHandler):
             body = render_template('email/training_announcement_payment_notification.text',
                 nickname=registrant.full_name,
                 payment_details=config.PAYMENT_DETAILS,
-                unregister_url= config.ABSOLUTE_ROOT_URL + 'training_announcements/' + training_program_key + '/registrant/' + registrant_key + '/unregister/',
+                unregister_url= config.ROOT_URL + 'training_announcements/' + training_program_key + '/registrant/' + registrant_key + '/unregister/',
                 training_program_title=training_program.title)
 
             mail.send_mail(sender=sender,
@@ -186,7 +186,7 @@ class TrainingAnnouncementConfirmPaymentNotificationWorker(webapp.RequestHandler
             subject = '[MILS Alumni] Thank you for your payment for the event.'
             body = render_template('email/training_announcement_confirm_payment_notification.text',
                 nickname=registrant.full_name,
-                unregister_url= config.ABSOLUTE_ROOT_URL + 'training_announcements/' + training_program_key + '/registrant/' + registrant_key + '/unregister/',
+                unregister_url= config.ROOT_URL + 'training_announcements/' + training_program_key + '/registrant/' + registrant_key + '/unregister/',
                 training_program_title=training_program.title)
 
             mail.send_mail(sender=sender,
@@ -214,7 +214,7 @@ class TrainingAnnouncementUnregisterNotificationWorker(webapp.RequestHandler):
             subject = '[MILS Alumni] You have successfully unregistered from the event.'
             body = render_template('email/training_announcement_unregister_notification.text',
                 nickname=registrant.full_name,
-                renew_url= config.ABSOLUTE_ROOT_URL + 'training_announcements/' + training_program_key + '/registrant/' + registrant_key + '/register/',
+                renew_url= config.ROOT_URL + 'training_announcements/' + training_program_key + '/registrant/' + registrant_key + '/register/',
                 training_program_title=training_program.title)
 
             mail.send_mail(sender=sender,

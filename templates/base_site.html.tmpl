@@ -1,11 +1,8 @@
 <!doctype html><html><head>
 <meta name="verify-v1" content="KI7FCk3ZgACVoQ+YKUk+2rCXWlyF51E83Ke8LFp076Y=" />
-#*<meta http-equiv="X-UA-Compatible" content="IE=edge" /> Make IE use the latest rendering mode/engine. *#
-#*<!--[if lt IE 7]>*#
 <meta http-equiv="X-UA-Compatible" content="chrome=1" />
-#*<![endif]-->*#
 <meta charset="utf-8" />
-<title>{% block tag_title %}MILS Alumni{% endblock %}</title>
+<title>{% block tag_title %}{{ APPLICATION_TITLE }}{% endblock %}</title>
 
 {% block unsupported_browser %}
 #*<!--[if IE]>
@@ -31,13 +28,9 @@ window.location.href="/unsupported/browser/";
 {% block tag_body %}{% endblock %}
 
 {% block tag_scripts_prefix %}
-#*<script type="text/javascript" src="{{ MEDIA_URL }}script/lib/chickoojs/src/load{{ MINIFIED }}.js" charset="utf-8"></script>*#
 <script type="text/javascript">
 $LOADER_SCRIPT
-{% if LOCAL %}window.scripts=["{{ MEDIA_URL }}script/lib/chickoojs/src/jquery/jquery-1.3.2-min.js"];
-{% else %}window.scripts=["http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"];
-#*window.scripts=["http://ajax.microsoft.com/ajax/jQuery/jquery-1.3.2.min.js"];*#
-{% endif %}
+window.scripts=["{{ JQUERY_URL }}"];
 </script>
 {% endblock %}
 {% block tag_scripts_base %}{% endblock %}
@@ -49,37 +42,9 @@ getScripts(window.scripts);
 {% endblock %}
 {% block tag_scripts_final %}{% endblock %}
 
-{% if not LOCAL %}
 {% block tag_scripts_analytics %}
-{% block tag_scripts_google_analytics %}
-
-<script type="text/javascript">
-  var _gaq = _gaq || [];
-  _gaq.push(['_setAccount', '{{ GOOGLE_ANALYTICS_ID }}']);
-  _gaq.push(['_trackPageview']);
-
-  (function() {
-    var ga = document.createElement('script');
-    ga.src = ('https:' == document.location.protocol ? 'https://ssl' :
-        'http://www') + '.google-analytics.com/ga.js';
-    ga.setAttribute('async', 'true');
-    document.documentElement.firstChild.appendChild(ga);
-  })();
-
-</script>
+{{ ANALYTICS_CODE }}
 {% endblock %}
-
-{% block tag_scripts_woopra_analytics %}
-
-<script type="text/javascript">
-var _wh = ((document.location.protocol=='https:') ? "https://sec1.woopra.com" : "http://static.woopra.com");
-document.write(unescape("%3Cscript src='" + _wh + "/js/woopra.js' type='text/javascript'%3E%3C/script%3E"));
-</script>
-
-{% endblock %}
-
-{% endblock %}
-{% endif %}
 
 
 </body></html>

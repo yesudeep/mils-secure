@@ -473,7 +473,7 @@ class UserEditHandler(webapp.RequestHandler):
         person.graduation_year = dec(self.request.get('graduation_year'))
         person.t_shirt_size = self.request.get('t_shirt_size')
         person.gender = self.request.get('gender')
- 
+
         birthdate_day = dec(self.request.get('birthdate_day'))
         birthdate_month = dec(self.request.get('birthdate_month'))
         birthdate_year = dec(self.request.get('birthdate_year'))
@@ -532,7 +532,7 @@ class UserListHandler(webapp.RequestHandler):
         user_list = []
         for user in users:
             user_list.append(user.to_json_dict('nickname',
-                'auth_provider', 'signin_email', 'is_starred', 
+                'auth_provider', 'signin_email', 'is_starred',
                 'is_active', 'is_deleted', 'when_created'))
         response = json.dumps(user_list)
         self.response.out.write(response)

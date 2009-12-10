@@ -2,8 +2,7 @@
 
 {% block tag_head %}
 	{% block tag_stylesheets %}
-    #*<link rel="stylesheet" href="{{ MEDIA_URL }}css/generic{{ MINIFIED }}.css" type="text/css" media="screen" charset="utf-8" />*#
-    <link rel="stylesheet" href="{{ MEDIA_URL }}css/screen{{ MINIFIED }}.css" type="text/css" media="screen" charset="utf-8" />
+<link rel="stylesheet" href="{{ MEDIA_URL }}css/screen{{ CSS_MINIFIED }}.css" type="text/css" media="screen" charset="utf-8" />
 	{% endblock %}
 	{% block tag_additional_stylesheets %}{% endblock %}
 {% endblock %}
@@ -63,10 +62,10 @@
 <script type="text/javascript">
     window.scripts.push(
         {% if LOCAL %}
-        "{{ MEDIA_URL }}script/lib/chickoojs/src/jquery/tools/1.1.2/jquery.tools.min.js",
+        "{{ TEXT_MEDIA_URL }}script/lib/chickoojs/src/jquery/tools/1.1.2/jquery.tools.min.js",
         {% else %}
         "http://cdn.jquerytools.org/1.1.2/full/jquery.tools.min.js",
         {% endif %}
-        "{{ MEDIA_URL }}script/page/base{{ MINIFIED }}.js");
+        "{{ TEXT_MEDIA_URL }}script/page/base{{ JS_MINIFIED }}.js");
 </script>
 {% endblock %}

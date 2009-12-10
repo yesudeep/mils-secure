@@ -1,11 +1,8 @@
-{% extends "admin/base_site.html" %}
+{% extends "base_site.html" %}
 
 {% block tag_head %}
-#*<link rel="stylesheet" type="text/css" media="screen" charset="utf-8" href="{{ MEDIA_URL }}script/lib/chickoojs/src/blackbirdjs/blackbird{{ MINIFIED }}.css" />*#
     {% block tag_stylesheets %}
-    #*<link rel="stylesheet" type="text/css" media="screen" charset="utf-8" href="{{ MEDIA_URL }}css/generic{{ MINIFIED }}.css" />
-    <link rel="stylesheet" type="text/css" media="screen" charset="utf-8" href="{{ MEDIA_URL }}css/articles{{ MINIFIED }}.css" />*#
-    <link rel="stylesheet" type="text/css" media="screen" charset="utf-8" href="{{ MEDIA_URL }}css/admin-all{{ MINIFIED }}.css" />
+    <link rel="stylesheet" type="text/css" media="screen" charset="utf-8" href="{{ MEDIA_URL }}css/admin-all{{ CSS_MINIFIED }}.css" />
     {% endblock %}
 	{% block tag_additional_stylesheets %}{% endblock %}
 {% endblock %}
@@ -55,11 +52,10 @@
 {% block tag_scripts_base %}
 <script type="text/javascript">
 window.scripts.push(
-//"{{ MEDIA_URL }}script/lib/chickoojs/src/blackbirdjs/blackbird{{ MINIFIED }}.js",
-"{{ MEDIA_URL }}script/lib/admin-common{{ MINIFIED }}.js"
+//"{{ TEXT_MEDIA_URL }}script/lib/chickoojs/src/blackbirdjs/blackbird{{ JS_MINIFIED }}.js",
+"{{ TEXT_MEDIA_URL }}script/lib/admin-common{{ JS_MINIFIED }}.js"
 );
 </script>
 {% endblock %}
 
 {% block tag_scripts_analytics %}{% endblock %}
-

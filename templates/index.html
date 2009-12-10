@@ -1,9 +1,9 @@
 {% extends "base_site.html" %}
 
 {% block tag_head %}
-<link rel="stylesheet" href="{{ MEDIA_URL }}css/generic{{ MINIFIED }}.css" type="text/css" media="screen" charset="utf-8" />
-<link rel="stylesheet" href="{{ MEDIA_URL }}css/screen{{ MINIFIED }}.css" type="text/css" media="screen" charset="utf-8" />
-<link rel="stylesheet" href="{{ MEDIA_URL }}css/index{{ MINIFIED }}.css" type="text/css" media="screen" charset="utf-8" />
+<link rel="stylesheet" href="{{ MEDIA_URL }}css/generic{{ CSS_MINIFIED }}.css" type="text/css" media="screen" charset="utf-8" />
+<link rel="stylesheet" href="{{ MEDIA_URL }}css/screen{{ CSS_MINIFIED }}.css" type="text/css" media="screen" charset="utf-8" />
+<link rel="stylesheet" href="{{ MEDIA_URL }}css/index{{ CSS_MINIFIED }}.css" type="text/css" media="screen" charset="utf-8" />
 {% endblock %}
 
 {% block tag_body %}
@@ -34,7 +34,7 @@ RPXNOW.domain = "{{ RPX_NOW_DOMAIN }}";
 RPXNOW.overlay = true;
 RPXNOW.language_preference = '{{ RPX_NOW_LANGUAGE }}';
 </script>*#<script type="text/javascript">
-window.scripts.push("{{ MEDIA_URL }}script/page/index{{ MINIFIED }}.js");
+window.scripts.push("{{ TEXT_MEDIA_URL }}script/page/index{{ JS_MINIFIED }}.js");
 </script>
 {% endblock %}
 

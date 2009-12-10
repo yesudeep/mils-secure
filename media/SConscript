@@ -32,6 +32,8 @@ SCRIPT_FILES = Split("""
     script/training_announcement_registration.js
     script/unregister_registrant.js
     script/lib/chickoojs/src/jquery/jquery-1.3.2.js
+    script/lib/chickoojs/src/jquery/jquery-1.4a1.js
+    script/lib/chickoojs/src/jquery/jquery-1.4a1.min.js
     script/lib/chickoojs/src/load.js
     script/lib/chickoojs/src/loader.js
     script/lib/chickoojs/src/json2.js
