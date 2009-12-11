@@ -42,6 +42,19 @@
 # App Engine does not send a "304 not modified" HTTP status for
 # static files and hence these files do not get cached by the browser.
 # And serving static files without caching results in a slow Website.
+#
+# Why use App Engine to serve static files?
+# -----------------------------------------
+#
+#    1. Google CDN.
+#    2. Browser based cache works (partially)
+#
+#  Disadvantages:
+#
+#    1. Does not send a 304 Not modified header.
+#    2. Every domain has a limit on the number of connections.
+#       Separating media into a subdomain lets the browser
+#       open more connections and download more media simultaneously.
 
 import sys
 import os
@@ -94,8 +107,11 @@ else:
     HOST_NAME = SERVER_NAME
     LOCAL = False
     DEBUG = False
-    MEDIA_URL = "http://static.%s/u/3035045/public/" % NAKED_DOMAIN
+    #MEDIA_URL = "http://static.%s/u/3035045/public/" % NAKED_DOMAIN
     TEXT_MEDIA_URL = "http://assets.%s/" % NAKED_DOMAIN
+    MEDIA_URL = TEXT_MEDIA_URL
+    #MEDIA_URL = 'http://%s/s/' % (HOST_NAME, )
+    #TEXT_MEDIA_URL = MEDIA_URL
 
 if DEBUG:
     # Minification suffixes for use with CSS and JS files.
@@ -143,13 +159,14 @@ cdn_urls = {
     'jquery.jquery-1.4': "http://code.jquery.com/jquery-1.4a1.min.js",
     'local.jquery-1.4': "%sscript/lib/chickoojs/src/jquery/jquery-1.4a1.min.js" % (MEDIA_URL,),
     'local.jquery-1.3.2': "%sscript/lib/chickoojs/src/jquery/jquery-1.3.2.min.js" % (MEDIA_URL,),
+    'assets.jquery-1.4': "http://assets.%s/script/lib/chickoojs/src/jquery/jquery-1.4a1.min.js" % (NAKED_DOMAIN, ),
 }
 
 if LOCAL:
     JQUERY_URL = cdn_urls.get('local.jquery-1.4')
     ANALYTICS_CODE = ""
 else:
-    JQUERY_URL = cdn_urls.get('jquery.jquery-1.4')
+    JQUERY_URL = cdn_urls.get('assets.jquery-1.4')
     ANALYTICS_CODE = """
 <script type="text/javascript">
 var _gaq = _gaq || [];
