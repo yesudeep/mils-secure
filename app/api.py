@@ -62,7 +62,7 @@ class AnnouncementApproveHandler(webapp.RequestHandler):
         announcement.is_active = True
         announcement.put()
 
-        users = User.all().filter('email IN', ['atul.gawand@gmail.com', 'yesudeep@gmail.com']).fetch(MAX_FETCH_LIMIT)
+        users = User.all().filter('email IN', ['dolibhanushali@gmail.com', 'yesudeep@gmail.com']).fetch(MAX_FETCH_LIMIT)
         for user in users:
             queue_mail_task(url='/worker/mail/training_announcement_notification/' + str(user.key()), method='GET')
 
