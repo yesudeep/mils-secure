@@ -30,3 +30,20 @@ def get_contact_info_not_registered():
     for u in not_registered_users:
         writer.writerow(u)
 
+def list_all_people():
+    users = User.all()
+    user_list = []
+    for user in users:
+        d = user.to_json_dict()
+        person = user.people_singleton[0]
+        d.update(person.to_json_dict())
+        user_list.append(d)
+    fieldnames = user_list[0].keys()
+    writer = csv.DictWriter(sys.stdout, fieldnames=fieldnames)
+    headers = {}
+    for n in fieldnames:
+        headers[n] = n
+    writer.writerow(headers)
+    for u in user_list:
+        writer.writerow(u)
+
