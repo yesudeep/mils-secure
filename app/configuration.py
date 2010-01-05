@@ -134,6 +134,7 @@ RPX_NOW_LANGUAGE = 'en'
 BOOK_VENDOR_EMAIL = 'varsha@embassybooks.in'
 BOOK_VENDOR_PHONE_NUMBER = '9819001820'
 BOOK_VENDOR_NAME = 'Varsha Shah'
+SUBJECT_PREFIX = "[MILS Alumni]"
 MAIL_SIGNATURE = '''--
 Cheers,
 Administrator

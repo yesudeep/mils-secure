@@ -81,10 +81,10 @@ urls = [
     ('/admin/announcements/?', AnnouncementsHandler),
     ('/admin/logout/?', LogoutHandler),
 ]
+application = webapp.WSGIApplication(urls, debug=configuration.DEBUG)
 
 def main():
     from gaefy.db.datastore_cache import DatastoreCachingShim
-    application = webapp.WSGIApplication(urls, debug=configuration.DEBUG)
     DatastoreCachingShim.Install()
     run_wsgi_app(application)
     DatastoreCachingShim.Uninstall()

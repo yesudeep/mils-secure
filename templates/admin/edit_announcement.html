@@ -29,6 +29,11 @@
 
       <span class="suffix"><a class="preview_url" href="{{ announcement.brochure_url }}" target="_blank"><img class="preview" src="{{ announcement.brochure_url }}" /></a><a target="_blank" href="http://www.flickr.com/photos/upload/">Upload image here</a> and then paste the link in this text box.</span>
     </label>
+    <label for="description">
+        <span class="prefix">description</span>
+        <textarea name="description" rows="20" cols="70">{{ announcement.description }}</textarea>
+        <span class="suffix"></span>
+    </label>
   </fieldset>
 
   <fieldset><legend>dates</legend>
@@ -75,6 +80,8 @@
     </label>
     {% endfor %}
   </fieldset>
+  
+  
 
 {% endblock %}
 

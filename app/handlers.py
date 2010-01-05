@@ -425,7 +425,7 @@ class SponsorsPage(AuthorizedRequestHandler):
         self.response.out.write(response)
 
 
-urls = [
+urls = (
     ('/', IndexPage),
     ('/about/?', AboutPage),
     ('/article/([0-9]*)/([0-9]*)/([0-9]*)/(.*)/?', ArticleHandler),
@@ -446,11 +446,11 @@ urls = [
     #('/privacy', PrivacyPage),
     #('/tos', TosPage),
     #('/help', HelpPage),
-    ]
+)
+application = webapp.WSGIApplication(urls, debug=configuration.DEBUG)
 
 def main():
     from gaefy.db.datastore_cache import DatastoreCachingShim
-    application = webapp.WSGIApplication(urls, debug=configuration.DEBUG)
     DatastoreCachingShim.Install()
     run_wsgi_app(application)
     DatastoreCachingShim.Uninstall()

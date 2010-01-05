@@ -1,6 +1,6 @@
 Dear {{ registrant.full_name }},
 
-The training program {{ training_announcement.title }} has been canceled.
+The training program {{ training_program.title }} has been canceled.
 
 Thank you.
 

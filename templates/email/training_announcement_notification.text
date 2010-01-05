@@ -1,8 +1,8 @@
 Dear {{ nickname }},
 
-Training announcement information.
+{{ training_program.title }}
+{{ training_program.description }}
 
 Thank you.
 
 {{ MAIL_SIGNATURE }}
-

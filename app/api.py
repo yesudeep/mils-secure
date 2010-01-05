@@ -62,9 +62,12 @@ class AnnouncementApproveHandler(webapp.RequestHandler):
         announcement.is_active = True
         announcement.put()
 
-        users = User.all().filter('email IN', ['dolibhanushali@gmail.com', 'yesudeep@gmail.com']).fetch(MAX_FETCH_LIMIT)
+        users = User.all().filter('email IN', ['atul.gawand@gmail.com', 'dolibhanushali@gmail.com', 'yesudeep@gmail.com']).fetch(MAX_FETCH_LIMIT)
         for user in users:
-            queue_mail_task(url='/worker/mail/training_announcement_notification/' + str(user.key()), method='GET')
+            queue_mail_task(url='/worker/mail/training_announcement_notification/' + str(user.key()),
+                params=dict(user_key=str(user.key()),
+                            training_program_key=key),
+                method='GET')
 
         self.response.out.write(announcement.is_active)
 
@@ -344,6 +347,7 @@ class AnnouncementNewHandler(webapp.RequestHandler):
         when_payment_is_calculated = self.request.get('when_payment_is_calculated')
         max_participants = self.request.get('max_participants')
         brochure_url = self.request.get('brochure_url')
+        description = self.request.get("description")
 
         training_program = TrainingProgram()
         training_program.title = title
@@ -355,6 +359,7 @@ class AnnouncementNewHandler(webapp.RequestHandler):
         training_program.when_payment_is_calculated = parse_iso_datetime_string(when_payment_is_calculated)
         training_program.max_participants = dec(max_participants)
         training_program.brochure_url = brochure_url
+        training_program.description = description
         training_program.put()
 
         fees1 = Decimal(self.request.get('fees_1'))
@@ -396,6 +401,7 @@ class AnnouncementEditHandler(webapp.RequestHandler):
         when_payment_is_calculated = self.request.get('when_payment_is_calculated')
         max_participants = self.request.get('max_participants')
         brochure_url = self.request.get('brochure_url')
+        description = self.request.get("description")
 
         training_program.title = title
         training_program.venue = venue
@@ -406,6 +412,7 @@ class AnnouncementEditHandler(webapp.RequestHandler):
         training_program.when_payment_is_calculated = parse_iso_datetime_string(when_payment_is_calculated)
         training_program.max_participants = dec(max_participants)
         training_program.brochure_url = brochure_url
+        training_program.description = description
 
         fees1 = Decimal(self.request.get('fees_1'))
         fees2 = Decimal(self.request.get('fees_2'))
@@ -429,7 +436,6 @@ class AnnouncementEditHandler(webapp.RequestHandler):
         db.put([training_program, fees_1, fees_2, fees_3])
 
         self.response.out.write(training_program.to_json('title', 'is_deleted', 'is_active', 'is_starred', 'when_created'))
-
 
 class UserEditHandler(webapp.RequestHandler):
     def get(self, key):
@@ -593,7 +599,7 @@ class AnnouncementUnapproveHandler(webapp.RequestHandler):
             )
         self.response.out.write(training_program.is_active)
 
-urls = [
+urls = (
     (r'/api/users/(.*)/delete/?', UserDeleteHandler),
     (r'/api/users/(.*)/undelete/?', UserUndeleteHandler),
     (r'/api/users/(.*)/approve/?', UserApproveHandler),
@@ -645,11 +651,11 @@ urls = [
     (r'/api/registrants/(.*)/approve/(.*)/?', RegistrantApproveHandler),
     (r'/api/registrants/(.*)/confirm_payment/(.*)/?', RegistrantConfirmPaymentHandler),
     (r'/api/registrants/(.*)/unapprove/(.*)/?', RegistrantUnapproveHandler),
-]
+)
+application = webapp.WSGIApplication(urls, debug=configuration.DEBUG)
 
 def main():
     from gaefy.db.datastore_cache import DatastoreCachingShim
-    application = webapp.WSGIApplication(urls, debug=configuration.DEBUG)
     DatastoreCachingShim.Install()
     run_wsgi_app(application)
     DatastoreCachingShim.Uninstall()

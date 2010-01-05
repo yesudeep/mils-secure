@@ -638,6 +638,8 @@ class TrainingProgram(RegularModel):
     max_participants = db.IntegerProperty()
     participants = db.ReferenceProperty(User, 'training_programs')
     brochure_url = db.URLProperty()
+    is_payment_mail_queued = db.BooleanProperty(default=False)
+    description = db.TextProperty()
 
     # Active participants count
     def get_participant_count(self):
@@ -677,7 +679,7 @@ class TrainingProgram(RegularModel):
         if total_participant_count.count > 0:
             total_participant_count.increment(incr=-1)
 
-    def get_fees_sorted(self):
+    def get_fees_sorted_by_count(self):
         key = str(self.key())
         cache_key = 'TrainingProgram.' + key + 'fees.sorted'
         fees = memcache.get(cache_key)
@@ -689,7 +691,7 @@ class TrainingProgram(RegularModel):
                 .fetch(FETCH_ALL_VALUES)
             memcache.set(cache_key, fees, 120)
         return fees
-
+ 
     @classmethod
     def get_all_closable_for_date(cls, year, month, day):
         start_date = datetime(year, month, day, 0, 0, 0)
@@ -722,6 +724,7 @@ class TrainingProgram(RegularModel):
                 .order('title') \
                 .filter('is_deleted = ', False) \
                 .filter('is_active = ', True) \
+                .filter('is_payment_mail_queued = ', False) \
                 .filter('when_payment_is_calculated >=', start_date) \
                 .filter('when_payment_is_calculated <=', end_date) \
                 .fetch(FETCH_ALL_VALUES)
