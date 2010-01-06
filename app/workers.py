@@ -315,7 +315,7 @@ class CronCalculatePaymentForTrainingPrograms(webapp.RequestHandler):
             count = training_program.get_participant_count()
             current_fee = calculate_fee(fees, count)
 
-            logging.info("fees: " + str(fees) + " count: " + count + " current_fee: " + current_fee)
+            logging.info("fees: " + str(fees) + " count: " + str(count) + " current_fee: " + str(current_fee))
             training_program.final_price = current_fee
             training_program.is_payment_mail_queued = True
             training_program.put()

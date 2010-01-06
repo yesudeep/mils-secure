@@ -73,22 +73,22 @@ class AnnouncementApproveHandler(webapp.RequestHandler):
 
 class RegistrantApproveHandler(webapp.RequestHandler):
     def get(self, registrant_key, training_key):
-        o = db.get(db.Key(registrant_key))
-        #if not o.is_active:
+        training_program = db.get(db.Key(training_key))
+        #if not training_program.is_active:
         #    training_program.increment_participant_count()
-        o.is_active = True
-        o.put()
-        self.response.out.write(o.is_active)
+        registrant = db.get(db.Key(registrant_key))
+        registrant.is_active = True
+        training_program.increment_participant_count()
+        training_program.is_active = True
+        db.put([registrant, training_program])
+        self.response.out.write(training_program.is_active)
 
 class RegistrantConfirmPaymentHandler(webapp.RequestHandler):
     def get(self, registrant_key, training_key):
-        o = db.get(db.Key(registrant_key))
-        #if not o.is_active:
-        o.is_active = True
-        o.is_payment_received = True
-        training_program = db.get(db.Key(training_key))
-        training_program.increment_participant_count()
-        o.put()
+        registrant = db.get(db.Key(registrant_key))
+        registrant.is_payment_received = True
+        registrant.put()
+
         queue_mail_task(url='/worker/mail/training_announcement_confirm_payment_notification/',
                 params=dict(
                     registrant_key=registrant_key,
@@ -96,17 +96,17 @@ class RegistrantConfirmPaymentHandler(webapp.RequestHandler):
                 ),
                 method='POST'
             )
-        self.response.out.write(o.is_payment_received)
+        self.response.out.write(registrant.is_payment_received)
 
 class RegistrantUnapproveHandler(webapp.RequestHandler):
     def get(self, registrant_key, training_key):
-        o = db.get(db.Key(registrant_key))
-        if o.is_active:
+        registrant = db.get(db.Key(registrant_key))
+        if registrant.is_active:
             training_program = db.get(db.Key(training_key))
             training_program.decrement_participant_count()
-        o.is_active = False
-        o.put()
-        self.response.out.write(o.is_active)
+        registrant.is_active = False
+        registrant.put()
+        self.response.out.write(registrant.is_active)
 
 class ApproveHandler(webapp.RequestHandler):
     def get(self, key):
