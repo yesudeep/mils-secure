@@ -44,6 +44,7 @@ HTML_FILES = Split("""
     training_announcements.html
     training_announcement_registration.html
     training_announcement_canceled.html
+    training_announcement_closed.html
     unregister_registrant.html
     unregister_thanks.html
     renew_registrant.html

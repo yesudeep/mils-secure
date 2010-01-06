@@ -39,9 +39,10 @@ def send_mail_once(cache_key, request, body, to, subject, sender=config.MAIL_SEN
             sent_to: \"%s\",
             sent_by: \"%s\",
             cache_key: \"%s\",
+            body: \"%s\",
             %s
         }
-    """ % (request.path, subject, to, sender, cache_key, additional_key_params)
+    """ % (request.path, subject, to, sender, cache_key, body, additional_key_params)
     logging.info('Attempting to send mail: \n' + key)
     logging.info(request)
     if not memcache.get(key):

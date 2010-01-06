@@ -326,6 +326,18 @@ class TrainingAnnouncementRegistrationHandler(AuthorizedRequestHandler):
                 )
             response = render_template('training_announcement_canceled.html', training_announcement=training_program)
             self.response.out.write(response)
+        elif training_program.is_registration_closed:
+            for registrant in registrants:
+                registrant_key = str(registrant.key())
+                queue_mail_task(url="/worker/mail/training_announcement/closure/",
+                    params=dict(
+                        registrant_key=registrant_key,
+                        training_program_key=training_key
+                    ),
+                    method="post"
+                )
+            response = render_template("training_announcement_closed.html", training_announcement=training_program)
+            self.response.out.write(response)
         else:
             for registrant in registrants:
                 registrant_key = str(registrant.key())
