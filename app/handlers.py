@@ -56,13 +56,11 @@ class BlogPage(AuthorizedRequestHandler):
             if not request_year or not request_month:
                 year = today.year
                 month = today.month
+                articles = Article.get_latest_published()
             else:
                 year = dec(request_year)
                 month = dec(request_month)
-            articles = Article.get_all_published_for_month(year, month)
-            #if not articles:
-            #    month = month - 1
-            #    articles = Article.get_all_published_for_month(year, month)
+                articles = Article.get_all_published_for_month(year, month)
             books = Book.get_latest(count=10)
             response = render_template('blog.html',
                 year_list=models.BLOG_YEAR_LIST,
@@ -91,13 +89,11 @@ class StudentsPage(AuthorizedRequestHandler):
             if not request_year or not request_month:
                 year = today.year
                 month = today.month
+                articles = Article.get_latest_published_student()
             else:
                 year = dec(request_year)
                 month = dec(request_month)
-            articles = Article.get_all_published_student_articles_for_month(year, month)
-            #if not articles:
-            #    month = month - 1
-            #    articles = Article.get_all_published_student_articles_for_month(year, month)
+                articles = Article.get_all_published_student_articles_for_month(year, month)
             books = Book.get_latest(count=10)
             response = render_template('blog_students.html',
                 year_list=models.BLOG_YEAR_LIST,

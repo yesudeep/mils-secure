@@ -550,6 +550,34 @@ class Article(RegularModel):
         return articles
 
     @classmethod
+    def get_latest_published(cls, count=5):
+        cache_key = 'Article.get_latest_published' + str(count)
+        articles = memcache.get(cache_key)
+        if not articles:
+            articles = db.Query(Article) \
+                .order('-when_published') \
+                .filter('is_deleted =', False) \
+                .filter('is_active =', True) \
+                .filter('section_type =', ARTICLE_SECTION_TYPE_ALUMNI) \
+                .fetch(count)
+            memcache.set(cache_key, articles, ONE_MINUTE)
+        return articles
+
+    @classmethod
+    def get_latest_published_student(cls, count=5):
+        cache_key = 'Article.get_latest_published_student' + str(count)
+        articles = memcache.get(cache_key)
+        if not articles:
+            articles = db.Query(Article) \
+                .order('-when_published') \
+                .filter('is_deleted =', False) \
+                .filter('is_active =', True) \
+                .filter('section_type =', ARTICLE_SECTION_TYPE_STUDENT) \
+                .fetch(count)
+            memcache.set(cache_key, articles, ONE_MINUTE)
+        return articles
+
+    @classmethod
     def get_all_published_student_articles_for_month(cls, year, month):
         first_weekday, number_of_days = cal.monthrange(year, month)
         start_date = datetime(year, month, 1)
