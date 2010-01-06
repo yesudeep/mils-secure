@@ -2,8 +2,7 @@ Dear {{ nickname }},
 
 Registrations for the event {{ training_program.title }} are now closed.
 
-Venue:
-Whatever other details that are wanted.
+We value your interest in the program.  Thank you.
 
 {{ MAIL_SIGNATURE }}
 
