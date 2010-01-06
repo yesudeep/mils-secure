@@ -2,7 +2,6 @@ Dear {{ registrant.full_name }},
 
 The training program {{ training_program.title }} has been canceled.
 
-Thank you.
+We appreciate your interest in the program. Thank you.
 
 {{ MAIL_SIGNATURE }}
-
