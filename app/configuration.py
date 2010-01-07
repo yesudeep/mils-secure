@@ -151,7 +151,7 @@ Name : MILS Alumni Association
 Bank   : Indian Overseas Bank
 Branch : New Marine Lines
 CDCC A/c. No. : 7360
-IFSC : IOBA0000301.
+IFSC : IOBA0000301
 '''
 PICASA_WEB_ALBUMS_PUBLIC_URL = 'http://picasaweb.google.com/mils.secure'
 GOOGLE_ANALYTICS_ID = "UA-7340598-3"
