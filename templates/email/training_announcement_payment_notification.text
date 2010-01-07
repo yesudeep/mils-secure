@@ -6,7 +6,7 @@ for the event.
 
 The amount for the event is:
 
-   {{ current_fee }}
+   {{ current_fee }} INR
 
 {{ payment_details }}
 
