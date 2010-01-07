@@ -91,7 +91,7 @@
   {% for registrant in registrants %}
     <li id="{{ registrant.key() }}" class="data-item {% if not registrant.is_active %}unapproved{% endif %} {% if registrant.is_payment_received %}approved-payment{% endif %}"><span class="title">{{ registrant.full_name }} {% if registrant.is_payment_received %}(paid){% endif %}</span> <span class="subtitle">{{ registrant.designation }}, {{ registrant.company }}</span> <span class="subtitle"><a href="mailto:{{ registrant.email }}">{{ registrant.email }}</a>, {{ registrant.phone_number }} - {{ registrant.when_created|datetimeformat('%A, %B %d, %Y - %H:%M:%S') }} UTC</span>
     <ul class="sub-actions">
-      <li><a class="awesome-button cool" href="/api/registrants/{{ registrant.key() }}/approve/{{ announcement.key() }}" rel="approve">&#10004; Approve Attendance (sends email)</a></li>
+      <li><a class="awesome-button cool" href="/api/registrants/{{ registrant.key() }}/approve/{{ announcement.key() }}" rel="approve">&#10004; Approve Attendance</a></li>
       <li><a class="awesome-button warm" href="/api/registrants/{{ registrant.key() }}/unapprove/{{ announcement.key() }}" rel="unapprove">&#10004; Unapprove Attendance</a></li>
       <li><a class="awesome-button cool" href="/api/registrants/{{ registrant.key() }}/confirm_payment/{{ announcement.key() }}" rel="approve-payment">&#10004; Confirm Payment (sends email)</a></li>
       #*<li><a class="awesome-button warm" href="/api/registrants/{{ registrant.key() }}/reverse_payment/{{ announcement.key() }}" rel="unapprove-payment">&times; Reverse Payment (sends email)</a></li>*#

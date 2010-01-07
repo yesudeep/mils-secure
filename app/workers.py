@@ -35,14 +35,14 @@ def send_mail_once(cache_key, request, body, to, subject, sender=config.MAIL_SEN
     key = """
         {
             worker: \"%s\",
+            cache_key: \"%s\",
             subject: \"%s\",
             sent_to: \"%s\",
             sent_by: \"%s\",
-            cache_key: \"%s\",
-            body: \"%s\",
             %s
+            body: \"%s\",
         }
-    """ % (request.path, subject, to, sender, cache_key, body, additional_key_params)
+    """ % (request.path, cache_key, subject, to, sender, additional_key_params, body)
     logging.info('Attempting to send mail: \n' + key)
     logging.info(request)
     if not memcache.get(key):
@@ -75,7 +75,7 @@ class SignupNotifier(webapp.RequestHandler):
     def get(self, user_key):
         user = db.get(db.Key(user_key))
         template_values = dict(nickame=user.nickname)
-        if user.corporate_email:
+        if user.corporate_email and (not user.corporate_email == user.email):
             to = [str(user.email), str(user.corporate_email)]
         else:
             to = user.email
@@ -93,7 +93,7 @@ class AccountActivationNotifier(webapp.RequestHandler):
     def get(self, user_key):
         user = db.get(db.Key(user_key))
         template_values = dict(nickname=user.nickname)
-        if user.corporate_email:
+        if user.corporate_email and (not user.corporate_email == user.email):
             to = [str(user.email), str(user.corporate_email)]
         else:
             to = user.email
@@ -120,14 +120,14 @@ class TrainingProgramNotifier(webapp.RequestHandler):
         
         # TODO: Check whether corporate email and the user email are the same.
         # We don't want to send TWO emails to the same email address.
-        if user.corporate_email:
+        if user.corporate_email and (not user.corporate_email == user.email):
             to = [str(user.email), str(user.corporate_email)]
         else:
             to = user.email
         send_mail_template(cache_key=user_key,
                            request=self.request,
                            to=to,
-                           subject="New training program announced.",
+                           subject="Training Program: " + training_program.title + " with " + training_program.faculty,
                            template_name="email/training_announcement_notification.text",
                            template_values=template_values)
 
@@ -330,7 +330,6 @@ class CronCalculatePaymentForTrainingPrograms(webapp.RequestHandler):
                     ),
                     method='POST'
                 )
-
 
 urls = (
     ('/worker/mail/signup_notification/(.*)/?', SignupNotifier),

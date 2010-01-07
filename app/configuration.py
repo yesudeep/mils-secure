@@ -137,8 +137,8 @@ BOOK_VENDOR_NAME = 'Varsha Shah'
 SUBJECT_PREFIX = "[MILS Alumni]"
 MAIL_SIGNATURE = '''--
 Cheers,
-Administrator
-www.milsalumni.org
+MILS Alumni Organizing Team
+Please visit: http://www.milsalumni.org
 --
 Please do not reply to this system generated message.
 '''

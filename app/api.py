@@ -209,6 +209,8 @@ class MailApproveHandler(webapp.RequestHandler):
         users = User.get_all_by_filter(mail.to_users)
         for user in users:
             to_emails.append(user.email)
+            if user.corporate_email and (not user.corporate_email == user.email):
+                to_emails.append(str(user.corporate_email))
 
         receivers = [MailReceiver(email=email, mail=mail) for email in set(to_emails)]
         db.put(receivers)

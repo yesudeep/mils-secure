@@ -1,9 +1,9 @@
 jQuery(function(){
     var nomination_template = '<fieldset id="nomination_{0}"> \
           <legend>Nomination {0}</legend> \
-          <label for="name_{0}"> \
+          <label for="full_name_{0}"> \
             <span class="prefix">full name</span> \
-            <input type="text" name="name_{0}" value="" class="required capitalize" /> \
+            <input type="text" name="full_name_{0}" value="" class="required capitalize" /> \
             <span class="suffix"></span> \
           </label> \
           <label for="company_{0}"> \
@@ -65,25 +65,7 @@ jQuery(function(){
         return false;
     });*/
 
-    jQuery('#form_training_registration').validate(/*{
-        rules: {
-            "email_1": {
-                remote: {
-                    url: "/training_announcements/check_email_available/",
-                    type: "post",
-                    data: {
-                        training_announcement_key: training_announcement_key,
-                        index: 1
-                    }
-                }
-            }
-        },
-        messages: {
-            "email_1": {
-                remote: "Please choose a new email address.  This one is already registered for this event."
-            }
-        }
-    }*/);
+    jQuery('#form_training_registration').validate();
 
      jQuery('#form_training_registration input[name="email_' + nominations_count + '"]').rules("add", {
         required: true,
