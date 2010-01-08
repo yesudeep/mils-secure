@@ -46,7 +46,7 @@
 
         <h2>Who has registered already? {{ training_announcement.participant_count }} people have nominated themselves till date.</h2>
         <ul>
-          {% for registrant in training_announcement.registrants|reverse %}
+          {% for registrant in training_announcement.registrants_in_chronological_order %}
           {% if registrant.is_active %}
           <li>{{ registrant.full_name }} ({{ registrant.designation }}, {{ registrant.company }})</li>
           {% endif %}

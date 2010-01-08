@@ -720,6 +720,20 @@ class TrainingProgram(RegularModel):
             memcache.set(cache_key, fees, 120)
         return fees
  
+    @property
+    def registrants_in_chronological_order(self):
+        key = str(self.key())
+        cache_key = "TrainingProgramRegistrants_for" + key + "chronologically.sorted"
+        registrants = memcache.get(cache_key)
+        if not registrants:
+            registrants = db.Query(TrainingProgramRegistrant) \
+                .filter("training_program =", self) \
+                .filter("is_deleted =", False) \
+                .order("when_created") \
+                .fetch(FETCH_ALL_VALUES)
+            memcache.set(cache_key, registrants)
+        return registrants
+ 
     @classmethod
     def get_all_closable_for_date(cls, year, month, day):
         start_date = datetime(year, month, day, 0, 0, 0)

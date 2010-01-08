@@ -88,6 +88,12 @@ indexes:
 
 - kind: TrainingProgramRegistrant
   properties:
+  - name: is_deleted
+  - name: training_program
+  - name: when_created
+
+- kind: TrainingProgramRegistrant
+  properties:
   - name: training_program
   - name: when_created
 
