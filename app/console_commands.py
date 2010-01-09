@@ -36,7 +36,9 @@ def list_all_people():
     for user in users:
         d = user.to_json_dict()
         person = user.people_singleton[0]
+        phones = ",".join(["%s (%s)" % (p.number, p.phone_type,) for p in person.phones])
         d.update(person.to_json_dict())
+        d.update(dict(phone_number=phones))
         user_list.append(d)
     fieldnames = user_list[0].keys()
     writer = csv.DictWriter(sys.stdout, fieldnames=fieldnames)
