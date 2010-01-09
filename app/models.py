@@ -723,15 +723,14 @@ class TrainingProgram(RegularModel):
     @property
     def registrants_in_chronological_order(self):
         key = str(self.key())
-        cache_key = "TrainingProgramRegistrants_for" + key + "chronologically.sorted"
+        cache_key = "TrainingProgramRegistrants_for(" + key + ").in(chronologically.sorted.order)"
         registrants = memcache.get(cache_key)
         if not registrants:
             registrants = db.Query(TrainingProgramRegistrant) \
                 .filter("training_program =", self) \
-                .filter("is_deleted =", False) \
                 .order("when_created") \
                 .fetch(FETCH_ALL_VALUES)
-            memcache.set(cache_key, registrants)
+            memcache.set(cache_key, registrants, 120)
         return registrants
  
     @classmethod
