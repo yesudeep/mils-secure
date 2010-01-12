@@ -1,17 +1,29 @@
 Dear {{ nickname }},
 
-Thank you for registering for the event {{ training_program_title }}.
-Here are the payment details you will need to complete your registration
-for the event.
+Thank you for registering for the program titled: 
 
-The amount for the event is:
+    {{ training_program_title }}
+    
+Here are the payment details you will need to complete for confirming 
+your seat at the event.
+
+The program fees based on the number of nominations is:
 
    {{ current_fee }} INR
+
+You will need to do a funds transfer of the fees online.  
+The details of the alumni bank account are provided hereinafter:
 
 {{ payment_details }}
 
 {{ MAIL_SIGNATURE }}
 
-Kindly note that currently, we are not encouraging the Cheque/Cash payment route, for logistics reasons. 
-Hence, will request your consideration and support. We will only confirm nominations, if we get your 
+Kindly note that currently, we are not encouraging the Cheque/Cash payment 
+route, for logistics reasons. We will confirm your nomination, once we get your 
 program fees via the online funds transfer route.
+ 
+We request your consideration and support.
+ 
+Should you require any clarifications, please feel free to call: 
+
+    Atul on +91.9820.348.220

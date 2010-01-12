@@ -28,7 +28,10 @@ jQuery(function(){
           </label> \
         </fieldset>',
         nominations_count = 1,
-        training_announcement_key = jQuery("#form_training_registration").attr('key');
+        training_announcement_key = jQuery("#form_training_registration").attr('key'),
+        elements = {
+            formTrainingRegistration: jQuery('#form_training_registration')
+        };
 
     jQuery('#form_training_registration a[href="#add_nomination"]').live('click', function(event){
         event.preventDefault();
@@ -58,16 +61,8 @@ jQuery(function(){
         return false;
     });
 
-    /*jQuery('#form_training_registration').live('submit', function(event){
-        event.preventDefault();
-        event.stopPropagation();
-        jQuery(this).ajaxSubmit(function(){});
-        return false;
-    });*/
 
-    jQuery('#form_training_registration').validate();
-
-     jQuery('#form_training_registration input[name="email_' + nominations_count + '"]').rules("add", {
+    /*jQuery('#form_training_registration input[name="email_' + nominations_count + '"]').rules("add", {
         required: true,
         remote: {
             url: "/training_announcements/check_email_available/",
@@ -80,6 +75,7 @@ jQuery(function(){
         messages: {
             remote: "Please choose a new email address.  This one is already registered for this event."
         }
-    });
+    });*/
+    elements.formTrainingRegistration.validate();
 });
 
