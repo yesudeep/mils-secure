@@ -12,7 +12,8 @@ except ImportError:
 import calendar as cal
 from data import countries, calendar
 import properties
-from counter import Counter
+#from counter import Counter
+from cached_counter import CachedCounter as Counter
 from decimal import Decimal
 
 FETCH_ALL_VALUES = 1000
@@ -300,13 +301,13 @@ class User(RegularModel):
 
     @classmethod
     def increment_user_count(cls, incr=1):
-        Counter('User.user_count').increment(incr=incr)
+        Counter('User.user_count').incr(value=incr)
 
     @classmethod
     def decrement_user_count(cls):
         user_count = Counter('User.user_count')
         if user_count.count > 0:
-            user_count.increment(incr=-1)
+            user_count.incr(value=-1)
 
     # Approved participants count
     @classmethod
@@ -319,13 +320,13 @@ class User(RegularModel):
 
     @classmethod
     def increment_approved_user_count(cls, incr=1):
-        Counter('User.approved_user_count').increment(incr=incr)
+        Counter('User.approved_user_count').incr(value=incr)
 
     @classmethod
     def decrement_approved_user_count(cls):
         user_count = Counter('User.approved_user_count')
         if user_count.count > 0:
-            user_count.increment(incr=-1)
+            user_count.incr(value=-1)
 
 
     # deleted participants count
@@ -339,13 +340,13 @@ class User(RegularModel):
 
     @classmethod
     def increment_deleted_user_count(cls, incr=1):
-        Counter('User.deleted_user_count').increment(incr=incr)
+        Counter('User.deleted_user_count').incr(value=incr)
 
     @classmethod
     def decrement_deleted_user_count(cls):
         user_count = Counter('User.deleted_user_count')
         if user_count.count > 0:
-            user_count.increment(incr=-1)
+            user_count.incr(value=-1)
 
 
     @classmethod
@@ -681,12 +682,12 @@ class TrainingProgram(RegularModel):
 
     def increment_participant_count(self, incr=1):
         participant_count = Counter('TrainingProgram.participant_count' + str(self.key()))
-        participant_count.increment(incr=incr)
+        participant_count.incr(value=incr)
 
     def decrement_participant_count(self):
         participant_count = Counter('TrainingProgram.participant_count' + str(self.key()))
         if participant_count.count > 0:
-            participant_count.increment(incr=-1)
+            participant_count.incr(value=-1)
 
     # Total participants count
     def get_total_participant_count(self):
@@ -700,12 +701,12 @@ class TrainingProgram(RegularModel):
 
     def increment_total_participant_count(self, incr=1):
         total_participant_count = Counter('TrainingProgram.total_participant_count' + str(self.key()))
-        total_participant_count.increment(incr=incr)
+        total_participant_count.incr(value=incr)
 
     def decrement_total_participant_count(self):
         total_participant_count = Counter('TrainingProgram.total_participant_count' + str(self.key()))
         if total_participant_count.count > 0:
-            total_participant_count.increment(incr=-1)
+            total_participant_count.incr(value=-1)
 
     def get_fees_sorted_by_count(self):
         key = str(self.key())
