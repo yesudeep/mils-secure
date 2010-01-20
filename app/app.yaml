@@ -3,13 +3,12 @@ version: optimized
 runtime: python
 api_version: 1
 
-default_expiration: "7d"
+default_expiration: "30d"
 
 handlers:
 - url: /s
   static_dir: public
   secure: never
-  expiration: 10s
   
 - url: /blank.html
   static_files: public/blank.html
@@ -26,7 +25,15 @@ handlers:
   upload: public/robots.txt
   expiration: 7d
   secure: never
-  
+ 
+- url: /remote_api
+  script: $PYTHON_LIB/google/appengine/ext/remote_api/handler.py
+  login: admin
+
+- url: /_ah/queue/deferred
+  script: $PYTHON_LIB/google/appengine/ext/deferred/deferred.py
+  login: admin
+
 - url: /console/static/
   static_dir: console/app/view/static
   expiration: 7d
@@ -34,10 +41,9 @@ handlers:
 - url: /console.*
   script: console/app/console.py
   login: admin
-  
-- url: /remote_api.*
-  script: $PYTHON_LIB/google/appengine/ext/remote_api/handler.py
-  login: admin
+ 
+- url: /dl.*
+  script: static.py
 
 - url: /admin.*
   script: admin.py

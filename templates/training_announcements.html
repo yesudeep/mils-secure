@@ -44,7 +44,9 @@
         <p class="brochure"><img src="{{ training_announcement.brochure_url }}" /></p>
         <p><a class="awesome-button large ice-cool" href="/announcement/{{ training_announcement.key() }}/register/">Register for the Event</a></p>
 
-        <h2>Who has registered already? {{ training_announcement.participant_count }} people have nominated themselves till date.</h2>
+        <h2>Who has registered already? 
+        
+        {% if training_announcement.participant_count %}{{ training_announcement.participant_count }} people have nominated themselves till date.{% endif %}</h2>
         <ul>
           {% for registrant in training_announcement.registrants_in_chronological_order %}
           {% if registrant.is_active %}

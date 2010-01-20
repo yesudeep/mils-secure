@@ -146,13 +146,21 @@ ADMIN_MAIL_SIGNATURE = '''--
 Cheers,
 Website Administrator, MILS Alumni Association
 '''
+
+#PAYMENT_DETAILS = '''
+#Name : MILS Alumni Association
+#Bank   : Indian Overseas Bank
+#Branch : New Marine Lines, Mumbai
+#CDCC A/c. No. : 7360
+#IFSC : IOBA0000301
+#'''
 PAYMENT_DETAILS = '''
-Name : MILS Alumni Association
-Bank   : Indian Overseas Bank
-Branch : New Marine Lines
-CDCC A/c. No. : 7360
-IFSC : IOBA0000301
+Payee: MILS Alumni Association
+Bank: Indian Overseas Bank, New Marine Lines, Mumbai
+Current Account: 030102000007360
+IFSC: IOBA0000301
 '''
+
 PICASA_WEB_ALBUMS_PUBLIC_URL = 'http://picasaweb.google.com/mils.secure'
 GOOGLE_ANALYTICS_ID = "UA-7340598-3"
 
