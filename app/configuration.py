@@ -80,7 +80,9 @@ def sanitize_url(url):
 
 # Static data.
 NAKED_DOMAIN = 'milsalumni.org'
-MAIL_SENDER = 'no-reply@%s' % NAKED_DOMAIN
+NO_REPLY_MAIL_SENDER = 'no-reply@%s' % NAKED_DOMAIN
+TEAM_MAIL_SENDER = 'team@%s' % NAKED_DOMAIN
+MAIL_SENDER = TEAM_MAIL_SENDER
 ADMIN_MAIL_SENDER = 'administrator@%s' % NAKED_DOMAIN
 ADMIN_EMAIL = ADMIN_MAIL_SENDER
 CONTACT_EMAIL = 'hello@%s' % NAKED_DOMAIN
@@ -108,10 +110,9 @@ else:
     LOCAL = False
     DEBUG = False
     #MEDIA_URL = "http://static.%s/u/3035045/public/" % NAKED_DOMAIN
-    TEXT_MEDIA_URL = "http://assets.%s/" % NAKED_DOMAIN
+    #TEXT_MEDIA_URL = "http://assets.%s/" % NAKED_DOMAIN
+    TEXT_MEDIA_URL = "/s/"
     MEDIA_URL = TEXT_MEDIA_URL
-    #MEDIA_URL = 'http://%s/s/' % (HOST_NAME, )
-    #TEXT_MEDIA_URL = MEDIA_URL
 
 if DEBUG:
     # Minification suffixes for use with CSS and JS files.
@@ -138,10 +139,10 @@ SUBJECT_PREFIX = "[MILS Alumni]"
 MAIL_SIGNATURE = '''--
 Cheers,
 MILS Alumni Organizing Team
-Please visit: http://www.milsalumni.org
+Please visit: http://www.%s
 --
-Please do not reply to this system generated message.
-'''
+Please reply to: %s
+''' % (NAKED_DOMAIN, TEAM_MAIL_SENDER,)
 ADMIN_MAIL_SIGNATURE = '''--
 Cheers,
 Website Administrator, MILS Alumni Association
@@ -169,6 +170,8 @@ GOOGLE_ANALYTICS_ID = "UA-7340598-3"
 cdn_urls = {
     'microsoft.jquery-1.3.2': "http://ajax.microsoft.com/ajax/jQuery/jquery-1.3.2.min.js",
     'google.jquery-1.3.2': "http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js",
+    # Specify the EXACT version to enable far-future expires header from google ajax libs.
+    'google.jquery-1.4': 'http://ajax.googleapis.com/ajax/libs/jquery/1.4.0/jquery.min.js',
     'jquery.jquery-1.4': "http://code.jquery.com/jquery-1.4a1.min.js",
     'local.jquery-1.4': "%sscript/lib/chickoojs/src/jquery/jquery-1.4a1.min.js" % (MEDIA_URL,),
     'local.jquery-1.3.2': "%sscript/lib/chickoojs/src/jquery/jquery-1.3.2.min.js" % (MEDIA_URL,),
@@ -179,7 +182,7 @@ if LOCAL:
     JQUERY_URL = cdn_urls.get('local.jquery-1.4')
     ANALYTICS_CODE = ""
 else:
-    JQUERY_URL = cdn_urls.get('assets.jquery-1.4')
+    JQUERY_URL = cdn_urls.get('google.jquery-1.4')
     ANALYTICS_CODE = """
 <script type="text/javascript">
 var _gaq = _gaq || [];
