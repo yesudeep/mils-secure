@@ -5,24 +5,26 @@ Thank you for registering for the program titled:
     {{ training_program_title }}
     
 Here are the payment details you will need to complete for confirming 
-your seat at the event.
+your seat at the event. Kindly note that your payment should reach us 
+by 28th Jan 2010. You will appreciate that we have limited seats and 
+hence confirmation depends on how quickly you can send the payment. 
 
 The program fees based on the number of nominations is:
 
    {{ current_fee }} INR
 
 You will need to do a funds transfer of the fees online.  
-The details of the alumni bank account are provided hereinafter:
+The details of the alumni bank account are provided below:
 
 {{ payment_details }}
 
 {{ MAIL_SIGNATURE }}
 
 Kindly note that currently, we are not encouraging the Cheque/Cash payment 
-route, for logistics reasons. We will confirm your nomination, once we get your 
-program fees via the online funds transfer route.
+route for logistics reasons. We will confirm your nomination once we get your 
+program fees via the online funds-transfer route.
  
 We request your consideration and support.
- 
-For any queries send an email to mils.secure@gmail.com 
-along with your Mobile Number.  We'll call you.
+
+For any queries send an email to team@milsalumni.org 
+along with your mobile number.  We'll call you.
